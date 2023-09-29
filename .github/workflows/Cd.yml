@@ -3,7 +3,6 @@ name: Continuos Deployment (CD)
 on:
   push:
     branches: ["main"]
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -15,7 +14,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  continuos_deployment:
+  continuos-deployment:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -23,6 +22,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Setup Node.js
+        id: setup-node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Setup typescript
+        run: npm i
+      - name: Compile typescript
+        run: tsc
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
