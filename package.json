@@ -1,0 +1,28 @@
+{
+  "name": "ludumdare54",
+  "version": "1.0.0",
+  "description": "Game for Ludum dare 54. Created by FrederikJA and OliverEC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/frederikja163/LudumDare54.git"
+  },
+  "keywords": [
+    "LudumDare",
+    "LD",
+    "Game",
+    "Gamejam"
+  ],
+  "author": "FrederikJA & OliverEC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/frederikja163/LudumDare54/issues"
+  },
+  "homepage": "https://github.com/frederikja163/LudumDare54#readme",
+  "dependencies": {
+    "typescript": "^5.2.2"
+  }
+}

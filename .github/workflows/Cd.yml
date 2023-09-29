@@ -1,4 +1,4 @@
-name: Deploy
+name: Continuos Deployment (CD)
 
 on:
   push:
@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  continuos_deployment:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
