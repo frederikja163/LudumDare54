@@ -10,7 +10,7 @@ This game was created for Ludum Dare 54, it is live at https://frederikja163.git
 
 ### Building
 Run `tsc` to compile javascript code.
-Optionally run `tsc --watch` to continuosly build the javascript code.
+Optionally run `tsc --watch` to continuously build the javascript code.
 
 ### Contributions
 During the ludum dare weekend, contributions are very welcome, afterwards this project may die very slowly, but feel free to fork the project and build on it yourself.

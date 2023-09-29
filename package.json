@@ -22,7 +22,7 @@
     "url": "https://github.com/frederikja163/LudumDare54/issues"
   },
   "homepage": "https://github.com/frederikja163/LudumDare54#readme",
-  "dependencies": {
+  "devDependencies": {
     "typescript": "^5.2.2"
   }
 }
