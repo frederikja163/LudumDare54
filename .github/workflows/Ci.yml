@@ -2,17 +2,18 @@ on:
   push:
 
 jobs:
-  tsc:
+  continuos-integration:
     name: tsc
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup Node.js
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Setup Nodejs
       id: setup-node
       uses: actions/setup-node@v3
       with:
         node-version: 18
-    - name: Setup typescript
+    - name: Setup Typescript
       run: npm i
-    - name: tsc
-      uses: icrawl/action-tsc@v1
+    - name: Compile Typescript
+      run: tsc
