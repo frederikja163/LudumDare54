@@ -2,7 +2,7 @@ on:
   push:
 
 jobs:
-  continuos-integration:
+  continuous-integration:
     name: tsc
     runs-on: ubuntu-latest
     steps:
