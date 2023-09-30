@@ -11,6 +11,7 @@ export enum ChamberType {
 }
 
 export class Chamber{
+    private static readonly tileCache: Map<string, ChamberType> = new Map();
     private readonly antHill: AntHill;
     private readonly explored: Set<string> = new Set();
     private readonly xOrigin: number;
@@ -28,6 +29,7 @@ export class Chamber{
     }
 
     private calcRoom(){
+        Chamber.tileCache.clear();
         this.chamberType = this.calcChamberType(this.xOrigin, this.yOrigin);
         this.explored.clear();
         this.tryExploreTile(this.xOrigin, this.yOrigin);
@@ -57,11 +59,19 @@ export class Chamber{
     }
 
     private calcChamberType(x: number, y: number) : ChamberType{
+        const key = this.getKey(x, y);
+        const type = Chamber.tileCache.get(key);
+        if (type){
+            return type;
+        }
+
         const tileValue = this.antHill.getTile(x, y);
         if (tileValue === -1){
+            Chamber.tileCache.set(key, ChamberType.Invalid);
             return ChamberType.Invalid;
         }
         else if (tileValue > 0){
+            Chamber.tileCache.set(key, ChamberType.Wall);
             return ChamberType.Wall;
         }
         const top = this.isEmpty(x, y + 1);
@@ -72,9 +82,12 @@ export class Chamber{
             (right && down && this.isEmpty(x + 1, y - 1)) ||
             (down && left && this.isEmpty(x - 1, y - 1)) ||
             (left && top && this.isEmpty(x - 1, y + 1))){
-            return this.isValidChamber() ? this.chamberType : ChamberType.Unassigned;
+            const type = this.isValidChamber() ? this.chamberType : ChamberType.Unassigned
+            Chamber.tileCache.set(key, type);
+            return type;
         }
         else{
+            Chamber.tileCache.set(key, ChamberType.Hall);
             return ChamberType.Hall;
         }
     }
