@@ -61,7 +61,7 @@ export class Chamber{
         if (tileValue === -1){
             return ChamberType.Invalid;
         }
-        else if (tileValue === 0){
+        else if (tileValue > 0){
             return ChamberType.Wall;
         }
         const top = this.isEmpty(x, y + 1);
@@ -72,7 +72,7 @@ export class Chamber{
             (right && down && this.isEmpty(x + 1, y - 1)) ||
             (down && left && this.isEmpty(x - 1, y - 1)) ||
             (left && top && this.isEmpty(x - 1, y + 1))){
-            return this.chamberType;
+            return this.isValidChamber() ? this.chamberType : ChamberType.Unassigned;
         }
         else{
             return ChamberType.Hall;
@@ -80,7 +80,7 @@ export class Chamber{
     }
 
     private isEmpty(x: number, y: number){
-        return this.antHill.getTile(x, y) === 1;
+        return this.antHill.getTile(x, y) === 0;
     }
 
     private getKey(x: number, y: number){

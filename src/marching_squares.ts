@@ -2,7 +2,7 @@ import P5 from "p5";
 import { AntHill } from "./data/ant_hill";
 import { Game } from "./data/game";
 import { Camera } from "./data/camera";
-const DEBUG = false;
+const DEBUG = true;
 
 type PointOffset = { xOffset: number, yOffset: number };
 const TopCenter: PointOffset = { xOffset: 0, yOffset: 0.5 };
