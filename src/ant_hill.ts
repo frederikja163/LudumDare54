@@ -1,3 +1,5 @@
+import P5 from "p5";
+
 export type Camera = {x: number, y: number, zoom: number}
 
 export class AntHill{
@@ -11,7 +13,7 @@ export class AntHill{
         return this.tiles.length;
     }
     public getTile(x: number, y: number): number{
-        return this.tiles[x][y];
+        return this.tiles[y][x];
     }
     public setTile(x: number, y: number, value: number){
         this.tiles[y][x] = value;
@@ -29,5 +31,12 @@ export class AntHill{
             }
         }
         this._camera = {x: 0, y: 0, zoom: 100};
+    }
+
+    getWorldCoords(p5: P5, x: number, y: number): {x: number, y: number}{
+        return {
+            x: (p5.mouseX + this.camera.x - p5.width/2) / (this.camera.zoom),
+            y: (p5.mouseY + this.camera.y - p5.height/2) / (this.camera.zoom)
+        };
     }
 }

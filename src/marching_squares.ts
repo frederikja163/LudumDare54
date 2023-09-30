@@ -56,7 +56,7 @@ export function drawMarchingSquares(p5: P5, antHill: AntHill, threshold: number)
             p5.beginShape();
             const square = squares[binaryValue];
             for (const point of square){
-                p5.vertex(x + 0.5 + point.xOffset, y + 0.5 + point.yOffset);
+                p5.vertex(x - 0.5 + point.xOffset, y - 0.5 + point.yOffset);
             }
             p5.endShape();
 

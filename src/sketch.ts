@@ -7,25 +7,20 @@ let camera: P5.Camera;
 export function setup(p5: P5, antHill: AntHill) {
     p5.createCanvas(window.innerWidth - 4, window.innerHeight - 4, p5.WEBGL);
     camera = p5.createCamera();
-    // camera.ortho(-p5.width / 2, -p5.height / 2, 0, 0);
 }
 
 export function draw(p5: P5, antHill: AntHill){
     p5.background(255, 255, 255);
 
-    const left = -p5.width / 2 + antHill.camera.x;
-    const right = p5.width / 2 + antHill.camera.x;
-    const up = -p5.height / 2 - antHill.camera.y;
-    const down = p5.height / 2 - antHill.camera.y
-    p5.frustum(left / antHill.camera.zoom, right / antHill.camera.zoom, up / antHill.camera.zoom, down / antHill.camera.zoom);
+    p5.translate(-antHill.camera.x, -antHill.camera.y);
+    p5.scale(antHill.camera.zoom);
 
-    p5.translate(-p5.width / 2, -p5.height / 2);
-    p5.scale(50);
+    p5.push();
+    p5.translate(-antHill.width/2, -antHill.height/2);
     p5.noStroke();
     p5.fill(0, 0, 0);
-    drawMarchingSquares(p5, antHill, 0.8);
-    p5.fill(0, 255, 0, 50);
-    drawMarchingSquares(p5, antHill, 0.2);
+    drawMarchingSquares(p5, antHill, 0.5);
+    p5.pop();
 }
 
 export function mouseDragged(p5: P5, antHill: AntHill, event: MouseEvent){
@@ -35,11 +30,29 @@ export function mouseDragged(p5: P5, antHill: AntHill, event: MouseEvent){
     }
 }
 
-export function mouseWheel(p5: P5, antHill: AntHill, event: WheelEvent){
-    const zoomDelta = event.deltaY * p5.deltaTime / 10000;
-    antHill.camera.zoom -= zoomDelta * antHill.camera.zoom;
-}
-
 export function resize(p5: P5, antHill: AntHill) {
     p5.resizeCanvas(window.innerWidth - 4, window.innerHeight - 4);
 }
+export function mouseClicked(p5: P5, antHill: AntHill): void {
+    const mouse = antHill.getWorldCoords(p5, p5.mouseX, p5.mouseY);
+
+    const x = Math.round(mouse.x + antHill.width / 2);
+    const y = Math.round(mouse.y + antHill.height / 2);
+    console.log(x, y);
+    if (p5.mouseButton === p5.LEFT && !p5.keyIsDown(p5.SHIFT)){
+        antHill.setTile(x, y, 0);
+    }
+    else if (p5.mouseButton === p5.LEFT && p5.keyIsDown(p5.SHIFT)){
+        antHill.setTile(x, y, 1);
+    }
+}
+
+export function keyPressed(p5: P5, antHill: AntHill): void {
+    if (p5.keyIsDown(187 /*+*/)){
+        antHill.camera.zoom *= 1.1;
+    }
+    else if (p5.keyIsDown(189) /*-*/){
+        antHill.camera.zoom *= 0.9;
+    }
+}
+

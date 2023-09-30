@@ -7,10 +7,12 @@ function sketch(p5: P5){
     p5.setup = () => Sketch.setup(p5, antHill);
 
     p5.draw = () => Sketch.draw(p5, antHill);
+
+    p5.mouseClicked = () => Sketch.mouseClicked(p5, antHill);
     
     p5.mouseDragged = (event: MouseEvent) => Sketch.mouseDragged(p5, antHill, event);
 
-    p5.mouseWheel = (event: WheelEvent) => Sketch.mouseWheel(p5, antHill, event);
+    p5.keyPressed = () => Sketch.keyPressed(p5, antHill);
 
     window.addEventListener('resize', event => {
         Sketch.resize(p5, antHill);
