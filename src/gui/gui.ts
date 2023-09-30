@@ -4,11 +4,11 @@ import { CursorMode, Game } from "../data/game";
 
 export function initGui(game: Game) {
     // ResourceBar
-    resourceBarAdd(new ResourceDisplay("food", "../assets/gui/food_icon.png"));
+    resourceBarAdd(new ResourceDisplay("food", game.assetList.foodIconPath));
 
     // BuildBar
-    buildBarAdd(new BuildBtn("dig", "../assets/gui/dig_icon.png", () => { game.cursorMode = CursorMode.Dig }));
-    buildBarAdd(new BuildBtn("fill", "../assets/gui/fill_icon.png", () => { game.cursorMode = CursorMode.Fill }));
+    buildBarAdd(new BuildBtn("dig", game.assetList.digIconPath, () => { game.cursorMode = CursorMode.Dig }));
+    buildBarAdd(new BuildBtn("fill", game.assetList.fillIconPath, () => { game.cursorMode = CursorMode.Fill }));
 }
 
 function resourceBarAdd(resourceDisplay: ResourceDisplay) {
