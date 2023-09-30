@@ -1,13 +1,14 @@
 import { ResourceDisplay } from "./resource_display";
 import { BuildBtn } from "./build_btn";
+import { CursorMode, Game } from "../data/game";
 
-export function initGui() {
+export function initGui(game: Game) {
     // ResourceBar
     resourceBarAdd(new ResourceDisplay("food", "../assets/gui/food_icon.png"));
 
     // BuildBar
-    buildBarAdd(new BuildBtn("dig", "../assets/gui/dig_icon.png", () => { console.log("dig") }));
-    buildBarAdd(new BuildBtn("fill", "../assets/gui/fill_icon.png", () => { console.log("fill") }));
+    buildBarAdd(new BuildBtn("dig", "../assets/gui/dig_icon.png", () => { game.cursorMode = CursorMode.Dig }));
+    buildBarAdd(new BuildBtn("fill", "../assets/gui/fill_icon.png", () => { game.cursorMode = CursorMode.Fill }));
 }
 
 function resourceBarAdd(resourceDisplay: ResourceDisplay) {

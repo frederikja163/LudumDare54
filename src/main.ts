@@ -20,7 +20,7 @@ function sketch(p5: P5) {
         Sketch.resize(game);
     }, true);
 
-    Gui.initGui();
+    Gui.initGui(game);
 }
 
 new P5(sketch);
