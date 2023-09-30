@@ -6,6 +6,8 @@ import * as Gui from "./gui/gui";
 
 function sketch(p5: P5) {
     const game = new Game(p5);
+    p5.preload = () => Sketch.preload(game)
+
     p5.setup = () => Sketch.setup(game);
 
     p5.draw = () => Sketch.draw(game);

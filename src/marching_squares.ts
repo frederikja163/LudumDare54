@@ -33,7 +33,11 @@ const squares: MarchingSquare[] = [
 /*15*/      [TopRight, DownRight, DownLeft, TopLeft],
 ];
 
-export function drawMarchingSquares(p5: P5, antHill: AntHill, camera: Camera, predicate: (x: number, y: number) => boolean) {
+export function drawMarchingSquares(game: Game, predicate: (x: number, y: number) => boolean) {
+    const antHill = game.antHill;
+    const p5 = game.p5;
+    const camera = game.camera;
+
     const point1 = camera.getWorldCoords(0, 0);
     const point2 = camera.getWorldCoords(p5.width, p5.height);
     const minX = Math.max(1, Math.round(point1.x + antHill.width / 2));

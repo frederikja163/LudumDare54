@@ -5,6 +5,13 @@ import { Game } from "./data/game";
 import { Chamber } from "./data/chamber";
 const placementThreshold = 0.2;
 
+export function preload(game: Game): void {
+    const p5 = game.p5;
+    const assetList = game.assetList;
+
+    assetList.image = p5.loadImage(assetList.imagePath);
+}
+
 export function setup(game: Game) {
     const p5 = game.p5;
 
@@ -26,7 +33,7 @@ export function draw(game: Game){
     p5.noStroke();
     
     p5.fill(255, 255, 255);
-    drawMarchingSquares(p5, antHill, camera, (x, y) => antHill.getTile(x, y) > 0);
+    drawMarchingSquares(game, (x, y) => antHill.getTile(x, y) > 0);
     if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && !p5.keyIsDown(p5.SHIFT) && !p5.keyIsDown(p5.CONTROL)){
         if (Math.abs(x % 1 - 0.5) > placementThreshold && Math.abs(y % 1 - 0.5) > placementThreshold){
             
@@ -46,11 +53,11 @@ export function draw(game: Game){
     
     p5.fill(0, 0, 255);
     if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && p5.keyIsDown(p5.CONTROL)){
-        const chamber = new Chamber(antHill, Math.round(x), Math.round(y));
-        chamber?.draw(p5, camera);
+        const chamber = new Chamber(this.game, Math.round(x), Math.round(y));
+        chamber?.draw();
     }
 
-    antHill.draw(p5, camera);
+    antHill.draw();
 
     p5.pop();
 }

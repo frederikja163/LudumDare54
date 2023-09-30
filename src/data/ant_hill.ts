@@ -1,6 +1,7 @@
 import { Camera } from "./camera";
 import { Chamber } from "./chamber";
 import P5 from "p5";
+import { Game } from "./game";
 
 export enum AntHillEvent{
     TilesChanged = "TilesChanged",
@@ -9,6 +10,7 @@ export enum AntHillEvent{
 export class AntHill extends EventTarget{
     private readonly tiles: number[][] = [];
     private readonly chambers: Chamber[] = [];
+    private readonly game: Game;
 
     public get width(): number{
         return this.tiles[0].length;
@@ -34,7 +36,7 @@ export class AntHill extends EventTarget{
         this.dispatchEvent(new Event(AntHillEvent.TilesChanged))
     }
 
-    constructor(width: number, height: number){
+    constructor(game: Game, width: number, height: number){
         super();
         for (let y = 0; y < height; y++) {
             this.tiles[y] = [];
@@ -42,12 +44,13 @@ export class AntHill extends EventTarget{
                 this.tiles[y][x] = 1;
             }
         }
+        this.game = game;
     }
 
     private updateChamber(x: number, y: number){
         const index = this.chambers.findIndex(c => c.contains(x, y));
         if (index === -1){
-            const chamber = new Chamber(this, x, y);
+            const chamber = new Chamber(this.game, x, y);
             if (chamber.isValidChamber()){
                 this.chambers.push(chamber);
             }
@@ -61,12 +64,13 @@ export class AntHill extends EventTarget{
         return this.chambers.find(c => c.contains(x, y));
     }
 
-    public draw(p5: P5, camera: Camera){
+    public draw(){
+        const p5 = this.game.p5;
         for (let i = 0; i < this.chambers.length; i++){
             const chamber = this.chambers[i];
             p5.randomSeed(i);
             p5.fill(p5.random(0, 256));
-            chamber.draw(p5, camera);
+            chamber.draw();
         }
     }
 }
