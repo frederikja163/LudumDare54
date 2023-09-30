@@ -1,7 +1,7 @@
 import P5 from "p5";
 import * as Sketch from "./sketch";
-import { AntHill } from "./ant_hill";
-import { Game } from "./game";
+import { AntHill } from "./data/ant_hill";
+import { Game } from "./data/game";
 
 function sketch(p5: P5){
     const game = new Game(p5);

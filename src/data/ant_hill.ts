@@ -1,4 +1,8 @@
-export class AntHill{
+export enum AntHillEvent{
+    TilesChanged = "TilesChanged",
+}
+
+export class AntHill extends EventTarget{
     private readonly tiles: number[][] = [];
 
     public get width(): number{
@@ -18,13 +22,15 @@ export class AntHill{
             return;
         }
         this.tiles[y][x] = value;
+        this.dispatchEvent(new Event(AntHillEvent.TilesChanged))
     }
 
     constructor(width: number, height: number){
+        super();
         for (let y = 0; y < height; y++) {
             this.tiles[y] = [];
             for (let x = 0; x < width; x++) {
-                this.tiles[y][x] = Math.random();
+                this.tiles[y][x] = 0;
             }
         }
     }

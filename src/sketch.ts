@@ -1,7 +1,7 @@
 import P5 from "p5";
-import { AntHill } from "./ant_hill";
+import { AntHill } from "./data/ant_hill";
 import { drawMarchingSquares } from "./marching_squares";
-import { Game } from "./game";
+import { Game } from "./data/game";
 const placementThreshold = 0.2;
 
 export function setup(game: Game) {
@@ -22,7 +22,9 @@ export function draw(game: Game){
     p5.translate(-antHill.width/2, -antHill.height/2);
     p5.noStroke();
     p5.fill(255, 255, 255);
-    drawMarchingSquares(game, 0.5);
+    drawMarchingSquares(p5, antHill, camera, v => v > 0.5);
+    p5.fill(128);
+    drawMarchingSquares(p5, antHill, camera, v => v < 0.5);
     const mouse = camera.getWorldCoords(p5.mouseX, p5.mouseY);
     const x = mouse.x + antHill.width / 2;
     const y = mouse.y + antHill.height / 2;

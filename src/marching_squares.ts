@@ -1,6 +1,7 @@
-import P5, { Camera } from "p5";
-import { AntHill } from "./ant_hill";
-import { Game } from "./game";
+import P5 from "p5";
+import { AntHill } from "./data/ant_hill";
+import { Game } from "./data/game";
+import { Camera } from "./data/camera";
 const DEBUG = false;
 
 type PointOffset = { xOffset: number, yOffset: number };
@@ -32,12 +33,9 @@ const squares: MarchingSquare[] = [
 /*15*/      [TopRight, DownRight, DownLeft, TopLeft],
 ];
 
-export function drawMarchingSquares(game: Game, threshold: number) {
-    const p5 = game.p5;
-    const antHill = game.antHill
-
-    const point1 = game.camera.getWorldCoords(0, 0);
-    const point2 = game.camera.getWorldCoords(p5.width, p5.height);
+export function drawMarchingSquares(p5: P5, antHill: AntHill, camera: Camera, predicate: (value: number) => boolean) {
+    const point1 = camera.getWorldCoords(0, 0);
+    const point2 = camera.getWorldCoords(p5.width, p5.height);
     const minX = Math.max(1, Math.round(point1.x + antHill.width / 2 - 1));
     const maxX = Math.min(antHill.width, Math.round(point2.x + antHill.width / 2 + 2));
     const minY = Math.min(1, Math.round(point1.y + antHill.height / 2 - 1));
@@ -51,16 +49,16 @@ export function drawMarchingSquares(game: Game, threshold: number) {
             const upperRight = antHill.getTile(x, y);
 
             let binaryValue = 0;
-            if (lowerLeft > threshold) {
+            if (predicate(lowerLeft)) {
                 binaryValue += 1 << 0;
             }
-            if (lowerRight > threshold) {
+            if (predicate(lowerRight)) {
                 binaryValue += 1 << 1;
             }
-            if (upperRight > threshold) {
+            if (predicate(upperRight)) {
                 binaryValue += 1 << 2;
             }
-            if (upperLeft > threshold) {
+            if (predicate(upperLeft)) {
                 binaryValue += 1 << 3;
             }
 
@@ -72,13 +70,13 @@ export function drawMarchingSquares(game: Game, threshold: number) {
             p5.endShape();
 
             if (DEBUG) {
-                p5.fill((lowerLeft > threshold) ? 0 : 125);
+                p5.fill((predicate(lowerLeft)) ? 0 : 125);
                 p5.ellipse(x, y, .25, .25);
-                p5.fill((lowerRight > threshold) ? 0 : 125);
+                p5.fill((predicate(lowerRight)) ? 0 : 125);
                 p5.ellipse(x + 1, y, .25, .25);
-                p5.fill((upperLeft > threshold) ? 0 : 125);
+                p5.fill((predicate(upperLeft)) ? 0 : 125);
                 p5.ellipse(x, y + 1, .25, .25);
-                p5.fill((upperRight > threshold) ? 0 : 125);
+                p5.fill((predicate(upperRight)) ? 0 : 125);
                 p5.ellipse(x + 1, y + 1, .25, .25);
             }
         }
