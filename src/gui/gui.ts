@@ -3,11 +3,11 @@ import { BuildBtn } from "./build_btn";
 
 export function initGui() {
     // ResourceBar
-    resourceBarAdd(new ResourceDisplay("food", "../resources/gui/food_icon.png"));
+    resourceBarAdd(new ResourceDisplay("food", "../assets/gui/food_icon.png"));
 
     // BuildBar
-    buildBarAdd(new BuildBtn("dig", "../resources/gui/dig_icon.png", () => { console.log("dig") }));
-    buildBarAdd(new BuildBtn("fill", "../resources/gui/fill_icon.png", () => { console.log("fill") }));
+    buildBarAdd(new BuildBtn("dig", "../assets/gui/dig_icon.png", () => { console.log("dig") }));
+    buildBarAdd(new BuildBtn("fill", "../assets/gui/fill_icon.png", () => { console.log("fill") }));
 }
 
 function resourceBarAdd(resourceDisplay: ResourceDisplay) {
