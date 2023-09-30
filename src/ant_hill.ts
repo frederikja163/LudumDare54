@@ -1,5 +1,8 @@
+export type Camera = {x: number, y: number, zoom: number}
+
 export class AntHill{
     private readonly tiles: number[][] = [];
+    private readonly _camera: Camera;
 
     public get width(): number{
         return this.tiles[0].length;
@@ -14,6 +17,10 @@ export class AntHill{
         this.tiles[y][x] = value;
     }
 
+    public get camera(): Camera{
+        return this._camera;
+    }
+
     constructor(width: number, height: number){
         for (let y = 0; y < height; y++) {
             this.tiles[y] = [];
@@ -21,5 +28,6 @@ export class AntHill{
                 this.tiles[y][x] = Math.random();
             }
         }
+        this._camera = {x: 0, y: 0, zoom: 100};
     }
 }
