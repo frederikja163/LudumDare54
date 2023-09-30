@@ -2,6 +2,7 @@ import P5 from "p5";
 import { AntHill } from "./data/ant_hill";
 import { drawMarchingSquares } from "./marching_squares";
 import { Game } from "./data/game";
+import { Chamber } from "./data/chamber";
 const placementThreshold = 0.2;
 
 export function setup(game: Game) {
@@ -17,33 +18,40 @@ export function draw(game: Game){
 
     p5.background(0, 0, 0);
     camera.apply();
-
-    p5.push();
-    p5.translate(-antHill.width/2, -antHill.height/2);
-    p5.noStroke();
-    p5.fill(255, 255, 255);
-    drawMarchingSquares(p5, antHill, camera, v => v > 0.5);
-    p5.fill(128);
-    drawMarchingSquares(p5, antHill, camera, v => v < 0.5);
     const mouse = camera.getWorldCoords(p5.mouseX, p5.mouseY);
     const x = mouse.x + antHill.width / 2;
     const y = mouse.y + antHill.height / 2;
-    if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && !p5.keyIsDown(p5.SHIFT)){
+    p5.push();
+    p5.translate(-antHill.width/2, -antHill.height/2);
+    p5.noStroke();
+    
+    p5.fill(255, 255, 255);
+    drawMarchingSquares(p5, antHill, camera, (x, y) => antHill.getTile(x, y) < 0.5);
+    if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && !p5.keyIsDown(p5.SHIFT) && !p5.keyIsDown(p5.CONTROL)){
         if (Math.abs(x % 1 - 0.5) > placementThreshold && Math.abs(y % 1 - 0.5) > placementThreshold){
-
-            antHill.setTile(Math.round(x), Math.round(y), 1);
+            
+            antHill.setTile(Math.round(x), Math.round(y), 0);
         }
         p5.fill(128, 255, 128, 200);
         p5.ellipse(Math.round(x), Math.round(y), 0.1, 0.1);
     }
-    else if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && p5.keyIsDown(p5.SHIFT)){
+    else if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && p5.keyIsDown(p5.SHIFT) && !p5.keyIsDown(p5.CONTROL)){
         if (Math.abs(x % 1 - 0.5) > placementThreshold && Math.abs(y % 1 - 0.5) > placementThreshold){
-
-            antHill.setTile(Math.round(x), Math.round(y), 0);
+            
+            antHill.setTile(Math.round(x), Math.round(y), 1);
         }
         p5.fill(255, 128, 128, 200);
         p5.ellipse(Math.round(x), Math.round(y), 0.1, 0.1);
     }
+    
+    p5.fill(0, 0, 255);
+    if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && p5.keyIsDown(p5.CONTROL)){
+        const chamber = antHill.getChamber(Math.round(x), Math.round(y));
+        chamber?.draw(p5, camera);
+    }
+
+    antHill.draw(p5, camera);
+
     p5.pop();
 }
 
