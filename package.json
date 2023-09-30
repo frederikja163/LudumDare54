@@ -4,7 +4,9 @@
   "description": "Game for Ludum dare 54. Created by FrederikJA and OliverEC",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "esbuild src/main.ts --bundle --outfile=dist/main.js",
+    "watch": "esbuild src/main.ts --bundle --outfile=dist/main.js --watch"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,11 @@
   },
   "homepage": "https://github.com/frederikja163/LudumDare54#readme",
   "devDependencies": {
+    "@types/p5": "^1.7.0",
+    "esbuild": "^0.19.4",
     "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "p5": "^1.7.0"
   }
 }

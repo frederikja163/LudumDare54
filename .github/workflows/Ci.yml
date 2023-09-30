@@ -16,4 +16,4 @@ jobs:
     - name: Setup Typescript
       run: npm i
     - name: Compile Typescript
-      run: tsc
+      run: npm run build
