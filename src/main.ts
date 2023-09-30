@@ -7,8 +7,6 @@ function sketch(p5: P5){
     p5.setup = () => Sketch.setup(p5, antHill);
 
     p5.draw = () => Sketch.draw(p5, antHill);
-
-    p5.mouseClicked = () => Sketch.mouseClicked(p5, antHill);
     
     p5.mouseDragged = (event: MouseEvent) => Sketch.mouseDragged(p5, antHill, event);
 
