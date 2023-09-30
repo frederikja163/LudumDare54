@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "esbuild src/main.ts --bundle --outfile=dist/main.js",
-    "watch": "esbuild src/main.ts --bundle --outfile=dist/main.js --watch"
+    "build": "esbuild src/main.ts --bundle --outfile=dist/main.js --minify",
+    "watch": "esbuild src/main.ts --bundle --outfile=dist/main.js --minify --sourcemap --watch"
   },
   "repository": {
     "type": "git",
