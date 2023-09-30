@@ -6,8 +6,8 @@ export function initGui() {
     resourceBarAdd(new ResourceDisplay("food", "../resources/gui/food_icon.png"));
 
     // BuildBar
-    buildBarAdd(new BuildBtn("dig", "", () => { console.log("dig") }));
-    buildBarAdd(new BuildBtn("fill", "", () => { console.log("fill") }));
+    buildBarAdd(new BuildBtn("dig", "../resources/gui/dig_icon.png", () => { console.log("dig") }));
+    buildBarAdd(new BuildBtn("fill", "../resources/gui/fill_icon.png", () => { console.log("fill") }));
 }
 
 function resourceBarAdd(resourceDisplay: ResourceDisplay) {

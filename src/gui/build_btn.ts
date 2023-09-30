@@ -5,6 +5,7 @@ export class BuildBtn {
     constructor(name: string, iconPath: string, clickAction: () => void) {
         this._buttonElem = document.createElement("button");
         this._buttonElem.onclick = clickAction;
+        this._buttonElem.title = name;
 
         this.iconElem = document.createElement("img");
         this.iconElem.src = iconPath;

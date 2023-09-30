@@ -11,6 +11,7 @@ export class ResourceDisplay {
         this.iconElem = document.createElement("img");
         this.iconElem.src = iconPath;
         this.iconElem.alt = name;
+        this.iconElem.title = name;
         this.containerElem.appendChild(this.iconElem);
 
         this.counterElem = document.createElement("p");
