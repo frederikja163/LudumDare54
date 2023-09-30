@@ -8,6 +8,9 @@ export class AntHill{
         return this.tiles.length;
     }
     public getTile(x: number, y: number): number{
+        if (x < 0 || x >= this.width || y < 0 || y >= this.height){
+            return -1;
+        }
         return this.tiles[y][x];
     }
     public setTile(x: number, y: number, value: number){

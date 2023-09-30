@@ -18,7 +18,7 @@ export class Game{
 
     constructor(p5: P5){
         this._p5 = p5;
-        this._antHill = new AntHill(25, 25);
+        this._antHill = new AntHill(100, 100);
         this._camera = new Camera(p5, 100);
     }
 }

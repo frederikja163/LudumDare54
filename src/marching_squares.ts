@@ -1,5 +1,6 @@
-import P5 from "p5";
+import P5, { Camera } from "p5";
 import { AntHill } from "./ant_hill";
+import { Game } from "./game";
 const DEBUG = false;
 
 type PointOffset = { xOffset: number, yOffset: number };
@@ -31,9 +32,19 @@ const squares: MarchingSquare[] = [
 /*15*/      [TopRight, DownRight, DownLeft, TopLeft],
 ];
 
-export function drawMarchingSquares(p5: P5, antHill: AntHill, threshold: number) {
-    for (let y = 1; y < antHill.height; y++) {
-        for (let x = 1; x < antHill.width; x++) {
+export function drawMarchingSquares(game: Game, threshold: number) {
+    const p5 = game.p5;
+    const antHill = game.antHill
+
+    const point1 = game.camera.getWorldCoords(0, 0);
+    const point2 = game.camera.getWorldCoords(p5.width, p5.height);
+    const minX = Math.max(1, Math.round(point1.x + antHill.width / 2 - 1));
+    const maxX = Math.min(antHill.width, Math.round(point2.x + antHill.width / 2 + 2));
+    const minY = Math.min(1, Math.round(point1.y + antHill.height / 2 - 1));
+    const maxY = Math.max(antHill.height, Math.round(point2.y + antHill.height / 2 + 2));
+
+    for (let y = minY; y < maxY; y++) {
+        for (let x = minX; x < maxX; x++) {
             const lowerLeft = antHill.getTile(x - 1, y - 1);
             const lowerRight = antHill.getTile(x, y - 1);
             const upperLeft = antHill.getTile(x - 1, y);

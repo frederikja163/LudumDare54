@@ -22,7 +22,7 @@ export function draw(game: Game){
     p5.translate(-antHill.width/2, -antHill.height/2);
     p5.noStroke();
     p5.fill(255, 255, 255);
-    drawMarchingSquares(p5, antHill, 0.5);
+    drawMarchingSquares(game, 0.5);
     const mouse = camera.getWorldCoords(p5.mouseX, p5.mouseY);
     const x = mouse.x + antHill.width / 2;
     const y = mouse.y + antHill.height / 2;
