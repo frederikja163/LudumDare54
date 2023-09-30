@@ -36,9 +36,8 @@ export function draw(game: Game){
     p5.noStroke();
     
     p5.fill(255, 255, 255);
-    p5.texture(assetList.dirt[0]);
     p5.textureMode(p5.NORMAL);
-    drawMarchingSquares(game, true, (x, y) => antHill.getTile(x, y) > 0);
+    drawMarchingSquares(game, assetList.dirt, (x, y) => antHill.getTile(x, y) > 0);
     if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && !p5.keyIsDown(p5.SHIFT) && !p5.keyIsDown(p5.CONTROL)){
         if (Math.abs(x % 1 - 0.5) > placementThreshold && Math.abs(y % 1 - 0.5) > placementThreshold){
             

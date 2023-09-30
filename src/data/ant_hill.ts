@@ -68,8 +68,7 @@ export class AntHill extends EventTarget{
         const p5 = this.game.p5;
         for (let i = 0; i < this.chambers.length; i++){
             const chamber = this.chambers[i];
-            p5.randomSeed(i);
-            p5.fill(p5.random(0, 256));
+            p5.fill(128);
             chamber.draw();
         }
     }
