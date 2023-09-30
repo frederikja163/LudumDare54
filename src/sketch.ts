@@ -1,24 +1,29 @@
 import P5 from "p5";
 import { AntHill } from "./ant_hill";
 import { drawMarchingSquares } from "./marching_squares";
+import { Game } from "./game";
 const placementThreshold = 0.2;
 
-export function setup(p5: P5, antHill: AntHill) {
+export function setup(game: Game) {
+    const p5 = game.p5;
+
     p5.createCanvas(window.innerWidth - 4, window.innerHeight - 4, p5.WEBGL);
 }
 
-export function draw(p5: P5, antHill: AntHill){
-    p5.background(0, 0, 0);
+export function draw(game: Game){
+    const p5 = game.p5;
+    const antHill = game.antHill;
+    const camera = game.camera;
 
-    p5.translate(-antHill.camera.x, -antHill.camera.y);
-    p5.scale(antHill.camera.zoom);
+    p5.background(0, 0, 0);
+    camera.apply();
 
     p5.push();
     p5.translate(-antHill.width/2, -antHill.height/2);
     p5.noStroke();
     p5.fill(255, 255, 255);
     drawMarchingSquares(p5, antHill, 0.5);
-    const mouse = antHill.getWorldCoords(p5, p5.mouseX, p5.mouseY);
+    const mouse = camera.getWorldCoords(p5.mouseX, p5.mouseY);
     const x = mouse.x + antHill.width / 2;
     const y = mouse.y + antHill.height / 2;
     if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && !p5.keyIsDown(p5.SHIFT)){
@@ -40,23 +45,30 @@ export function draw(p5: P5, antHill: AntHill){
     p5.pop();
 }
 
-export function mouseDragged(p5: P5, antHill: AntHill, event: MouseEvent){
+export function mouseDragged(game: Game, event: MouseEvent){
+    const p5 = game.p5;
+    const camera = game.camera;
+
     if (p5.mouseButton == p5.CENTER){
-        antHill.camera.x -= event.movementX;
-        antHill.camera.y -= event.movementY;
+        camera.move(event.movementX, event.movementY);
     }
 }
 
-export function resize(p5: P5, antHill: AntHill) {
+export function resize(game: Game){
+    const p5 = game.p5;
+
     p5.resizeCanvas(window.innerWidth - 4, window.innerHeight - 4);
 }
 
-export function keyPressed(p5: P5, antHill: AntHill): void {
+export function keyPressed(game: Game){
+    const p5 = game.p5;
+    const camera = game.camera;
+
     if (p5.keyIsDown(187 /*+*/)){
-        antHill.camera.zoom *= 1.1;
+        camera.zoom(1.1);
     }
     else if (p5.keyIsDown(189) /*-*/){
-        antHill.camera.zoom *= 0.9;
+        camera.zoom(1/1.1);
     }
 }
 
