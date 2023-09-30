@@ -2,6 +2,7 @@ import P5 from "p5";
 import { AntHill, AntHillEvent } from "./ant_hill";
 import { Camera } from "./camera";
 import { drawMarchingSquares } from "../marching_squares";
+import { Game } from "./game";
 
 export enum ChamberType {
     Invalid = "Invalid",
@@ -11,19 +12,20 @@ export enum ChamberType {
 }
 
 export class Chamber{
-    private readonly antHill: AntHill;
+    private readonly game: Game;
     private readonly explored: Set<string> = new Set();
     private readonly xOrigin: number;
     private readonly yOrigin: number;
     private chamberType: ChamberType;
 
-    constructor(antHill: AntHill, x: number, y: number){
-        this.antHill = antHill;
+    constructor(game: Game, x: number, y: number){
+        this.game = game;
+        const antHill = game.antHill;
         this.xOrigin = x;
         this.yOrigin = y;
         this.chamberType = ChamberType.Unassigned;
 
-        this.antHill.addEventListener(AntHillEvent.TilesChanged, this.calcRoom.bind(this));
+        antHill.addEventListener(AntHillEvent.TilesChanged, this.calcRoom.bind(this));
         this.calcRoom();
     }
 
@@ -57,11 +59,12 @@ export class Chamber{
     }
 
     private calcChamberType(x: number, y: number) : ChamberType{
-        const tileValue = this.antHill.getTile(x, y);
+        const antHill = this.game.antHill;
+        const tileValue = antHill.getTile(x, y);
         if (tileValue === -1){
             return ChamberType.Invalid;
         }
-        else if (tileValue === 0){
+        else if (tileValue > 0){
             return ChamberType.Wall;
         }
         const top = this.isEmpty(x, y + 1);
@@ -72,7 +75,7 @@ export class Chamber{
             (right && down && this.isEmpty(x + 1, y - 1)) ||
             (down && left && this.isEmpty(x - 1, y - 1)) ||
             (left && top && this.isEmpty(x - 1, y + 1))){
-            return this.chamberType;
+            return this.isValidChamber() ? this.chamberType : ChamberType.Invalid;
         }
         else{
             return ChamberType.Hall;
@@ -80,15 +83,16 @@ export class Chamber{
     }
 
     private isEmpty(x: number, y: number){
-        return this.antHill.getTile(x, y) === 1;
+        const antHill = this.game.antHill;
+        return antHill.getTile(x, y) === 0;
     }
 
     private getKey(x: number, y: number){
         return x.toString().padStart(5) + y.toString().padStart(5);
     }
 
-    public draw(p5: P5, camera: Camera){
-        drawMarchingSquares(p5, this.antHill, camera, (x, y) => this.explored.has(this.getKey(x, y)));
+    public draw(){
+        drawMarchingSquares(this.game, false, (x, y) => this.explored.has(this.getKey(x, y)));
     }
 
     public contains(x: number, y: number): boolean{
