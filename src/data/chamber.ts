@@ -92,7 +92,7 @@ export class Chamber{
     }
 
     public draw(){
-        drawMarchingSquares(this.game, (x, y) => this.explored.has(this.getKey(x, y)));
+        drawMarchingSquares(this.game, false, (x, y) => this.explored.has(this.getKey(x, y)));
     }
 
     public contains(x: number, y: number): boolean{

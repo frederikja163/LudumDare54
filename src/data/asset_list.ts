@@ -1,8 +1,8 @@
 import P5 from "p5";
 
 export class AssetList{
-    public image: P5.Image;
-    public readonly imagePath: string = getPath("test.png");
+    public readonly dirt: P5.Image[] = [];
+    public readonly dirtPaths: string[] = [getPath("dirt/dirt1.png")];
 
     public readonly testPath: string = getPath("test.png");
 }

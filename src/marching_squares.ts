@@ -33,7 +33,7 @@ const squares: MarchingSquare[] = [
 /*15*/      [TopRight, DownRight, DownLeft, TopLeft],
 ];
 
-export function drawMarchingSquares(game: Game, predicate: (x: number, y: number) => boolean) {
+export function drawMarchingSquares(game: Game, usetexture: boolean, predicate: (x: number, y: number) => boolean) {
     const antHill = game.antHill;
     const p5 = game.p5;
     const camera = game.camera;
@@ -64,7 +64,14 @@ export function drawMarchingSquares(game: Game, predicate: (x: number, y: number
             p5.beginShape();
             const square = squares[binaryValue];
             for (const point of square){
-                p5.vertex(x - 0.5 + point.xOffset, y - 0.5 + point.yOffset);
+                const posX = x - 0.5 + point.xOffset;
+                const posY = y - 0.5 + point.yOffset;
+                if (usetexture){
+                    p5.vertex(posX, posY, undefined, point.xOffset + 0.5, point.yOffset + 0.5);
+                    // console.log(point.xOffset + 0.5, point.yOffset + 0.5);
+                }else{
+                    p5.vertex(posX, posY);
+                }
             }
             p5.endShape();
 

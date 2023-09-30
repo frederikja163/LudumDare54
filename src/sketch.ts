@@ -9,7 +9,9 @@ export function preload(game: Game): void {
     const p5 = game.p5;
     const assetList = game.assetList;
 
-    assetList.image = p5.loadImage(assetList.imagePath);
+    for (const path of assetList.dirtPaths){
+        assetList.dirt.push(p5.loadImage(path))
+    }
 }
 
 export function setup(game: Game) {
@@ -22,6 +24,7 @@ export function draw(game: Game){
     const p5 = game.p5;
     const antHill = game.antHill;
     const camera = game.camera;
+    const assetList = game.assetList;
 
     p5.background(0, 0, 0);
     camera.apply();
@@ -33,7 +36,9 @@ export function draw(game: Game){
     p5.noStroke();
     
     p5.fill(255, 255, 255);
-    drawMarchingSquares(game, (x, y) => antHill.getTile(x, y) > 0);
+    p5.texture(assetList.dirt[0]);
+    p5.textureMode(p5.NORMAL);
+    drawMarchingSquares(game, true, (x, y) => antHill.getTile(x, y) > 0);
     if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && !p5.keyIsDown(p5.SHIFT) && !p5.keyIsDown(p5.CONTROL)){
         if (Math.abs(x % 1 - 0.5) > placementThreshold && Math.abs(y % 1 - 0.5) > placementThreshold){
             
