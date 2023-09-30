@@ -2,7 +2,7 @@ import P5 from "p5";
 import { AntHill } from "./data/ant_hill";
 import { drawMarchingSquares } from "./marching_squares";
 import { Game } from "./data/game";
-import { Chamber } from "./chamber";
+import { Chamber } from "./data/chamber";
 const placementThreshold = 0.2;
 
 export function setup(game: Game) {
@@ -46,9 +46,12 @@ export function draw(game: Game){
     
     p5.fill(0, 0, 255);
     if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && p5.keyIsDown(p5.CONTROL)){
-        const chamber = new Chamber(antHill, Math.round(x), Math.round(y));
-        chamber.draw(p5, camera);
+        const chamber = antHill.getChamber(Math.round(x), Math.round(y));
+        chamber?.draw(p5, camera);
     }
+
+    antHill.draw(p5, camera);
+
     p5.pop();
 }
 

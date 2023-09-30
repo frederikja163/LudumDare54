@@ -1,13 +1,13 @@
 import P5 from "p5";
-import { AntHill, AntHillEvent } from "./data/ant_hill";
-import { Camera } from "./data/camera";
-import { drawMarchingSquares } from "./marching_squares";
+import { AntHill, AntHillEvent } from "./ant_hill";
+import { Camera } from "./camera";
+import { drawMarchingSquares } from "../marching_squares";
 
 export enum ChamberType {
     Invalid = "Invalid",
     Wall = "Wall",
     Hall = "Hall",
-    Chamber = "Room",
+    Unassigned = "Unassigned",
 }
 
 export class Chamber{
@@ -21,6 +21,7 @@ export class Chamber{
         this.antHill = antHill;
         this.xOrigin = x;
         this.yOrigin = y;
+        this.chamberType = ChamberType.Unassigned;
 
         this.antHill.addEventListener(AntHillEvent.TilesChanged, this.calcRoom.bind(this));
         this.calcRoom();
@@ -71,7 +72,7 @@ export class Chamber{
             (right && down && this.isEmpty(x + 1, y - 1)) ||
             (down && left && this.isEmpty(x - 1, y - 1)) ||
             (left && top && this.isEmpty(x - 1, y + 1))){
-            return ChamberType.Chamber;
+            return this.chamberType;
         }
         else{
             return ChamberType.Hall;
@@ -88,5 +89,13 @@ export class Chamber{
 
     public draw(p5: P5, camera: Camera){
         drawMarchingSquares(p5, this.antHill, camera, (x, y) => this.explored.has(this.getKey(x, y)));
+    }
+
+    public contains(x: number, y: number): boolean{
+        return this.explored.has(this.getKey(x, y));
+    }
+
+    public isValidChamber(): boolean{
+        return this.chamberType != ChamberType.Invalid && this.chamberType != ChamberType.Hall && this.chamberType != ChamberType.Wall;
     }
 }
