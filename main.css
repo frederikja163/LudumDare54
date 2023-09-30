@@ -7,9 +7,12 @@ body
 
 #resourceBar
 {
-    background-color: #ffffff10;
+    background-color: #ffffff40;
     height: 40px;
+    width: 100%;
     display: flex;
+    position: fixed;
+    z-index: 1;
 }
 
 .resourceDisplay
@@ -32,4 +35,23 @@ body
     margin: 0;
     margin-left: 10px;
     color: white;
+}
+
+#buildBar
+{
+    background-color: #ffffff40;
+    height: 100px;
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+    display: flex;
+}
+
+#buildBar button
+{
+    height: 60px;
+    width: 60px;
+    margin: 20px;
 }

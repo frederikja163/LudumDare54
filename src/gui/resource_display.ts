@@ -4,16 +4,17 @@ export class ResourceDisplay {
     private readonly counterElem: HTMLParagraphElement;
     private _counter: number;
 
-    constructor(iconPath: string) {
+    constructor(name: string, iconPath: string) {
         this._containerElem = document.createElement("div");
         this.containerElem.className += "resourceDisplay";
 
         this.iconElem = document.createElement("img");
         this.iconElem.src = iconPath;
+        this.iconElem.alt = name;
+        this.containerElem.appendChild(this.iconElem);
 
         this.counterElem = document.createElement("p");
-
-        this.containerElem.appendChild(this.iconElem);
+        this.counter = 0;
         this.containerElem.appendChild(this.counterElem);
     }
 

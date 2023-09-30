@@ -1,10 +1,21 @@
 import { ResourceDisplay } from "./resource_display";
+import { BuildBtn } from "./build_btn";
 
 export function initGui() {
-    let resourceBar = document.getElementById("resourceBar");
+    // ResourceBar
+    resourceBarAdd(new ResourceDisplay("food", "../resources/gui/food_icon.png"));
 
-    let foodDisplay = new ResourceDisplay("../resources/gui/food_icon.png");
-    foodDisplay.counter = 1000;
+    // BuildBar
+    buildBarAdd(new BuildBtn("dig", "", () => { console.log("dig") }));
+    buildBarAdd(new BuildBtn("fill", "", () => { console.log("fill") }));
+}
 
-    resourceBar?.appendChild(foodDisplay.containerElem);
+function resourceBarAdd(resourceDisplay: ResourceDisplay) {
+    const resourceBar = document.getElementById("resourceBar");
+    resourceBar?.appendChild(resourceDisplay.containerElem);
+}
+
+function buildBarAdd(buildBtn: BuildBtn) {
+    const buildBar = document.getElementById("buildBar");
+    buildBar?.appendChild(buildBtn.buttonElem);
 }
