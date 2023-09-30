@@ -40,16 +40,16 @@ export function drawMarchingSquares(p5: P5, antHill: AntHill, threshold: number)
             const upperRight = antHill.getTile(x, y);
 
             let binaryValue = 0;
-            if (lowerLeft < threshold) {
+            if (lowerLeft > threshold) {
                 binaryValue += 1 << 0;
             }
-            if (lowerRight < threshold) {
+            if (lowerRight > threshold) {
                 binaryValue += 1 << 1;
             }
-            if (upperRight < threshold) {
+            if (upperRight > threshold) {
                 binaryValue += 1 << 2;
             }
-            if (upperLeft < threshold) {
+            if (upperLeft > threshold) {
                 binaryValue += 1 << 3;
             }
 
@@ -61,13 +61,13 @@ export function drawMarchingSquares(p5: P5, antHill: AntHill, threshold: number)
             p5.endShape();
 
             if (DEBUG) {
-                p5.fill((lowerLeft < threshold) ? 0 : 125);
+                p5.fill((lowerLeft > threshold) ? 0 : 125);
                 p5.ellipse(x, y, .25, .25);
-                p5.fill((lowerRight < threshold) ? 0 : 125);
+                p5.fill((lowerRight > threshold) ? 0 : 125);
                 p5.ellipse(x + 1, y, .25, .25);
-                p5.fill((upperLeft < threshold) ? 0 : 125);
+                p5.fill((upperLeft > threshold) ? 0 : 125);
                 p5.ellipse(x, y + 1, .25, .25);
-                p5.fill((upperRight < threshold) ? 0 : 125);
+                p5.fill((upperRight > threshold) ? 0 : 125);
                 p5.ellipse(x + 1, y + 1, .25, .25);
             }
         }

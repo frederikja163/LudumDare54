@@ -27,7 +27,7 @@ export class AntHill{
         for (let y = 0; y < height; y++) {
             this.tiles[y] = [];
             for (let x = 0; x < width; x++) {
-                this.tiles[y][x] = Math.random();
+                this.tiles[y][x] = 0;
             }
         }
         this._camera = {x: 0, y: 0, zoom: 100};
@@ -35,8 +35,8 @@ export class AntHill{
 
     getWorldCoords(p5: P5, x: number, y: number): {x: number, y: number}{
         return {
-            x: (p5.mouseX + this.camera.x - p5.width/2) / (this.camera.zoom),
-            y: (p5.mouseY + this.camera.y - p5.height/2) / (this.camera.zoom)
+            x: (x + this.camera.x - p5.width/2) / (this.camera.zoom),
+            y: (y + this.camera.y - p5.height/2) / (this.camera.zoom)
         };
     }
 }
