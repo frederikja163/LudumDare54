@@ -2,6 +2,7 @@ import P5 from "p5";
 import * as Sketch from "./sketch";
 import { AntHill } from "./data/ant_hill";
 import { Game } from "./data/game";
+import * as Gui from "./gui/gui";
 
 function sketch(p5: P5) {
     const game = new Game(p5);
@@ -17,8 +18,7 @@ function sketch(p5: P5) {
         Sketch.resize(game);
     }, true);
 
-    ui: Ui = new Ui();
-    ui.addResourceBar();
+    Gui.initGui();
 }
 
 new P5(sketch);
