@@ -9,8 +9,8 @@ export function preload(game: Game): void {
     const p5 = game.p5;
     const assetList = game.assetList;
 
-    for (const path of assetList.dirtPaths) {
-        assetList.dirt.push(p5.loadImage(path))
+    for (const path of assetList.tiles.dirt.paths) {
+        assetList.tiles.dirt.image.push(p5.loadImage(path))
     }
 }
 
@@ -32,42 +32,51 @@ export function draw(game: Game) {
     const mouse = camera.getWorldCoords(p5.mouseX, p5.mouseY);
     const x = mouse.x + antHill.width / 2;
     const y = mouse.y + antHill.height / 2;
+    const tileX = Math.round(x);
+    const tileY = Math.round(y);
     p5.push();
     p5.translate(-antHill.width / 2, -antHill.height / 2);
     p5.noStroke();
 
     p5.fill(255, 255, 255);
     p5.textureMode(p5.NORMAL);
-    drawMarchingSquares(game, assetList.dirt, 1, antHill.width, 1, antHill.height, (x, y) => antHill.getTile(x, y) > 0);
+    drawMarchingSquares(game, assetList.tiles.dirt.image, 1, antHill.width, 1, antHill.height, (x, y) => antHill.getTile(x, y) > 0);
 
     if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && cursorMode != CursorMode.Neutral && !game.canvasIgnoreInput) {
         const cursorRadius = 0.9;
-
+        const chamber = antHill.getChamber(tileX, tileY);
         switch (cursorMode) {
             case CursorMode.Dig:
                 if (Math.abs(x % cursorRadius) > placementThreshold && Math.abs(y % cursorRadius) > placementThreshold) {
 
-                    antHill.setTile(Math.round(x), Math.round(y), 0);
+                    antHill.setTile(tileX, tileY, 0);
                 }
-
                 break;
-
             case CursorMode.Fill:
                 if (Math.abs(x % cursorRadius) > placementThreshold && Math.abs(y % cursorRadius) > placementThreshold) {
 
-                    antHill.setTile(Math.round(x), Math.round(y), 1);
+                    antHill.setTile(tileX, tileY, 1);
                 }
-
                 break;
-
+            case CursorMode.Queen:
+                if (chamber != undefined) {
+                    chamber.chamberType = ChamberType.Queen;
+                }
+                break;
+            case CursorMode.Residential:
+                if (chamber != undefined) {
+                    chamber.chamberType = ChamberType.Residential;
+                }
+                break;
             case CursorMode.Farm:
-                const chamber = antHill.getChamber(Math.round(x), Math.round(y));
                 if (chamber != undefined) {
                     chamber.chamberType = ChamberType.Farm;
-                    console.log(chamber);
-
                 }
-
+                break;
+            case CursorMode.Training:
+                if (chamber != undefined) {
+                    chamber.chamberType = ChamberType.Training;
+                }
                 break;
 
         }

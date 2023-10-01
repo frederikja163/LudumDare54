@@ -66,7 +66,7 @@ export class AntHill extends EventTarget {
     }
 
     private updateChamber(x: number, y: number) {
-        const index = this.chambers.findIndex(c => c.contains(x, y));
+        const index = this.findChamberIndex(x, y);
         if (index === -1 && Chamber.calcChamberType(this, ChamberType.Unassigned, x, y) === ChamberType.Unassigned) {
             const chamber = new Chamber(this.game, x, y);
             if (chamber.isValidChamber()) {
@@ -78,37 +78,61 @@ export class AntHill extends EventTarget {
         }
     }
 
+    private findChamberIndex(x: number, y: number): number{
+        let index = -1;
+        for (let i = this.chambers.length - 1; i >= 0; i--){
+            const chamber = this.chambers[i];
+            if (index === -1 && chamber.contains(x, y)){
+                index = i;
+            }
+            else if (index != -1 && chamber.contains(x, y)){
+                if ((chamber.size > this.chambers[index].size || chamber.chamberType != ChamberType.Queen) && this.chambers[index].chamberType === ChamberType.Queen){
+                    this.chambers.splice(i, 1);
+                    index -= 1;
+                }
+                else{
+                    this.chambers.splice(index, 1);
+                    index = i;
+                }
+            }
+        }
+        return index;
+    }
+
     public getChamber(x: number, y: number): Chamber | undefined {
-        return this.chambers.find(c => c.contains(x, y));
+        const index = this.findChamberIndex(x, y);
+        return index === -1 ? undefined : this.chambers[index];
     }
 
     public draw() {
-        const p5 = this.game.p5;
+        const p5 = this.game.p5;        
         for (let i = 0; i < this.chambers.length; i++) {
             const chamber = this.chambers[i];
-            console.log(chamber.chamberType);
-
             switch (chamber.chamberType) {
                 case ChamberType.Invalid:
                     p5.fill(255, 0, 0);
                     break;
-
                 case ChamberType.Hall:
                     p5.fill(100, 100, 100);
                     break;
-
                 case ChamberType.Unassigned:
-                    p5.fill(200, 200, 0);
+                    p5.fill(150, 150, 150);
                     break;
-
+                case ChamberType.Queen:
+                    p5.fill(255, 255, 255);
+                    break;
+                case ChamberType.Residential:
+                    p5.fill(0, 0, 255);
+                    break;
                 case ChamberType.Farm:
                     p5.fill(0, 255, 0);
+                    break;
+                case ChamberType.Training:
+                    p5.fill(255, 0, 0);
                     break;
             }
 
             chamber.draw();
         }
-        console.log(1);
-
     }
 }

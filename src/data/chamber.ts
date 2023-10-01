@@ -8,7 +8,10 @@ export enum ChamberType {
     Invalid = "Invalid",
     Hall = "Hall",
     Unassigned = "Unassigned",
+    Queen = "Queen",
+    Residential = "Residential",
     Farm = "Farm",
+    Training = "Training"
 }
 
 type Position = { x: number, y: number };
@@ -42,6 +45,10 @@ export class Chamber {
         this.calcRoom();
     }
 
+    public get size(): number{
+        return this.explored.size;
+    }
+
     public get chamberType(): ChamberType {
         return this._chamberType;
     }
@@ -52,8 +59,8 @@ export class Chamber {
 
     private tileChangedEvent(event: TileEvent) {
         const antHill = this.game.antHill;
-        if (event.x < this.minX || event.x > this.maxX ||
-            event.y < this.minY || event.y > this.maxY) {
+        if (event.x < this.minX - 1 || event.x > this.maxX + 1 ||
+            event.y < this.minY - 1 || event.y > this.maxY + 1) {
             return;
         }
         const key = this.getKey(event.x, event.y);
@@ -68,7 +75,7 @@ export class Chamber {
         this.discovered = [];
         this.explored.clear();
         this.tryDiscoverTile(this.xOrigin, this.yOrigin);
-        this._chamberType = Chamber.calcChamberType(antHill, ChamberType.Unassigned, this.xOrigin, this.yOrigin);
+        this._chamberType = Chamber.calcChamberType(antHill, this._chamberType, this.xOrigin, this.yOrigin);
         this.calcRoom();
     }
 
