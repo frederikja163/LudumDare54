@@ -1,5 +1,5 @@
 import { Camera } from "./camera";
-import { Chamber } from "./chamber";
+import { Chamber, ChamberType } from "./chamber";
 import P5 from "p5";
 import { Game } from "./game";
 
@@ -67,13 +67,13 @@ export class AntHill extends EventTarget{
 
     private updateChamber(x: number, y: number){
         const index = this.chambers.findIndex(c => c.contains(x, y));
-        if (index === -1){
+        if (index === -1 && Chamber.calcChamberType(this, ChamberType.Unassigned, x, y) === ChamberType.Unassigned){
             const chamber = new Chamber(this.game, x, y);
             if (chamber.isValidChamber()){
                 this.chambers.push(chamber);
             }
         }
-        else if (!this.chambers[index].isValidChamber()){
+        else if (index != -1 && !this.chambers[index].isValidChamber()){
             this.chambers.splice(index, 1);
         }
     }

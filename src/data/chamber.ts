@@ -36,17 +36,19 @@ export class Chamber{
         this.chamberType = ChamberType.Unassigned;
 
         this.tryDiscoverTile(this.xOrigin, this.yOrigin);
+        this.chamberType = Chamber.calcChamberType(antHill, ChamberType.Unassigned, this.xOrigin, this.yOrigin);
         antHill.addEventListener(AntHillEvent.TilesChanged, this.tileChangedEvent.bind(this));
         this.calcRoom();
     }
 
     private tileChangedEvent(event: TileEvent){
+        const antHill = this.game.antHill;
         if (event.x < this.minX || event.x > this.maxX ||
             event.y < this.minY || event.y > this.maxY){
             return;
         }
         const key = this.getKey(event.x, event.y);
-        const chamberType = this.calcChamberType(event.x, event.y);
+        const chamberType = Chamber.calcChamberType(antHill, this.chamberType, event.x, event.y);
         if (Chamber.isValidChamber(chamberType)){
             this.discoveredSet.delete(key);
             this.tryDiscoverTile(event.x, event.y);
@@ -57,13 +59,14 @@ export class Chamber{
         this.discovered = [];
         this.explored.clear();
         this.tryDiscoverTile(this.xOrigin, this.yOrigin);
+        this.chamberType = Chamber.calcChamberType(antHill, ChamberType.Unassigned, this.xOrigin, this.yOrigin);
         this.calcRoom();
     }
 
     private calcRoom(){
-        this.chamberType = this.calcChamberType(this.xOrigin, this.yOrigin);
-
+        const antHill = this.game.antHill;
         if (this.chamberType === ChamberType.Invalid){
+            antHill.removeEventListener(AntHillEvent.TilesChanged, this.tileChangedEvent.bind(this));
             return;
         }
 
@@ -76,12 +79,13 @@ export class Chamber{
     }
 
     private tryExploreTile(x: number, y: number){        
+        const antHill = this.game.antHill;
         const pos: string = this.getKey(x, y);
         if (this.explored.has(pos)){
             return;
         }
 
-        if (this.calcChamberType(x, y) != this.chamberType){
+        if (Chamber.calcChamberType(antHill, this.chamberType, x, y) != this.chamberType){
             return;
         }
         this.minX = Math.min(x, this.minX);
@@ -106,25 +110,28 @@ export class Chamber{
         this.discoveredSet.add(key);
     }
 
-    private calcChamberType(x: number, y: number) : ChamberType{
-        const antHill = this.game.antHill;
+    public static calcChamberType(antHill: AntHill, chamberType: ChamberType, x: number, y: number) : ChamberType{
         const tileValue = antHill.getTile(x, y);
         if (tileValue === -1 || tileValue > 0){
             return ChamberType.Invalid;
         }
-        const top = this.isEmpty(x, y + 1);
-        const right = this.isEmpty(x + 1, y);
-        const down = this.isEmpty(x, y - 1);
-        const left = this.isEmpty(x - 1, y);
-        if ((top && right && this.isEmpty(x + 1, y + 1)) ||
-            (right && down && this.isEmpty(x + 1, y - 1)) ||
-            (down && left && this.isEmpty(x - 1, y - 1)) ||
-            (left && top && this.isEmpty(x - 1, y + 1))){
-            return this.isValidChamber() ? this.chamberType : ChamberType.Invalid;
+        const top = Chamber.isEmpty(antHill, x, y + 1);
+        const right = Chamber.isEmpty(antHill, x + 1, y);
+        const down = Chamber.isEmpty(antHill, x, y - 1);
+        const left = Chamber.isEmpty(antHill, x - 1, y);
+        if ((top && right && Chamber.isEmpty(antHill, x + 1, y + 1)) ||
+            (right && down && Chamber.isEmpty(antHill, x + 1, y - 1)) ||
+            (down && left && Chamber.isEmpty(antHill, x - 1, y - 1)) ||
+            (left && top && Chamber.isEmpty(antHill, x - 1, y + 1))){
+            return chamberType;
         }
         else{
             return ChamberType.Hall;
         }
+    }
+
+    private static isEmpty(antHill: AntHill, x: number, y: number){
+        return antHill.getTile(x, y) === 0;
     }
 
     private isEmpty(x: number, y: number){
