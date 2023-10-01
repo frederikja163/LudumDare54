@@ -4,39 +4,26 @@ import { CursorMode, Game } from "../data/game";
 
 export function initGui(game: Game) {
     const assetList = game.assetList;
+    const gui = game.gui;
 
     // ResourceBar
-    game.gui.resourceDisplays.push(new ResourceDisplay("food", assetList.foodIconPath));
-
-    game.gui.resourceDisplays.forEach(resourceDisplay => { resourceBarAdd(resourceDisplay) });
+    gui.addResourceDisplay(new ResourceDisplay("food", assetList.foodIconPath));
 
     // BuildBar
-    game.gui.buildBtns.push(new BuildBtn("dig", getSwapCursorModeFunction(game, CursorMode.Dig), assetList.digIconPath, assetList.digIconActivePath));
-    game.gui.buildBtns.push(new BuildBtn("fill", getSwapCursorModeFunction(game, CursorMode.Fill), assetList.fillIconPath, assetList.fillIconActivePath));
-
-    game.gui.buildBtns.forEach(buildBtn => { buildBarAdd(buildBtn) });
+    gui.addBuildBtn(new BuildBtn("dig", getSwapCursorModeFunction(game, CursorMode.Dig), assetList.digIconPath, assetList.digIconActivePath));
+    gui.addBuildBtn(new BuildBtn("fill", getSwapCursorModeFunction(game, CursorMode.Fill), assetList.fillIconPath, assetList.fillIconActivePath));
 }
 
-function getSwapCursorModeFunction(game: Game, cursorMode: CursorMode) {
+function getSwapCursorModeFunction(game: Game, cursorModeThis: CursorMode) {
     return (active) => {
-        if (game.cursorMode == cursorMode && active) {
+        if (game.cursorMode == cursorModeThis && active) {
             game.cursorMode = CursorMode.Neutral;
             return false;
         }
         else {
             game.gui.neutralizeBuildBtns();
-            game.cursorMode = cursorMode;
+            game.cursorMode = cursorModeThis;
             return true;
         }
     };
-}
-
-function resourceBarAdd(resourceDisplay: ResourceDisplay) {
-    const resourceBar = document.getElementById("resourceBar");
-    resourceBar?.appendChild(resourceDisplay.containerElem);
-}
-
-function buildBarAdd(buildBtn: BuildBtn) {
-    const buildBar = document.getElementById("buildBar");
-    buildBar?.appendChild(buildBtn.buttonElem);
 }
