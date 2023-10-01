@@ -40,13 +40,4 @@ export class BuildBtn {
     public get active(): boolean {
         return this._active;
     }
-
-    // public toggleActive() {
-    //     if (this._active) {
-    //         this.active = false;
-    //     }
-    //     else {
-    //         this.active = true;
-    //     }
-    // }
 }

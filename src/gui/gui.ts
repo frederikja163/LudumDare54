@@ -2,35 +2,39 @@ import { ResourceDisplay } from "./resource_display";
 import { BuildBtn } from "./build_btn";
 import { CursorMode, Game } from "../data/game";
 
+const buildBtns: BuildBtn[] = [];
+
 export function initGui(game: Game) {
     const assetList = game.assetList;
     // ResourceBar
     resourceBarAdd(new ResourceDisplay("food", assetList.foodIconPath));
 
     // BuildBar
-    buildBarAdd(new BuildBtn("dig", active => {
+    buildBtns.push(new BuildBtn("dig", active => {
         if (game.cursorMode == CursorMode.Dig && active) {
             game.cursorMode = CursorMode.Neutral;
             return false;
         }
-        else if (game.cursorMode == CursorMode.Neutral && !active) {
+        else {
+            neutralizeBuildBtns(buildBtns);
             game.cursorMode = CursorMode.Dig;
             return true;
         }
-        return false;
     }, assetList.digIconPath, assetList.digIconActivePath));
 
-    buildBarAdd(new BuildBtn("fill", active => {
+    buildBtns.push(new BuildBtn("fill", active => {
         if (game.cursorMode == CursorMode.Fill && active) {
             game.cursorMode = CursorMode.Neutral;
             return false;
         }
-        else if (game.cursorMode == CursorMode.Neutral && !active) {
+        else {
+            neutralizeBuildBtns(buildBtns);
             game.cursorMode = CursorMode.Fill;
             return true;
         }
-        return false;
     }, assetList.fillIconPath, assetList.fillIconActivePath));
+
+    buildBtns.forEach(buildBtn => { buildBarAdd(buildBtn) });
 }
 
 function resourceBarAdd(resourceDisplay: ResourceDisplay) {
@@ -41,4 +45,8 @@ function resourceBarAdd(resourceDisplay: ResourceDisplay) {
 function buildBarAdd(buildBtn: BuildBtn) {
     const buildBar = document.getElementById("buildBar");
     buildBar?.appendChild(buildBtn.buttonElem);
+}
+
+function neutralizeBuildBtns(buildBtns: BuildBtn[]) {
+    buildBtns.forEach(buildBtn => { buildBtn.active = false });
 }
