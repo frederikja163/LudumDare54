@@ -8,10 +8,17 @@ export function initGui(game: Game) {
 
     // ResourceBar
     gui.addResourceDisplay(new ResourceDisplay("food", assetList.foodIconPath));
+    gui.addResourceDisplay(new ResourceDisplay("queen", assetList.queenPath));
+    gui.addResourceDisplay(new ResourceDisplay("farmer", assetList.farmerPath));
+    gui.addResourceDisplay(new ResourceDisplay("worker", assetList.workerPath));
+    gui.addResourceDisplay(new ResourceDisplay("soldier", assetList.soldierPath));
 
     // BuildBar
     gui.addBuildBtn(new BuildBtn("dig", getSwapCursorModeFunction(game, CursorMode.Dig), assetList.digIconPath, assetList.digIconActivePath));
     gui.addBuildBtn(new BuildBtn("fill", getSwapCursorModeFunction(game, CursorMode.Fill), assetList.fillIconPath, assetList.fillIconActivePath));
+    gui.addBuildBtn(new BuildBtn("training", getSwapCursorModeFunction(game, CursorMode.Neutral), assetList.trainingIconPath, assetList.trainingIconActivePath));
+    gui.addBuildBtn(new BuildBtn("farming", getSwapCursorModeFunction(game, CursorMode.Neutral), assetList.farmingIconPath, assetList.farmingIconActivePath));
+    gui.addBuildBtn(new BuildBtn("residential", getSwapCursorModeFunction(game, CursorMode.Neutral), assetList.residentialIconPath, assetList.residentialIconActivePath));
 }
 
 function getSwapCursorModeFunction(game: Game, cursorModeThis: CursorMode) {
