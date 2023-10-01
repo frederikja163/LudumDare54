@@ -1,5 +1,5 @@
 import P5 from "p5";
-import { AntColony, AntHillEvent, TileEvent } from "./ant_hill";
+import { AntColony, AntHillEvent, TileEvent } from "./ant_colony";
 import { Camera } from "./camera";
 import { drawMarchingSquares } from "../marching_squares";
 import { Game } from "./game";

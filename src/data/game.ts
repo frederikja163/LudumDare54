@@ -1,5 +1,5 @@
 import P5 from "p5";
-import { AntColony } from "./ant_hill";
+import { AntColony } from "./ant_colony";
 import { Camera } from "./camera";
 import { AssetList } from "./asset_list";
 import { Gui } from "./gui";

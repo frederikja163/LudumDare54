@@ -1,5 +1,5 @@
 import P5 from "p5";
-import { AntColony } from "./data/ant_hill";
+import { AntColony } from "./data/ant_colony";
 import { drawMarchingSquares } from "./marching_squares";
 import { CursorMode, Game } from "./data/game";
 import { Chamber, ChamberType } from "./data/chamber";
