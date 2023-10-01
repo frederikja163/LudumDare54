@@ -1,18 +1,28 @@
+<<<<<<< HEAD
 :root {
     --guiBg: rgba(31, 31, 31, 0.941);
+=======
+:root{
+    --resourceBarHeight: 48px;
+>>>>>>> 5f42cfaa48156ab8a7b4ceee665d658b037389da
 }
 
 body
 {
+    font-family: 'Pixelify Sans', Arial, Helvetica, sans-serif;
     margin: 0;
     background-color: #0f0f0f;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 #resourceBar
 {
+<<<<<<< HEAD
     background-color: var(--guiBg);
     height: 40px;
+=======
+    background-color: #ffffff40;
+    height: var(--resourceBarHeight);
+>>>>>>> 5f42cfaa48156ab8a7b4ceee665d658b037389da
     width: 100%;
     display: flex;
     position: fixed;
@@ -23,19 +33,19 @@ body
 {
     width: 200px;
     display: grid;
-    grid-template-rows: 40px;
-    grid-template-columns: 40px 160px;
+    grid-template-rows: var(--resourceBarHeight);
+    grid-template-columns: var(--resourceBarHeight) calc(200px - var(--resourceBarHeight));
 }
 
 .resourceDisplay img
 {
-    height: 40px;
+    height: var(--resourceBarHeight);
 }
 
 .resourceDisplay p
 {
-    height: 40px;
-    line-height: 40px;
+    height: var(--resourceBarHeight);
+    line-height: var(--resourceBarHeight);
     margin: 0;
     margin-left: 10px;
     color: white;

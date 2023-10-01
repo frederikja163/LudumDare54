@@ -32,6 +32,8 @@ export class Game {
     }
     public set cursorMode(cursorMode: CursorMode) {
         this._cursorMode = cursorMode;
+        console.log(this._cursorMode);
+
     }
 
     constructor(p5: P5) {

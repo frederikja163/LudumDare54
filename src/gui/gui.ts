@@ -7,8 +7,8 @@ export function initGui(game: Game) {
     resourceBarAdd(new ResourceDisplay("food", game.assetList.foodIconPath));
 
     // BuildBar
-    buildBarAdd(new BuildBtn("dig", game.assetList.digIconPath, () => { game.cursorMode = CursorMode.Dig }));
-    buildBarAdd(new BuildBtn("fill", game.assetList.fillIconPath, () => { game.cursorMode = CursorMode.Fill }));
+    buildBarAdd(new BuildBtn("dig", active => { game.cursorMode = active ? CursorMode.Dig : CursorMode.Neutral }, game.assetList.digIconPath, "lol"));
+    buildBarAdd(new BuildBtn("fill", active => { game.cursorMode = active ? CursorMode.Fill : CursorMode.Neutral }, game.assetList.fillIconPath));
 }
 
 function resourceBarAdd(resourceDisplay: ResourceDisplay) {

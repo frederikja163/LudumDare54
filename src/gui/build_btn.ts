@@ -1,14 +1,20 @@
 export class BuildBtn {
     private readonly _buttonElem: HTMLButtonElement;
     private readonly iconElem: HTMLImageElement;
+    private iconPath: string;
+    private activeIconPath: string;
     private _active: boolean = false;
 
-    constructor(name: string, iconPath: string, clickAction: () => void) {
+    constructor(name: string, clickAction: (active: boolean) => void, iconPath: string, activeIconPath?: string) {
+        this.iconPath = iconPath;
+        this.activeIconPath = activeIconPath == undefined ? iconPath : activeIconPath;
+
         this._buttonElem = document.createElement("button");
-        this._buttonElem.onclick = clickAction;
+        this._buttonElem.onclick = () => clickAction(this.active);
         this._buttonElem.title = name;
 
         this.iconElem = document.createElement("img");
+        this.iconElem.onclick = this.toggleActive.bind(this);
         this.iconElem.src = iconPath;
         this.iconElem.alt = name;
 
@@ -19,17 +25,22 @@ export class BuildBtn {
         return this._buttonElem;
     }
 
-    public set active(active: boolean) {
-        this._active = active;
+    private set active(active: boolean) {
         if (active) {
-            this.iconElem.style.border = "4px solid #f0f0f0";
+            this._active = true;
+            this.iconElem.src = this.activeIconPath;
         }
         else {
-            this.iconElem.style.border = "none";
+            this._active = false;
+            this.iconElem.src = this.iconPath;
         }
     }
 
-    public toggleActive() {
+    private get active(): boolean {
+        return this._active;
+    }
+
+    private toggleActive() {
         if (this._active) {
             this.active = false;
         }
