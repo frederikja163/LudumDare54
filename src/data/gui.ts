@@ -9,7 +9,7 @@ export class Gui {
         this._resourceDisplays = [];
         this._buildBtns = [];
     }
-    
+
     public addResourceDisplay(resourceDisplay: ResourceDisplay) {
         this._resourceDisplays.push(resourceDisplay);
         const resourceBar = document.getElementById("resourceBar");

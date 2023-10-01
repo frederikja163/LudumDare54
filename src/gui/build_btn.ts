@@ -10,9 +10,7 @@ export class BuildBtn {
         this.activeIconPath = activeIconPath == undefined ? iconPath : activeIconPath;
 
         this._buttonElem = document.createElement("button");
-        this._buttonElem.onmousedown = () => {
-            this.active = clickAction(this.active);
-        };
+        this._buttonElem.addEventListener("mousedown", () => { this.active = clickAction(this.active) });
         this._buttonElem.title = name;
 
         this.iconElem = document.createElement("img");
