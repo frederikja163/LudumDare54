@@ -1,8 +1,26 @@
 import { Camera } from "./camera";
-import { Chamber } from "./chamber";
+import { Chamber, ChamberType } from "./chamber";
 import P5 from "p5";
 import { Game } from "./game";
 
+
+export class TileEvent extends Event{
+    private readonly _x: number;
+    private readonly _y: number;
+
+    constructor(x: number, y: number){
+        super(AntHillEvent.TilesChanged);
+        this._x = x;
+        this._y = y;
+    }
+
+    public get x(): number {
+        return this._x;
+    }
+    public get y(): number {
+        return this._y;
+    }
+}
 export enum AntHillEvent{
     TilesChanged = "TilesChanged",
 }
@@ -33,7 +51,7 @@ export class AntHill extends EventTarget{
         this.updateChamber(x + 1, y);
         this.updateChamber(x, y + 1);
         this.tiles[y][x] = value;
-        this.dispatchEvent(new Event(AntHillEvent.TilesChanged))
+        this.dispatchEvent(new TileEvent(x, y));
     }
 
     constructor(game: Game, width: number, height: number){
@@ -49,13 +67,13 @@ export class AntHill extends EventTarget{
 
     private updateChamber(x: number, y: number){
         const index = this.chambers.findIndex(c => c.contains(x, y));
-        if (index === -1){
+        if (index === -1 && Chamber.calcChamberType(this, ChamberType.Unassigned, x, y) === ChamberType.Unassigned){
             const chamber = new Chamber(this.game, x, y);
             if (chamber.isValidChamber()){
                 this.chambers.push(chamber);
             }
         }
-        else if (!this.chambers[index].isValidChamber()){
+        else if (index != -1 && !this.chambers[index].isValidChamber()){
             this.chambers.splice(index, 1);
         }
     }

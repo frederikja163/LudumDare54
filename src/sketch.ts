@@ -37,8 +37,8 @@ export function draw(game: Game) {
 
     p5.fill(255, 255, 255);
     p5.textureMode(p5.NORMAL);
-    drawMarchingSquares(game, assetList.dirt, (x, y) => antHill.getTile(x, y) > 0);
-    if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && game.cursorMode == CursorMode.Fill && !p5.keyIsDown(p5.CONTROL)) {
+    drawMarchingSquares(game, assetList.dirt, 1, antHill.width, 1, antHill.height, (x, y) => antHill.getTile(x, y) > 0);
+    if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && game.cursorMode == CursorMode.Fill) {
         if (Math.abs(x % 1 - 0.5) > placementThreshold && Math.abs(y % 1 - 0.5) > placementThreshold) {
 
             antHill.setTile(Math.round(x), Math.round(y), 1);
@@ -46,7 +46,7 @@ export function draw(game: Game) {
         p5.fill(128, 255, 128, 200);
         p5.ellipse(Math.round(x), Math.round(y), 0.1, 0.1);
     }
-    else if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && game.cursorMode == CursorMode.Dig && !p5.keyIsDown(p5.CONTROL)) {
+    else if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && game.cursorMode == CursorMode.Dig) {
         if (Math.abs(x % 1 - 0.5) > placementThreshold && Math.abs(y % 1 - 0.5) > placementThreshold) {
 
             antHill.setTile(Math.round(x), Math.round(y), 0);
