@@ -10,6 +10,7 @@ export class AssetList {
     public readonly fillIconActivePath: string = getPath("gui/fill_icon_active.png");
 
     public readonly testPath: string = getPath("test.png");
+    public readonly testAltPath: string = getPath("test_alt.png");
 }
 
 function getPath(path: string) {

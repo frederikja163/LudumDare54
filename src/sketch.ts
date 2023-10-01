@@ -2,7 +2,7 @@ import P5 from "p5";
 import { AntHill } from "./data/ant_hill";
 import { drawMarchingSquares } from "./marching_squares";
 import { CursorMode, Game } from "./data/game";
-import { Chamber } from "./data/chamber";
+import { Chamber, ChamberType } from "./data/chamber";
 const placementThreshold = 0.2;
 
 export function preload(game: Game): void {
@@ -49,8 +49,6 @@ export function draw(game: Game) {
 
                     antHill.setTile(Math.round(x), Math.round(y), 0);
                 }
-                p5.fill(255, 128, 128, 200);
-                p5.ellipse(Math.round(x), Math.round(y), 0.1, 0.1);
 
                 break;
 
@@ -59,10 +57,19 @@ export function draw(game: Game) {
 
                     antHill.setTile(Math.round(x), Math.round(y), 1);
                 }
-                p5.fill(128, 255, 128, 200);
-                p5.ellipse(Math.round(x), Math.round(y), 0.1, 0.1);
 
                 break;
+
+            case CursorMode.Farm:
+                const chamber = antHill.getChamber(Math.round(x), Math.round(y));
+                if (chamber != undefined) {
+                    chamber.chamberType = ChamberType.Farm;
+                    console.log(chamber);
+
+                }
+
+                break;
+
         }
     }
 

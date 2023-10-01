@@ -12,6 +12,7 @@ export function initGui(game: Game) {
     // BuildBar
     gui.addBuildBtn(new BuildBtn("dig", getSwapCursorModeFunction(game, CursorMode.Dig), assetList.digIconPath, assetList.digIconActivePath));
     gui.addBuildBtn(new BuildBtn("fill", getSwapCursorModeFunction(game, CursorMode.Fill), assetList.fillIconPath, assetList.fillIconActivePath));
+    gui.addBuildBtn(new BuildBtn("farm", getSwapCursorModeFunction(game, CursorMode.Farm), assetList.testPath, assetList.testAltPath));
 }
 
 function getSwapCursorModeFunction(game: Game, cursorModeThis: CursorMode) {

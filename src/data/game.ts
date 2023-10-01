@@ -8,6 +8,7 @@ export enum CursorMode {
     Neutral,
     Dig,
     Fill,
+    Farm,
 }
 
 export class Game {

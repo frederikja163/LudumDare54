@@ -4,11 +4,11 @@ import P5 from "p5";
 import { Game } from "./game";
 
 
-export class TileEvent extends Event{
+export class TileEvent extends Event {
     private readonly _x: number;
     private readonly _y: number;
 
-    constructor(x: number, y: number){
+    constructor(x: number, y: number) {
         super(AntHillEvent.TilesChanged);
         this._x = x;
         this._y = y;
@@ -21,29 +21,29 @@ export class TileEvent extends Event{
         return this._y;
     }
 }
-export enum AntHillEvent{
+export enum AntHillEvent {
     TilesChanged = "TilesChanged",
 }
 
-export class AntHill extends EventTarget{
+export class AntHill extends EventTarget {
     private readonly tiles: number[][] = [];
     private readonly chambers: Chamber[] = [];
     private readonly game: Game;
 
-    public get width(): number{
+    public get width(): number {
         return this.tiles[0].length;
     }
-    public get height(): number{
+    public get height(): number {
         return this.tiles.length;
     }
-    public getTile(x: number, y: number): number{
-        if (x < 0 || x >= this.width || y < 0 || y >= this.height){
+    public getTile(x: number, y: number): number {
+        if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
             return -1;
         }
         return this.tiles[y][x];
     }
-    public setTile(x: number, y: number, value: number){
-        if (x < 0 || x >= this.width || y < 0 || y >= this.height){
+    public setTile(x: number, y: number, value: number) {
+        if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
             return;
         }
         this.updateChamber(x - 1, y);
@@ -54,7 +54,7 @@ export class AntHill extends EventTarget{
         this.dispatchEvent(new TileEvent(x, y));
     }
 
-    constructor(game: Game, width: number, height: number){
+    constructor(game: Game, width: number, height: number) {
         super();
         for (let y = 0; y < height; y++) {
             this.tiles[y] = [];
@@ -65,29 +65,50 @@ export class AntHill extends EventTarget{
         this.game = game;
     }
 
-    private updateChamber(x: number, y: number){
+    private updateChamber(x: number, y: number) {
         const index = this.chambers.findIndex(c => c.contains(x, y));
-        if (index === -1 && Chamber.calcChamberType(this, ChamberType.Unassigned, x, y) === ChamberType.Unassigned){
+        if (index === -1 && Chamber.calcChamberType(this, ChamberType.Unassigned, x, y) === ChamberType.Unassigned) {
             const chamber = new Chamber(this.game, x, y);
-            if (chamber.isValidChamber()){
+            if (chamber.isValidChamber()) {
                 this.chambers.push(chamber);
             }
         }
-        else if (index != -1 && !this.chambers[index].isValidChamber()){
+        else if (index != -1 && !this.chambers[index].isValidChamber()) {
             this.chambers.splice(index, 1);
         }
     }
 
-    public getChamber(x: number, y: number): Chamber | undefined{
+    public getChamber(x: number, y: number): Chamber | undefined {
         return this.chambers.find(c => c.contains(x, y));
     }
 
-    public draw(){
+    public draw() {
         const p5 = this.game.p5;
-        for (let i = 0; i < this.chambers.length; i++){
+        for (let i = 0; i < this.chambers.length; i++) {
             const chamber = this.chambers[i];
-            p5.fill(128);
+            console.log(chamber.chamberType);
+
+            switch (chamber.chamberType) {
+                case ChamberType.Invalid:
+                    p5.fill(255, 0, 0);
+                    break;
+
+                case ChamberType.Hall:
+                    p5.fill(100, 100, 100);
+                    break;
+
+                case ChamberType.Unassigned:
+                    p5.fill(200, 200, 0);
+                    break;
+
+                case ChamberType.Farm:
+                    p5.fill(0, 255, 0);
+                    break;
+            }
+
             chamber.draw();
         }
+        console.log(1);
+
     }
 }
