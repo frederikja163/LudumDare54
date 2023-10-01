@@ -1,5 +1,5 @@
 import P5 from "p5";
-import { AntHill, AntHillEvent } from "./ant_hill";
+import { AntHill, AntHillEvent, TileEvent } from "./ant_hill";
 import { Camera } from "./camera";
 import { drawMarchingSquares } from "../marching_squares";
 import { Game } from "./game";
@@ -13,7 +13,6 @@ export enum ChamberType {
 type Position = {x: number, y: number};
 export class Chamber{
     private readonly game: Game;
-    private readonly exploreNonRooms: boolean;
     private readonly xOrigin: number;
     private readonly yOrigin: number;
     private minX: number;
@@ -36,25 +35,44 @@ export class Chamber{
         this.maxY = this.yOrigin;
         this.chamberType = ChamberType.Unassigned;
 
-        antHill.addEventListener(AntHillEvent.TilesChanged, this.calcRoom.bind(this));
+        this.tryDiscoverTile(this.xOrigin, this.yOrigin);
+        antHill.addEventListener(AntHillEvent.TilesChanged, this.tileChangedEvent.bind(this));
+        this.calcRoom();
+    }
+
+    private tileChangedEvent(event: TileEvent){
+        if (event.x < this.minX || event.x > this.maxX ||
+            event.y < this.minY || event.y > this.maxY){
+            return;
+        }
+        const key = this.getKey(event.x, event.y);
+        const chamberType = this.calcChamberType(event.x, event.y);
+        if (Chamber.isValidChamber(chamberType)){
+            this.discoveredSet.delete(key);
+            this.tryDiscoverTile(event.x, event.y);
+            this.calcRoom();
+            return;
+        }
+        this.discoveredSet.clear();
+        this.discovered = [];
+        this.explored.clear();
+        this.tryDiscoverTile(this.xOrigin, this.yOrigin);
         this.calcRoom();
     }
 
     private calcRoom(){
         this.chamberType = this.calcChamberType(this.xOrigin, this.yOrigin);
-        this.explored.clear();
-        this.discovered = [];
-        this.discoveredSet.clear();
 
         if (this.chamberType === ChamberType.Invalid){
             return;
         }
 
-        this.tryDiscoverTile(this.xOrigin, this.yOrigin);
         for (let i = 0; i < this.discovered.length; i++){
             const tile = this.discovered[i];
             this.tryExploreTile(tile.x, tile.y);
         }
+        this.discovered = [];
+        this.discoveredSet.clear();
     }
 
     private tryExploreTile(x: number, y: number){        
@@ -81,7 +99,7 @@ export class Chamber{
 
     private tryDiscoverTile(x: number, y: number){
         const key = this.getKey(x, y);
-        if (this.discoveredSet.has(key)){
+        if (this.explored.has(key) || this.discoveredSet.has(key)){
             return;
         }
         this.discovered.push({x: x, y: y});
@@ -124,6 +142,10 @@ export class Chamber{
 
     public contains(x: number, y: number): boolean{
         return this.explored.has(this.getKey(x, y));
+    }
+
+    private static isValidChamber(chamberType: ChamberType): boolean{
+        return chamberType != ChamberType.Invalid && chamberType != ChamberType.Hall;
     }
 
     public isValidChamber(): boolean{

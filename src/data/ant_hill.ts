@@ -3,6 +3,24 @@ import { Chamber } from "./chamber";
 import P5 from "p5";
 import { Game } from "./game";
 
+
+export class TileEvent extends Event{
+    private readonly _x: number;
+    private readonly _y: number;
+
+    constructor(x: number, y: number){
+        super(AntHillEvent.TilesChanged);
+        this._x = x;
+        this._y = y;
+    }
+
+    public get x(): number {
+        return this._x;
+    }
+    public get y(): number {
+        return this._y;
+    }
+}
 export enum AntHillEvent{
     TilesChanged = "TilesChanged",
 }
@@ -33,7 +51,7 @@ export class AntHill extends EventTarget{
         this.updateChamber(x + 1, y);
         this.updateChamber(x, y + 1);
         this.tiles[y][x] = value;
-        this.dispatchEvent(new Event(AntHillEvent.TilesChanged))
+        this.dispatchEvent(new TileEvent(x, y));
     }
 
     constructor(game: Game, width: number, height: number){

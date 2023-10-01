@@ -38,13 +38,7 @@ export function draw(game: Game) {
     p5.fill(255, 255, 255);
     p5.textureMode(p5.NORMAL);
 
-    const point1 = camera.getWorldCoords(0, 0);
-    const point2 = camera.getWorldCoords(p5.width, p5.height);
-    const minX = Math.max(1, Math.round(point1.x + antHill.width / 2));
-    const maxX = Math.min(antHill.width, Math.round(point2.x + antHill.width / 2 + 2));
-    const minY = Math.max(1, Math.round(point1.y + antHill.height / 2));
-    const maxY = Math.min(antHill.height, Math.round(point2.y + antHill.height / 2 + 2));
-    drawMarchingSquares(game, assetList.dirt, minX, maxX, minY, maxY, (x, y) => antHill.getTile(x, y) > 0);
+    drawMarchingSquares(game, assetList.dirt, 1, antHill.width, 1, antHill.height, (x, y) => antHill.getTile(x, y) > 0);
     if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && !p5.keyIsDown(p5.SHIFT) && !p5.keyIsDown(p5.CONTROL)){
         if (Math.abs(x % 1 - 0.5) > placementThreshold && Math.abs(y % 1 - 0.5) > placementThreshold){
             
