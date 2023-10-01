@@ -6,6 +6,12 @@ export function initGui(game: Game) {
     const assetList = game.assetList;
     const gui = game.gui;
 
+    const barElems = document.querySelectorAll(".bar");
+    barElems.forEach(e => {
+        const elem = e as HTMLElement;
+        elem.addEventListener("mousedown", () => { game.canvasIgnoreInput = true });
+    });
+
     // ResourceBar
     gui.addResourceDisplay(new ResourceDisplay("food", assetList.resource.foodIconPath));
     gui.addResourceDisplay(new ResourceDisplay("queen", assetList.resource.queenPath));

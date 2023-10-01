@@ -21,6 +21,7 @@ export class Game {
     private readonly _camera: Camera;
     private readonly _gui: Gui;
     private _cursorMode: CursorMode;
+    private _canvasIgnoreInput: boolean;
     public get p5(): P5 {
         return this._p5;
     }
@@ -41,7 +42,12 @@ export class Game {
     }
     public set cursorMode(cursorMode: CursorMode) {
         this._cursorMode = cursorMode;
-
+    }
+    public get canvasIgnoreInput(): boolean {
+        return this._canvasIgnoreInput;
+    }
+    public set canvasIgnoreInput(canvasIgnoreInput: boolean) {
+        this._canvasIgnoreInput = canvasIgnoreInput;
     }
 
     constructor(p5: P5) {

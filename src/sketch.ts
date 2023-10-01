@@ -42,7 +42,7 @@ export function draw(game: Game) {
     p5.textureMode(p5.NORMAL);
     drawMarchingSquares(game, assetList.tiles.dirt.image, 1, antHill.width, 1, antHill.height, (x, y) => antHill.getTile(x, y) > 0);
 
-    if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT) {
+    if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && cursorMode != CursorMode.Neutral && !game.canvasIgnoreInput) {
         const cursorRadius = 0.9;
         const chamber = antHill.getChamber(tileX, tileY);
         switch (cursorMode) {
@@ -125,4 +125,8 @@ export function mouseWheel(game: Game, event: WheelEvent) {
     else {
         camera.zoom(1 / 1.1);
     }
+}
+
+export function mouseReleased(game: Game) {
+    game.canvasIgnoreInput = false;
 }

@@ -18,6 +18,8 @@ function sketch(p5: P5) {
 
     p5.mouseWheel = (event: WheelEvent) => Sketch.mouseWheel(game, event);
 
+    p5.mouseReleased = () => Sketch.mouseReleased(game);
+
     window.addEventListener('resize', event => {
         Sketch.resize(game);
     }, true);

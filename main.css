@@ -1,6 +1,7 @@
 :root {
-    --guiBg: rgba(31, 31, 31, 0.941);
-    --resourceBarHeight: 48px;
+    --guiBg: rgba(31, 31, 31, 0.9);
+    --resourceBarHeight: 40px;
+    --buildBtnHeight: 64px;
 }
 
 *
@@ -35,7 +36,8 @@ body
 
 .resourceDisplay img
 {
-    height: var(--resourceBarHeight);
+    height: calc(var(--resourceBarHeight) - 8px);
+    margin: auto;
 }
 
 .resourceDisplay p
@@ -62,8 +64,8 @@ body
 
 #buildBar button
 {
-    height: 60px;
-    width: 60px;
+    height: var(--buildBtnHeight);
+    width: var(--buildBtnHeight);
     margin: 20px;
     border: none;
     padding: 0;
