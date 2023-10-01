@@ -16,6 +16,10 @@ export class Chamber{
     private readonly exploreNonRooms: boolean;
     private readonly xOrigin: number;
     private readonly yOrigin: number;
+    private minX: number;
+    private maxX: number;
+    private minY: number;
+    private maxY: number;
     private readonly explored: Set<string> = new Set();
     private readonly discoveredSet: Set<string> = new Set();
     private discovered: Position[] = [];
@@ -26,6 +30,10 @@ export class Chamber{
         const antHill = game.antHill;
         this.xOrigin = x;
         this.yOrigin = y;
+        this.minX = this.xOrigin;
+        this.maxX = this.xOrigin;
+        this.minY = this.yOrigin;
+        this.maxY = this.yOrigin;
         this.chamberType = ChamberType.Unassigned;
 
         antHill.addEventListener(AntHillEvent.TilesChanged, this.calcRoom.bind(this));
@@ -58,6 +66,10 @@ export class Chamber{
         if (this.calcChamberType(x, y) != this.chamberType){
             return;
         }
+        this.minX = Math.min(x, this.minX);
+        this.maxX = Math.max(x, this.maxX);
+        this.minY = Math.min(y, this.minY);
+        this.maxY = Math.max(y, this.maxY);
 
         this.explored.add(pos);
         this.tryDiscoverTile(x, y + 1);
@@ -107,7 +119,7 @@ export class Chamber{
     }
 
     public draw(){
-        drawMarchingSquares(this.game, undefined, (x, y) => this.explored.has(this.getKey(x, y)));
+        drawMarchingSquares(this.game, undefined, this.minX, this.maxX + 2, this.minY, this.maxY + 2, (x, y) => this.explored.has(this.getKey(x, y)));
     }
 
     public contains(x: number, y: number): boolean{

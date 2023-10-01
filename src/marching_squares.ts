@@ -33,17 +33,8 @@ const squares: MarchingSquare[] = [
 /*15*/      [TopRight, DownRight, DownLeft, TopLeft],
 ];
 
-export function drawMarchingSquares(game: Game, textures: P5.Image[] | undefined, predicate: (x: number, y: number) => boolean) {
-    const antHill = game.antHill;
+export function drawMarchingSquares(game: Game, textures: P5.Image[] | undefined, minX: number, maxX: number, minY: number, maxY: number, predicate: (x: number, y: number) => boolean) {
     const p5 = game.p5;
-    const camera = game.camera;
-
-    const point1 = camera.getWorldCoords(0, 0);
-    const point2 = camera.getWorldCoords(p5.width, p5.height);
-    const minX = Math.max(1, Math.round(point1.x + antHill.width / 2));
-    const maxX = Math.min(antHill.width, Math.round(point2.x + antHill.width / 2 + 2));
-    const minY = Math.max(1, Math.round(point1.y + antHill.height / 2));
-    const maxY = Math.min(antHill.height, Math.round(point2.y + antHill.height / 2 + 2));
 
     for (let y = minY; y < maxY; y++) {
         for (let x = minX; x < maxX; x++) {
