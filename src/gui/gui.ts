@@ -10,31 +10,24 @@ export function initGui(game: Game) {
     resourceBarAdd(new ResourceDisplay("food", assetList.foodIconPath));
 
     // BuildBar
-    buildBtns.push(new BuildBtn("dig", active => {
-        if (game.cursorMode == CursorMode.Dig && active) {
-            game.cursorMode = CursorMode.Neutral;
-            return false;
-        }
-        else {
-            neutralizeBuildBtns(buildBtns);
-            game.cursorMode = CursorMode.Dig;
-            return true;
-        }
-    }, assetList.digIconPath, assetList.digIconActivePath));
-
-    buildBtns.push(new BuildBtn("fill", active => {
-        if (game.cursorMode == CursorMode.Fill && active) {
-            game.cursorMode = CursorMode.Neutral;
-            return false;
-        }
-        else {
-            neutralizeBuildBtns(buildBtns);
-            game.cursorMode = CursorMode.Fill;
-            return true;
-        }
-    }, assetList.fillIconPath, assetList.fillIconActivePath));
+    buildBtns.push(new BuildBtn("dig", getSwapCursorModeFunction(game, CursorMode.Dig), assetList.digIconPath, assetList.digIconActivePath));
+    buildBtns.push(new BuildBtn("fill", getSwapCursorModeFunction(game, CursorMode.Fill), assetList.fillIconPath, assetList.fillIconActivePath));
 
     buildBtns.forEach(buildBtn => { buildBarAdd(buildBtn) });
+}
+
+function getSwapCursorModeFunction(game: Game, cursorMode: CursorMode){
+    return (active) => {
+        if (game.cursorMode == cursorMode && active) {
+            game.cursorMode = CursorMode.Neutral;
+            return false;
+        }
+        else {
+            neutralizeBuildBtns(buildBtns);
+            game.cursorMode = cursorMode;
+            return true;
+        }
+    };
 }
 
 function resourceBarAdd(resourceDisplay: ResourceDisplay) {
@@ -48,5 +41,7 @@ function buildBarAdd(buildBtn: BuildBtn) {
 }
 
 function neutralizeBuildBtns(buildBtns: BuildBtn[]) {
-    buildBtns.forEach(buildBtn => { buildBtn.active = false });
+    for (const button of buildBtns){
+        button.active = false;
+    }
 }
