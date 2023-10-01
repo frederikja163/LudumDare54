@@ -9,33 +9,17 @@ export class Gui {
         this._resourceDisplays = [];
         this._buildBtns = [];
     }
-
-    private updateResourceBar() {
-        const resourceBar = document.getElementById("resourceBar");
-
-        for (const display of this._resourceDisplays) {
-            resourceBar?.appendChild(display.containerElem);
-        }
-    }
-
-    private updateBuildBar() {
-        const buildBar = document.getElementById("buildBar");
-
-        for (const button of this._buildBtns) {
-            buildBar?.appendChild(button.buttonElem);
-        }
-    }
-
+    
     public addResourceDisplay(resourceDisplay: ResourceDisplay) {
         this._resourceDisplays.push(resourceDisplay);
-
-        this.updateResourceBar();
+        const resourceBar = document.getElementById("resourceBar");
+        resourceBar?.appendChild(resourceDisplay.containerElem);
     }
 
     public addBuildBtn(buildBtn: BuildBtn) {
         this._buildBtns.push(buildBtn);
-
-        this.updateBuildBar();
+        const buildBar = document.getElementById("buildBar");
+        buildBar?.appendChild(buildBtn.buttonElem);
     }
 
     public neutralizeBuildBtns() {
