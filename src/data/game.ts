@@ -8,7 +8,10 @@ export enum CursorMode {
     Neutral,
     Dig,
     Fill,
+    Queen,
+    Residential,
     Farm,
+    Training,
 }
 
 export class Game {

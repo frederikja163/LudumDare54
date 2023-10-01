@@ -16,9 +16,10 @@ export function initGui(game: Game) {
     // BuildBar
     gui.addBuildBtn(new BuildBtn("dig", getSwapCursorModeFunction(game, CursorMode.Dig), assetList.digIconPath, assetList.digIconActivePath));
     gui.addBuildBtn(new BuildBtn("fill", getSwapCursorModeFunction(game, CursorMode.Fill), assetList.fillIconPath, assetList.fillIconActivePath));
-    gui.addBuildBtn(new BuildBtn("training", getSwapCursorModeFunction(game, CursorMode.Neutral), assetList.trainingIconPath, assetList.trainingIconActivePath));
-    gui.addBuildBtn(new BuildBtn("residential", getSwapCursorModeFunction(game, CursorMode.Neutral), assetList.residentialIconPath, assetList.residentialIconActivePath));
-    gui.addBuildBtn(new BuildBtn("farm", getSwapCursorModeFunction(game, CursorMode.Farm), assetList.testPath, assetList.testAltPath));
+    gui.addBuildBtn(new BuildBtn("queens lair", getSwapCursorModeFunction(game, CursorMode.Queen), assetList.queenIconPath, assetList.queenIconActivePath));
+    gui.addBuildBtn(new BuildBtn("residential chamber", getSwapCursorModeFunction(game, CursorMode.Residential), assetList.residentialIconPath, assetList.residentialIconActivePath));
+    gui.addBuildBtn(new BuildBtn("farm chamber", getSwapCursorModeFunction(game, CursorMode.Farm), assetList.farmingIconPath, assetList.farmingIconActivePath));
+    gui.addBuildBtn(new BuildBtn("training chamber", getSwapCursorModeFunction(game, CursorMode.Training), assetList.trainingIconPath, assetList.trainingIconActivePath));
 }
 
 function getSwapCursorModeFunction(game: Game, cursorModeThis: CursorMode) {
