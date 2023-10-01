@@ -1,5 +1,5 @@
 import P5 from "p5";
-import { AntHill, AntHillEvent, TileEvent } from "./ant_hill";
+import { AntColony, AntHillEvent, TileEvent } from "./ant_colony";
 import { Camera } from "./camera";
 import { drawMarchingSquares } from "../marching_squares";
 import { Game } from "./game";
@@ -126,7 +126,7 @@ export class Chamber {
         this.discoveredSet.add(key);
     }
 
-    public static calcChamberType(antHill: AntHill, chamberType: ChamberType, x: number, y: number): ChamberType {
+    public static calcChamberType(antHill: AntColony, chamberType: ChamberType, x: number, y: number): ChamberType {
         const tileValue = antHill.getTile(x, y);
         if (tileValue === -1 || tileValue > 0) {
             return ChamberType.Invalid;
@@ -146,7 +146,7 @@ export class Chamber {
         }
     }
 
-    private static isEmpty(antHill: AntHill, x: number, y: number) {
+    private static isEmpty(antHill: AntColony, x: number, y: number) {
         return antHill.getTile(x, y) === 0;
     }
 
