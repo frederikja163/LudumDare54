@@ -1,4 +1,6 @@
-import { Equation } from "../data/gamedata";
+import { Value } from "../data/dynamic_equations";
+import { EquationEventType } from "../data/dynamic_equations";
+import { Equation } from "../data/dynamic_equations";
 
 export class ResourceDisplay {
     private readonly _containerElem: HTMLDivElement;
@@ -21,8 +23,8 @@ export class ResourceDisplay {
 
         this.counterElem = document.createElement("p");
         this.containerElem.appendChild(this.counterElem);
-        value.addEventListener("valuechanged", this.updateText.bind(this));
-        capacity.addEventListener("valuechanged", this.updateText.bind(this));
+        value.addEventListener(EquationEventType.ValueChange, this.updateText.bind(this));
+        capacity.addEventListener(EquationEventType.ValueChange, this.updateText.bind(this));
     }
 
     private updateText(){

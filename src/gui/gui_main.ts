@@ -1,7 +1,7 @@
 import { ResourceDisplay } from "./resource_display";
 import { BuildBtn } from "./build_btn";
 import { CursorMode, Game } from "../data/game";
-import { value } from "../data/gamedata";
+import { value } from "../data/dynamic_equations";
 
 export function initGui(game: Game) {
     const assetList = game.assetList;
