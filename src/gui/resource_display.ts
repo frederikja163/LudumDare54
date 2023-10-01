@@ -1,12 +1,17 @@
+import { Equation } from "../data/gamedata";
+
 export class ResourceDisplay {
     private readonly _containerElem: HTMLDivElement;
     private readonly iconElem: HTMLImageElement;
     private readonly counterElem: HTMLParagraphElement;
-    private _counter: number;
+    private readonly value: Equation;
+    private readonly capacity: Equation;
 
-    constructor(name: string, iconPath: string) {
+    constructor(name: string, value: Equation, capacity: Equation, iconPath: string) {
         this._containerElem = document.createElement("div");
         this.containerElem.className += "resourceDisplay";
+        this.value = value;
+        this.capacity = capacity;
 
         this.iconElem = document.createElement("img");
         this.iconElem.src = iconPath;
@@ -15,17 +20,18 @@ export class ResourceDisplay {
         this.containerElem.appendChild(this.iconElem);
 
         this.counterElem = document.createElement("p");
-        this.counter = 0;
         this.containerElem.appendChild(this.counterElem);
+        value.addEventListener("valuechanged", this.updateText.bind(this));
+        capacity.addEventListener("valuechanged", this.updateText.bind(this));
     }
 
-    public get counter(): number {
-        return this._counter;
-    }
-
-    public set counter(value: number) {
-        this._counter = value;
-        this.counterElem.textContent = JSON.stringify(value);
+    private updateText(){
+        if (this.capacity.value === -1){
+            this.counterElem.textContent = `${this.value.value}`;
+        }
+        else{
+            this.counterElem.textContent = `${this.value.value}/${this.capacity.value}`;
+        }
     }
 
     public get containerElem(): HTMLElement {

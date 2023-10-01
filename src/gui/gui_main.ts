@@ -1,9 +1,11 @@
 import { ResourceDisplay } from "./resource_display";
 import { BuildBtn } from "./build_btn";
 import { CursorMode, Game } from "../data/game";
+import { value } from "../data/gamedata";
 
 export function initGui(game: Game) {
     const assetList = game.assetList;
+    const data = game.gameData;
     const gui = game.gui;
 
     const barElems = document.querySelectorAll(".bar");
@@ -13,11 +15,11 @@ export function initGui(game: Game) {
     });
 
     // ResourceBar
-    gui.addResourceDisplay(new ResourceDisplay("food", assetList.resource.foodIconPath));
-    gui.addResourceDisplay(new ResourceDisplay("queen", assetList.resource.queenPath));
-    gui.addResourceDisplay(new ResourceDisplay("farmer", assetList.resource.farmerPath));
-    gui.addResourceDisplay(new ResourceDisplay("worker", assetList.resource.workerPath));
-    gui.addResourceDisplay(new ResourceDisplay("soldier", assetList.resource.soldierPath));
+    gui.addResourceDisplay(new ResourceDisplay("food", data.foodConsumption, data.foodProduction, assetList.resource.foodIconPath));
+    gui.addResourceDisplay(new ResourceDisplay("queen", data.queensActive, value(-1), assetList.resource.queenPath));
+    gui.addResourceDisplay(new ResourceDisplay("farmer", data.farmersActive, data.farmersIdle, assetList.resource.farmerPath));
+    gui.addResourceDisplay(new ResourceDisplay("worker", data.workersActive, data.workersIdle, assetList.resource.workerPath));
+    gui.addResourceDisplay(new ResourceDisplay("soldier", data.soldiersActive, data.soldiersIdle, assetList.resource.soldierPath));
 
     // BuildBar
     gui.addBuildBtn(new BuildBtn("dig", getSwapCursorModeFunction(game, CursorMode.Dig), assetList.buildBtn.dig));

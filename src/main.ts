@@ -3,6 +3,7 @@ import * as Sketch from "./sketch";
 import { AntHill } from "./data/ant_hill";
 import { Game } from "./data/game";
 import * as Gui from "./gui/gui_main";
+import * as Gameplay from "./gameplay";
 
 function sketch(p5: P5) {
     const game = new Game(p5);
@@ -27,6 +28,8 @@ function sketch(p5: P5) {
     document.addEventListener('contextmenu', event => event.preventDefault());
 
     Gui.initGui(game);
+
+    Gameplay.initGameplay(game);
 }
 
 new P5(sketch);
