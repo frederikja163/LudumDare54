@@ -72,15 +72,20 @@ export class Value extends Equation{
 }
 
 export class GameData{
-    public readonly queensIdle = value(0);
-    public readonly farmersIdle = value(0);
-    public readonly workersIdle = value(0);
-    public readonly soldiersIdle = value(0);
+    public readonly queensTotal = value(1);
+    public readonly farmersTotal = value(0);
+    public readonly workersTotal = value(0);
+    public readonly soldiersTotal = value(0);
 
-    public readonly queensActive = value(1);
+    public readonly queensActive = this.queensTotal;
     public readonly farmersActive = value(0);
     public readonly workersActive = value(0);
     public readonly soldiersActive = value(0);
+
+    public readonly queensIdle = equation([this.queensTotal, this.queensActive], n => n[0] - n[1]);
+    public readonly farmersIdle = equation([this.farmersTotal, this.farmersActive], n => n[0] - n[1]);;
+    public readonly workersIdle = equation([this.workersTotal, this.workersActive], n => n[0] - n[1]);;
+    public readonly soldiersIdle = equation([this.soldiersTotal, this.soldiersActive], n => n[0] - n[1]);;
 
     public readonly queenTiles = value(0);
     public readonly residentialTiles = value(0);

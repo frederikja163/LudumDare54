@@ -7,7 +7,7 @@ export class ResourceDisplay {
     private readonly value: Equation;
     private readonly capacity: Equation;
 
-    constructor(name: string, value: Equation, capacity: Equation, iconPath: string) {
+    constructor(name: string, tooltip: string, value: Equation, capacity: Equation, iconPath: string) {
         this._containerElem = document.createElement("div");
         this.containerElem.className += "resourceDisplay";
         this.value = value;
@@ -16,7 +16,7 @@ export class ResourceDisplay {
         this.iconElem = document.createElement("img");
         this.iconElem.src = iconPath;
         this.iconElem.alt = name;
-        this.iconElem.title = name;
+        this.iconElem.title = tooltip;
         this.containerElem.appendChild(this.iconElem);
 
         this.counterElem = document.createElement("p");
