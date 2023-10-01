@@ -35,7 +35,8 @@ body
 
 .resourceDisplay img
 {
-    height: var(--resourceBarHeight);
+    height: calc(var(--resourceBarHeight) - 8px);
+    margin: auto;
 }
 
 .resourceDisplay p
