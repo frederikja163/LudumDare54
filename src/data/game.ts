@@ -2,6 +2,7 @@ import P5 from "p5";
 import { AntHill } from "./ant_hill";
 import { Camera } from "./camera";
 import { AssetList } from "./asset_list";
+import { Gui } from "./gui";
 
 export enum CursorMode {
     Neutral,
@@ -14,6 +15,7 @@ export class Game {
     private readonly _assetList: AssetList;
     private readonly _antHill: AntHill;
     private readonly _camera: Camera;
+    private readonly _gui: Gui;
     private _cursorMode: CursorMode;
     public get p5(): P5 {
         return this._p5;
@@ -26,6 +28,9 @@ export class Game {
     }
     public get camera(): Camera {
         return this._camera;
+    }
+    public get gui(): Gui {
+        return this._gui;
     }
     public get cursorMode(): CursorMode {
         return this._cursorMode;
@@ -40,6 +45,7 @@ export class Game {
         this._assetList = new AssetList();
         this._antHill = new AntHill(this, 100, 100);
         this._camera = new Camera(p5, 100);
+        this._gui = new Gui();
         this._cursorMode = CursorMode.Neutral;
     }
 }
