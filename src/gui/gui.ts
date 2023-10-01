@@ -8,8 +8,29 @@ export function initGui(game: Game) {
     resourceBarAdd(new ResourceDisplay("food", assetList.foodIconPath));
 
     // BuildBar
-    buildBarAdd(new BuildBtn("dig", active => { game.cursorMode = (game.cursorMode == CursorMode.Neutral) ? CursorMode.Dig : CursorMode.Neutral }, assetList.digIconPath, assetList.digIconActivePath));
-    buildBarAdd(new BuildBtn("fill", active => { game.cursorMode = (game.cursorMode == CursorMode.Neutral) ? CursorMode.Fill : CursorMode.Neutral }, assetList.fillIconPath, assetList.fillIconActivePath));
+    buildBarAdd(new BuildBtn("dig", active => {
+        if (game.cursorMode == CursorMode.Dig && active) {
+            game.cursorMode = CursorMode.Neutral;
+            return false;
+        }
+        else if (game.cursorMode == CursorMode.Neutral && !active) {
+            game.cursorMode = CursorMode.Dig;
+            return true;
+        }
+        return false;
+    }, assetList.digIconPath, assetList.digIconActivePath));
+
+    buildBarAdd(new BuildBtn("fill", active => {
+        if (game.cursorMode == CursorMode.Fill && active) {
+            game.cursorMode = CursorMode.Neutral;
+            return false;
+        }
+        else if (game.cursorMode == CursorMode.Neutral && !active) {
+            game.cursorMode = CursorMode.Fill;
+            return true;
+        }
+        return false;
+    }, assetList.fillIconPath, assetList.fillIconActivePath));
 }
 
 function resourceBarAdd(resourceDisplay: ResourceDisplay) {

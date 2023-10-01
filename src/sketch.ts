@@ -17,7 +17,7 @@ export function preload(game: Game): void {
 export function setup(game: Game) {
     const p5 = game.p5;
 
-    p5.createCanvas(window.innerWidth - 4, window.innerHeight - 4, p5.WEBGL);
+    p5.createCanvas(window.innerWidth - 8, window.innerHeight - 8, p5.WEBGL);
 }
 
 export function draw(game: Game) {
@@ -78,7 +78,7 @@ export function mouseDragged(game: Game, event: MouseEvent) {
 export function resize(game: Game) {
     const p5 = game.p5;
 
-    p5.resizeCanvas(window.innerWidth - 4, window.innerHeight - 4);
+    p5.resizeCanvas(window.innerWidth - 8, window.innerHeight - 8);
 }
 
 export function keyPressed(game: Game) {
