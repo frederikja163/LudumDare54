@@ -2,7 +2,7 @@ import P5 from "p5";
 import { AntHill } from "./data/ant_hill";
 import { drawMarchingSquares } from "./marching_squares";
 import { CursorMode, Game } from "./data/game";
-import { Chamber } from "./data/chamber";
+import { Chamber, ChamberType } from "./data/chamber";
 const placementThreshold = 0.2;
 
 export function preload(game: Game): void {
@@ -25,6 +25,7 @@ export function draw(game: Game) {
     const antHill = game.antHill;
     const camera = game.camera;
     const assetList = game.assetList;
+    const cursorMode = game.cursorMode;
 
     p5.background(0, 0, 0);
     camera.apply();
@@ -38,27 +39,38 @@ export function draw(game: Game) {
     p5.fill(255, 255, 255);
     p5.textureMode(p5.NORMAL);
     drawMarchingSquares(game, assetList.dirt, 1, antHill.width, 1, antHill.height, (x, y) => antHill.getTile(x, y) > 0);
-    if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && game.cursorMode == CursorMode.Fill) {
-        if (Math.abs(x % 1 - 0.5) > placementThreshold && Math.abs(y % 1 - 0.5) > placementThreshold) {
 
-            antHill.setTile(Math.round(x), Math.round(y), 1);
+    if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && cursorMode != CursorMode.Neutral) {
+        const cursorRadius = 0.9;
+
+        switch (cursorMode) {
+            case CursorMode.Dig:
+                if (Math.abs(x % cursorRadius) > placementThreshold && Math.abs(y % cursorRadius) > placementThreshold) {
+
+                    antHill.setTile(Math.round(x), Math.round(y), 0);
+                }
+
+                break;
+
+            case CursorMode.Fill:
+                if (Math.abs(x % cursorRadius) > placementThreshold && Math.abs(y % cursorRadius) > placementThreshold) {
+
+                    antHill.setTile(Math.round(x), Math.round(y), 1);
+                }
+
+                break;
+
+            case CursorMode.Farm:
+                const chamber = antHill.getChamber(Math.round(x), Math.round(y));
+                if (chamber != undefined) {
+                    chamber.chamberType = ChamberType.Farm;
+                    console.log(chamber);
+
+                }
+
+                break;
+
         }
-        p5.fill(128, 255, 128, 200);
-        p5.ellipse(Math.round(x), Math.round(y), 0.1, 0.1);
-    }
-    else if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && game.cursorMode == CursorMode.Dig) {
-        if (Math.abs(x % 1 - 0.5) > placementThreshold && Math.abs(y % 1 - 0.5) > placementThreshold) {
-
-            antHill.setTile(Math.round(x), Math.round(y), 0);
-        }
-        p5.fill(255, 128, 128, 200);
-        p5.ellipse(Math.round(x), Math.round(y), 0.1, 0.1);
-    }
-
-    p5.fill(0, 0, 255);
-    if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && p5.keyIsDown(p5.CONTROL)) {
-        const chamber = new Chamber(this.game, Math.round(x), Math.round(y));
-        chamber?.draw();
     }
 
     antHill.draw();
@@ -69,8 +81,9 @@ export function draw(game: Game) {
 export function mouseDragged(game: Game, event: MouseEvent) {
     const p5 = game.p5;
     const camera = game.camera;
+    const cursorMode = game.cursorMode;
 
-    if (p5.mouseButton == p5.CENTER) {
+    if (p5.mouseButton === p5.CENTER || (p5.mouseButton === p5.LEFT && cursorMode === CursorMode.Neutral)) {
         camera.move(event.movementX, event.movementY);
     }
 }
@@ -93,3 +106,14 @@ export function keyPressed(game: Game) {
     }
 }
 
+export function mouseWheel(game: Game, event: WheelEvent) {
+    const p5 = game.p5;
+    const camera = game.camera;
+
+    if (event.deltaY < 0) {
+        camera.zoom(1.1);
+    }
+    else {
+        camera.zoom(1 / 1.1);
+    }
+}

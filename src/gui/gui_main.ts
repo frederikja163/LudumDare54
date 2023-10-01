@@ -17,8 +17,8 @@ export function initGui(game: Game) {
     gui.addBuildBtn(new BuildBtn("dig", getSwapCursorModeFunction(game, CursorMode.Dig), assetList.digIconPath, assetList.digIconActivePath));
     gui.addBuildBtn(new BuildBtn("fill", getSwapCursorModeFunction(game, CursorMode.Fill), assetList.fillIconPath, assetList.fillIconActivePath));
     gui.addBuildBtn(new BuildBtn("training", getSwapCursorModeFunction(game, CursorMode.Neutral), assetList.trainingIconPath, assetList.trainingIconActivePath));
-    gui.addBuildBtn(new BuildBtn("farming", getSwapCursorModeFunction(game, CursorMode.Neutral), assetList.farmingIconPath, assetList.farmingIconActivePath));
     gui.addBuildBtn(new BuildBtn("residential", getSwapCursorModeFunction(game, CursorMode.Neutral), assetList.residentialIconPath, assetList.residentialIconActivePath));
+    gui.addBuildBtn(new BuildBtn("farm", getSwapCursorModeFunction(game, CursorMode.Farm), assetList.testPath, assetList.testAltPath));
 }
 
 function getSwapCursorModeFunction(game: Game, cursorModeThis: CursorMode) {
