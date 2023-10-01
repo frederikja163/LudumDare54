@@ -14,7 +14,8 @@ export class BuildBtn {
         this._buttonElem.title = name;
 
         this.iconElem = document.createElement("img");
-        this.iconElem.onclick = this.toggleActive.bind(this);
+        //this.iconElem.onclick = this.toggleActive.bind(this);
+        // combine theese
         this.iconElem.src = iconPath;
         this.iconElem.alt = name;
 

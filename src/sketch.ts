@@ -1,7 +1,7 @@
 import P5 from "p5";
 import { AntHill } from "./data/ant_hill";
 import { drawMarchingSquares } from "./marching_squares";
-import { Game } from "./data/game";
+import { CursorMode, Game } from "./data/game";
 import { Chamber } from "./data/chamber";
 const placementThreshold = 0.2;
 
@@ -9,7 +9,7 @@ export function preload(game: Game): void {
     const p5 = game.p5;
     const assetList = game.assetList;
 
-    for (const path of assetList.dirtPaths){
+    for (const path of assetList.dirtPaths) {
         assetList.dirt.push(p5.loadImage(path))
     }
 }
@@ -38,17 +38,17 @@ export function draw(game: Game) {
     p5.fill(255, 255, 255);
     p5.textureMode(p5.NORMAL);
     drawMarchingSquares(game, assetList.dirt, (x, y) => antHill.getTile(x, y) > 0);
-    if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && !p5.keyIsDown(p5.SHIFT) && !p5.keyIsDown(p5.CONTROL)){
-        if (Math.abs(x % 1 - 0.5) > placementThreshold && Math.abs(y % 1 - 0.5) > placementThreshold){
-            
+    if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && game.cursorMode == CursorMode.Fill && !p5.keyIsDown(p5.CONTROL)) {
+        if (Math.abs(x % 1 - 0.5) > placementThreshold && Math.abs(y % 1 - 0.5) > placementThreshold) {
+
             antHill.setTile(Math.round(x), Math.round(y), 1);
         }
         p5.fill(128, 255, 128, 200);
         p5.ellipse(Math.round(x), Math.round(y), 0.1, 0.1);
     }
-    else if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && p5.keyIsDown(p5.SHIFT) && !p5.keyIsDown(p5.CONTROL)){
-        if (Math.abs(x % 1 - 0.5) > placementThreshold && Math.abs(y % 1 - 0.5) > placementThreshold){
-            
+    else if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && game.cursorMode == CursorMode.Dig && !p5.keyIsDown(p5.CONTROL)) {
+        if (Math.abs(x % 1 - 0.5) > placementThreshold && Math.abs(y % 1 - 0.5) > placementThreshold) {
+
             antHill.setTile(Math.round(x), Math.round(y), 0);
         }
         p5.fill(255, 128, 128, 200);
@@ -56,7 +56,7 @@ export function draw(game: Game) {
     }
 
     p5.fill(0, 0, 255);
-    if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && p5.keyIsDown(p5.CONTROL)){
+    if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && p5.keyIsDown(p5.CONTROL)) {
         const chamber = new Chamber(this.game, Math.round(x), Math.round(y));
         chamber?.draw();
     }

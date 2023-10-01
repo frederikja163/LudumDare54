@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 :root {
     --guiBg: rgba(31, 31, 31, 0.941);
-=======
-:root{
     --resourceBarHeight: 48px;
->>>>>>> 5f42cfaa48156ab8a7b4ceee665d658b037389da
 }
 
 body
@@ -16,13 +12,8 @@ body
 
 #resourceBar
 {
-<<<<<<< HEAD
     background-color: var(--guiBg);
-    height: 40px;
-=======
-    background-color: #ffffff40;
     height: var(--resourceBarHeight);
->>>>>>> 5f42cfaa48156ab8a7b4ceee665d658b037389da
     width: 100%;
     display: flex;
     position: fixed;

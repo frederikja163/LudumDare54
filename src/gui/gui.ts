@@ -3,12 +3,13 @@ import { BuildBtn } from "./build_btn";
 import { CursorMode, Game } from "../data/game";
 
 export function initGui(game: Game) {
+    const assetList = game.assetList;
     // ResourceBar
-    resourceBarAdd(new ResourceDisplay("food", game.assetList.foodIconPath));
+    resourceBarAdd(new ResourceDisplay("food", assetList.foodIconPath));
 
     // BuildBar
-    buildBarAdd(new BuildBtn("dig", active => { game.cursorMode = active ? CursorMode.Dig : CursorMode.Neutral }, game.assetList.digIconPath, "lol"));
-    buildBarAdd(new BuildBtn("fill", active => { game.cursorMode = active ? CursorMode.Fill : CursorMode.Neutral }, game.assetList.fillIconPath));
+    buildBarAdd(new BuildBtn("dig", active => { game.cursorMode = (game.cursorMode == CursorMode.Neutral) ? CursorMode.Dig : CursorMode.Neutral }, assetList.digIconPath, assetList.digIconActivePath));
+    buildBarAdd(new BuildBtn("fill", active => { game.cursorMode = (game.cursorMode == CursorMode.Neutral) ? CursorMode.Fill : CursorMode.Neutral }, assetList.fillIconPath, assetList.fillIconActivePath));
 }
 
 function resourceBarAdd(resourceDisplay: ResourceDisplay) {
