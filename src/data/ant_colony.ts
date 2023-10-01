@@ -68,11 +68,15 @@ export class AntColony extends EventTarget {
     public countTiles(){
         const data = this.game.gameData;
         const counts = new Map<ChamberType, number>();
+        counts.set(ChamberType.Unassigned, 0);
+        counts.set(ChamberType.Invalid, 0);
+        counts.set(ChamberType.Hall, 0);
+        counts.set(ChamberType.Queen, 0);
+        counts.set(ChamberType.Residential, 0);
+        counts.set(ChamberType.Farm, 0);
+        counts.set(ChamberType.Training, 0);
         for (let i = 0; i < this.chambers.length; i++) {
             const chamber = this.chambers[i];
-            if (!counts.has(chamber.chamberType)){
-                counts.set(chamber.chamberType, 0);
-            }
             const count = counts.get(chamber.chamberType)!;
             counts.set(chamber.chamberType, count + chamber.size);
         }
@@ -91,7 +95,7 @@ export class AntColony extends EventTarget {
                     data.residentialTiles.value = val;
                     break;
                 case ChamberType.Farm:
-                    data.farmerTiles.value = val;
+                    data.farmTiles.value = val;
                     break;
                 case ChamberType.Training:
                     data.trainingTiles.value = val;

@@ -26,6 +26,7 @@ export function draw(game: Game) {
     const camera = game.camera;
     const assetList = game.assetList;
     const cursorMode = game.cursorMode;
+    const data = game.gameData;
 
     p5.background(0, 0, 0);
     camera.apply();
@@ -47,7 +48,7 @@ export function draw(game: Game) {
         const chamber = antHill.getChamber(tileX, tileY);
         switch (cursorMode) {
             case CursorMode.Dig:
-                if (Math.abs(x % cursorRadius) > placementThreshold && Math.abs(y % cursorRadius) > placementThreshold) {
+                if (data.tileCapacity.value > data.totalTiles.value && Math.abs(x % cursorRadius) > placementThreshold && Math.abs(y % cursorRadius) > placementThreshold) {
 
                     antHill.setTile(tileX, tileY, 0);
                 }
