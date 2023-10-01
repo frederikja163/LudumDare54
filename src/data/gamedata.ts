@@ -37,7 +37,7 @@ export class GameData{
     public readonly totalTiles = sum([this.queenTiles,this.farmTiles,this.residentialTiles,this.trainingTiles]);
     
     // ants/min
-    public readonly antProduction = equation([this.queenTiles], n => n[0] / 10);
+    public readonly antProduction = equation([this.queenTiles], n => Math.log(n[0])/Math.log(8));
     public readonly msPerAnt = equation([this.antProduction], n => (1000 * 60) / n[0]);
     public readonly antCapacity = product([this.residentialTiles, value(5)]);
     public readonly combatPower = product([this.trainingTiles, this.soldiersActive]);

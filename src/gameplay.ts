@@ -18,7 +18,12 @@ export function initGameplay(game: Game){
             }
         }
         else{
-            console.log("Not enough residential chambers to produce ant");
+            if (data.antsTotal.value < data.antCapacity.value){
+                console.log("Ant production failed: not enough chambers to produce ant.");
+            }
+            else if (data.foodConsumption.value < data.foodProduction.value){
+                console.log("Ant production failed: not enough food to produce ant.")
+            }
         }
         setTimeout(spawnAnt, data.msPerAnt.value);
     }
