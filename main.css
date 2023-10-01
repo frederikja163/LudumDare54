@@ -3,6 +3,11 @@
     --resourceBarHeight: 48px;
 }
 
+*
+{
+    user-select: none;
+}
+
 body
 {
     font-family: 'Pixelify Sans', Arial, Helvetica, sans-serif;
