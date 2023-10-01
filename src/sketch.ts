@@ -9,8 +9,8 @@ export function preload(game: Game): void {
     const p5 = game.p5;
     const assetList = game.assetList;
 
-    for (const path of assetList.dirtPaths) {
-        assetList.dirt.push(p5.loadImage(path))
+    for (const path of assetList.tiles.dirt.paths) {
+        assetList.tiles.dirt.image.push(p5.loadImage(path))
     }
 }
 
@@ -40,7 +40,7 @@ export function draw(game: Game) {
 
     p5.fill(255, 255, 255);
     p5.textureMode(p5.NORMAL);
-    drawMarchingSquares(game, assetList.dirt, 1, antHill.width, 1, antHill.height, (x, y) => antHill.getTile(x, y) > 0);
+    drawMarchingSquares(game, assetList.tiles.dirt.image, 1, antHill.width, 1, antHill.height, (x, y) => antHill.getTile(x, y) > 0);
 
     if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT) {
         const cursorRadius = 0.9;

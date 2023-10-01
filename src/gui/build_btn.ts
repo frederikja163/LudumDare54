@@ -1,3 +1,5 @@
+import { Button } from "../data/asset_list";
+
 export class BuildBtn {
     private readonly _buttonElem: HTMLButtonElement;
     private readonly iconElem: HTMLImageElement;
@@ -5,9 +7,9 @@ export class BuildBtn {
     private activeIconPath: string;
     private _active: boolean = false;
 
-    constructor(name: string, clickAction: (active: boolean) => boolean, iconPath: string, activeIconPath?: string) {
-        this.iconPath = iconPath;
-        this.activeIconPath = activeIconPath == undefined ? iconPath : activeIconPath;
+    constructor(name: string, clickAction: (active: boolean) => boolean, button: Button) {
+        this.iconPath = button.iconPath;
+        this.activeIconPath = button.activePath == undefined ? button.iconPath : button.activePath;
 
         this._buttonElem = document.createElement("button");
         this._buttonElem.onmousedown = () => {
@@ -16,7 +18,7 @@ export class BuildBtn {
         this._buttonElem.title = name;
 
         this.iconElem = document.createElement("img");
-        this.iconElem.src = iconPath;
+        this.iconElem.src = button.iconPath;
         this.iconElem.alt = name;
         this.iconElem.draggable = false;
 
