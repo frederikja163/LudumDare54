@@ -1,5 +1,5 @@
 import P5 from "p5";
-import { AntHill } from "./data/ant_hill";
+import { AntColony } from "./data/ant_hill";
 import { Game } from "./data/game";
 import { Camera } from "./data/camera";
 const DEBUG = false;

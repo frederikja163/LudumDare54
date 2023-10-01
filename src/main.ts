@@ -1,6 +1,6 @@
 import P5 from "p5";
 import * as Sketch from "./sketch";
-import { AntHill } from "./data/ant_hill";
+import { AntColony } from "./data/ant_hill";
 import { Game } from "./data/game";
 import * as Gui from "./gui/gui_main";
 
