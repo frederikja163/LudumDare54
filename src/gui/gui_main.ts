@@ -12,6 +12,7 @@ export function initGui(game: Game) {
     const welcomeMsgElem = document.getElementById("welcomeMsg");
     welcomeMsgElem?.querySelector("button")?.addEventListener("mouseup", () => {
         welcomeMsgElem.style.display = "none";
+        gui.notify("Antlantis", "I'm a notification, and I wanna be free");
     });
 
     const barElems = document.querySelectorAll(".gui");
@@ -61,8 +62,6 @@ export function initGui(game: Game) {
             gui.slidersPlayPause(false);
         }
     });
-
-    gui.notify("Antlantis", "I'm a notification, and i wanna be free");
 }
 
 function getSwapCursorModeFunction(game: Game, cursorModeThis: CursorMode): (active: boolean) => boolean {
