@@ -1,16 +1,28 @@
-import { Equation, EquationEventType, Value } from "../data/dynamic_equations";
+import { AssetList } from "../data/asset_list";
+import { Equation, EquationEventType, Value, value } from "../data/dynamic_equations";
 
 export class Slider {
     private _name: string;
     private _max: number;
+    private paused: boolean;
+    private prePauseVal: number;
+    private value: Value;
+    private percentageValue: Equation;
+    private iconPath: string;
+    private iconPausedPath: string;
     private readonly _containerElem: HTMLDivElement;
     private readonly iconElem: HTMLImageElement;
     private readonly infoElem: HTMLDivElement;
     private readonly inputElem: HTMLInputElement;
 
-    constructor(name: string, iconPath: string, value: Value, percentageValue: Equation, max: number = 100) {
+    constructor(name: string, iconPath: string, iconPausedPath: string, value: Value, percentageValue: Equation, max: number = 100) {
         this._name = name;
         this._max = max;
+        this.paused = false;
+        this.value = value;
+        this.percentageValue = percentageValue;
+        this.iconPath = iconPath;
+        this.iconPausedPath = iconPausedPath;
 
         this._containerElem = document.createElement("div");
         this._containerElem.className += "sliderCont";
@@ -20,11 +32,14 @@ export class Slider {
         this.iconElem.alt = this._name;
         this.iconElem.title = `Play/pause ${this._name} production`;
         this.iconElem.draggable = false;
+        this.iconElem.addEventListener("click", () => { this.playPause() });
 
         this.infoElem = document.createElement("p");
         percentageValue.addEventListener(EquationEventType.ValueChange, () => {
-            const text = (percentageValue.value * 100).toString().split('.');
-            this.infoElem.textContent = `${text[0]}%`;
+            if (!this.paused) {
+                const text = (percentageValue.value * 100).toString().split('.');
+                this.infoElem.textContent = `${text[0]}%`;
+            }
         });
 
         this.inputElem = document.createElement("input");
@@ -44,5 +59,35 @@ export class Slider {
 
     public get containerElem(): HTMLElement {
         return this._containerElem;
+    }
+
+    public playPause(pause?: boolean) {
+        if (pause != undefined) {
+            this.paused = pause;
+        }
+
+        if (this.paused) {
+            this.paused = false;
+
+            this.iconElem.src = this.iconPath;
+
+            this.inputElem.disabled = false;
+            this.inputElem.style.setProperty("--sliderGold", "var(--gold)");
+
+            this.value.value = this.prePauseVal;
+        }
+        else {
+            this.paused = true;
+
+            this.iconElem.src = this.iconPausedPath;
+
+            this.inputElem.disabled = true;
+            this.inputElem.style.setProperty("--sliderGold", "#808080");
+
+            this.prePauseVal = this.value.value;
+            this.value.value = 0.00001;
+
+            this.infoElem.textContent = "Paused";
+        }
     }
 }

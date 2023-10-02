@@ -1,6 +1,7 @@
 :root {
     --guiBg: rgba(31, 31, 31, 0.9);
     --light: #f0f0f0;
+    --gold: #8e7603;
     --resourceBarHeight: 40px;
     --buildBtnHeight: 64px;
 }
@@ -157,6 +158,8 @@ body
 
 #spawnMenu .sliderCont input
 {
+    --sliderGold: var(--gold);
+
     transform: rotate(-90deg) translate(-50%);
     height: var(--width);
     border-radius: calc(var(--width) * 0.5);
@@ -171,7 +174,7 @@ body
     height: 0;
     appearance: none;
     cursor: n-resize;
-    box-shadow: calc(var(--height) * -0.5) 0 0 calc(var(--height) * 0.5) #8e7603;
+    box-shadow: calc(var(--height) * -0.5) 0 0 calc(var(--height) * 0.5) var(--sliderGold);
 }
 
 #buildBar
