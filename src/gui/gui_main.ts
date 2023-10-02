@@ -15,6 +15,8 @@ export function initGui(game: Game) {
         elem.addEventListener("mousedown", () => { game.canvasIgnoreInput = true });
     });
 
+    gui.updateSpawnProgress(data.msPerAnt, data.antSpawnProgress);
+
     // ResourceBar
     gui.addResourceDisplay(new ResourceDisplay("food", "Food [consumption/production]", data.foodConsumption, data.foodProduction, assetList.resource.foodIconPath));
     gui.addResourceDisplay(new ResourceDisplay("queen", "Queen", data.queensActive, value(-1), assetList.resource.queenPath));

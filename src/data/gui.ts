@@ -1,6 +1,7 @@
 import { ResourceDisplay } from "../gui/resource_display";
 import { BuildBtn } from "../gui/build_btn";
 import { Slider } from "../gui/slider";
+import { Equation, EquationEventType } from "./dynamic_equations";
 
 export class Gui {
     private readonly _resourceDisplays: ResourceDisplay[];
@@ -35,5 +36,17 @@ export class Gui {
         for (const button of this._buildBtns) {
             button.active = false;
         }
+    }
+
+    public updateSpawnProgress(msPerAnt: Equation, antSpawnProgress: Equation) {
+        const spawnProgressElem = document.querySelector("#resourceBar>input") as HTMLInputElement;
+
+        msPerAnt.addEventListener(EquationEventType.ValueChange, () => {
+            spawnProgressElem.max = JSON.stringify(msPerAnt.value);
+        });
+
+        antSpawnProgress.addEventListener(EquationEventType.ValueChange, () => {
+            spawnProgressElem.value = JSON.stringify(antSpawnProgress.value);
+        });
     }
 }
