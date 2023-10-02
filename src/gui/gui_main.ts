@@ -32,6 +32,7 @@ export function initGui(game: Game) {
     gui.spawnMenuAddSlider(new Slider("Farmer ants", assetList.resource.farmerPath));
     gui.spawnMenuAddSlider(new Slider("Worker ants", assetList.resource.workerPath));
     gui.spawnMenuAddSlider(new Slider("Soldier ants", assetList.resource.soldierPath));
+    gui.spawnMenuAddSlider(new Slider("spawn", assetList.resource.queenPath));
 
     const spawnPauseElem = document.getElementById("spawnPause") as HTMLImageElement;
     spawnPauseElem?.addEventListener("mousedown", () => {
