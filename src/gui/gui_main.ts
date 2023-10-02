@@ -31,21 +31,21 @@ export function initGui(game: Game) {
     gui.addBuildBtn(new BuildBtn("residential chamber", getSwapCursorModeFunction(game, CursorMode.Residential), assetList.buildBtn.residential));
     gui.addBuildBtn(new BuildBtn("farm chamber", getSwapCursorModeFunction(game, CursorMode.Farm), assetList.buildBtn.farming));
     gui.addBuildBtn(new BuildBtn("training chamber", getSwapCursorModeFunction(game, CursorMode.Training), assetList.buildBtn.training));
-    gui.addBuildBtn(new BuildBtn("ant spawn", toggleAntSpawnMenu(game), assetList.buildBtn.queen, updateAntSpawnMenuBtn));
+    gui.addBuildBtn(new BuildBtn("ant spawn", toggleAntSpawnMenu(game), assetList.buildBtn.spawn, updateAntSpawnMenuBtn));
 
-    gui.spawnMenuAddSlider(new Slider("Farmer ants", assetList.spawnMenu.farmerPath));
-    gui.spawnMenuAddSlider(new Slider("Worker ants", assetList.spawnMenu.workerPath));
-    gui.spawnMenuAddSlider(new Slider("Soldier ants", assetList.spawnMenu.soldierPath));
+    gui.spawnMenuAddSlider(new Slider("Farmer ants", assetList.spawnMenu.farmerPath, data.farmerSpawnRatio, data.farmerSpawnChance));
+    gui.spawnMenuAddSlider(new Slider("Worker ants", assetList.spawnMenu.workerPath, data.workerSpawnRatio, data.workerSpawnChance));
+    gui.spawnMenuAddSlider(new Slider("Soldier ants", assetList.spawnMenu.soldierPath, data.soldierSpawnRatio, data.soldierSpawnChance));
 
     const spawnPauseElem = document.getElementById("spawnPause") as HTMLImageElement;
     spawnPauseElem?.addEventListener("mousedown", () => {
         if (spawnPauseElem.alt.includes("Pause")) {
-            spawnPauseElem.src = assetList.spawnMenu.playIconPath;
+            spawnPauseElem.src = assetList.spawnMenu.pauseIconPath;
             spawnPauseElem.alt = "Play ant production";
             spawnPauseElem.title = "Play ant production";
         }
         else {
-            spawnPauseElem.src = assetList.spawnMenu.pauseIconPath;
+            spawnPauseElem.src = assetList.spawnMenu.playIconPath;
             spawnPauseElem.alt = "Pause ant production";
             spawnPauseElem.title = "Pause ant production";
         }

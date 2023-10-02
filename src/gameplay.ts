@@ -35,14 +35,14 @@ function trySpawnAnt(game: Game, spawn: boolean): boolean{
             return true;
         }
 
-        const antType = Math.random() * 3;
-        if (antType < 1){
+        let antType = Math.random();
+        if ((antType -= data.farmerSpawnChance.value) < 0){
             data.farmersTotal.value += 1;
         }
-        else if (antType < 2){
+        else if ((antType -= data.workerSpawnChance.value) < 0){
             data.workersTotal.value += 1;
         }
-        else if (antType < 3){
+        else if ((antType -= data.soldierSpawnChance.value) < 0){
             data.soldiersTotal.value += 1;
         }
         return true;
