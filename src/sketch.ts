@@ -66,7 +66,7 @@ export function draw(game: Game) {
                 break;
             case CursorMode.Fill:
                 if (Math.abs(x % cursorRadius) > placementThreshold && Math.abs(y % cursorRadius) > placementThreshold) {
-                    if (antHill.getTile(tileX, tileY) != 1){
+                    if (antHill.getTile(tileX, tileY) != 1) {
                         data.totalTiles.value -= 1;
                     }
                     antHill.setTile(tileX, tileY, 1);
@@ -129,25 +129,22 @@ export function keyPressed(game: Game) {
     const camera = game.camera;
 
     if (p5.keyIsDown(187 /*+*/)) {
-        camera.zoom(1.1);
+        game.camZoom(1.1);
     }
     else if (p5.keyIsDown(189) /*-*/) {
-        camera.zoom(1 / 1.1);
+        game.camZoom(1 / 1.1);
     }
-    else if (p5.keyIsDown(p5.ESCAPE)){
+    else if (p5.keyIsDown(p5.ESCAPE)) {
         console.log(game.gameData);
     }
 }
 
 export function mouseWheel(game: Game, event: WheelEvent) {
-    const p5 = game.p5;
-    const camera = game.camera;
-
     if (event.deltaY < 0) {
-        camera.zoom(1.1);
+        game.camZoom(1.1);
     }
     else {
-        camera.zoom(1 / 1.1);
+        game.camZoom(1 / 1.1);
     }
 }
 
