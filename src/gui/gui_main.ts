@@ -40,15 +40,20 @@ export function initGui(game: Game) {
 
     const spawnPauseElem = document.getElementById("spawnPause") as HTMLImageElement;
     spawnPauseElem?.addEventListener("mousedown", () => {
-        if (spawnPauseElem.alt.includes("Pause")) {
+        if (spawnPauseElem.alt.includes("Play")) {
             spawnPauseElem.src = assetList.spawnMenu.pauseIconPath;
-            spawnPauseElem.alt = "Play ant production";
-            spawnPauseElem.title = "Play ant production";
+            spawnPauseElem.alt = "Pause ant production";
+            spawnPauseElem.title = "Click to resume ant production";
+
+            gui.slidersPlayPause(true);
+
         }
         else {
             spawnPauseElem.src = assetList.spawnMenu.playIconPath;
-            spawnPauseElem.alt = "Pause ant production";
-            spawnPauseElem.title = "Pause ant production";
+            spawnPauseElem.alt = "Play ant production";
+            spawnPauseElem.title = "Click to pause ant production";
+
+            gui.slidersPlayPause(false);
         }
     });
 }

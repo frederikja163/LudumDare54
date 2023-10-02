@@ -63,7 +63,7 @@ export class Slider {
 
     public playPause(pause?: boolean) {
         if (pause != undefined) {
-            this.paused = pause;
+            this.paused = !pause;
         }
 
         if (this.paused) {

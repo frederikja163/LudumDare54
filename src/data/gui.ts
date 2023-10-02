@@ -32,6 +32,12 @@ export class Gui {
         spawnMenuElem?.appendChild(slider.containerElem);
     }
 
+    public slidersPlayPause(pause?: boolean) {
+        for (const slider of this._spawnSliders) {
+            slider.playPause(pause);
+        }
+    }
+
     public neutralizeBuildBtns() {
         for (const button of this._buildBtns) {
             button.active = false;
