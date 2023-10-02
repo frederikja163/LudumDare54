@@ -22,6 +22,9 @@ export function initGui(game: Game) {
     gui.addResourceDisplay(new ResourceDisplay("worker", "Workers [Active/Total]", data.workersActive, data.workersTotal, assetList.resource.workerPath));
     gui.addResourceDisplay(new ResourceDisplay("soldier", "Soldiers [Active/Total]", data.soldiersActive, data.soldiersTotal, assetList.resource.soldierPath));
 
+    const spawnProgressElem = document.querySelector("#resourceBar>input") as HTMLInputElement;
+    spawnProgressElem.value = "10";
+
     // BuildBar
     gui.addBuildBtn(new BuildBtn("dig", getSwapCursorModeFunction(game, CursorMode.Dig), assetList.buildBtn.dig));
     gui.addBuildBtn(new BuildBtn("fill", getSwapCursorModeFunction(game, CursorMode.Fill), assetList.buildBtn.fill));
@@ -31,9 +34,9 @@ export function initGui(game: Game) {
     gui.addBuildBtn(new BuildBtn("training chamber", getSwapCursorModeFunction(game, CursorMode.Training), assetList.buildBtn.training));
     gui.addBuildBtn(new BuildBtn("ant spawn", toggleAntSpawnMenu(game), assetList.buildBtn.queen, updateAntSpawnMenuBtn));
 
-    gui.spawnMenuAddSlider(new Slider("Farmer ants", assetList.resource.farmerPath));
-    gui.spawnMenuAddSlider(new Slider("Worker ants", assetList.resource.workerPath));
-    gui.spawnMenuAddSlider(new Slider("Soldier ants", assetList.resource.soldierPath));
+    gui.spawnMenuAddSlider(new Slider("Farmer ants", assetList.spawnMenu.farmerPath));
+    gui.spawnMenuAddSlider(new Slider("Worker ants", assetList.spawnMenu.workerPath));
+    gui.spawnMenuAddSlider(new Slider("Soldier ants", assetList.spawnMenu.soldierPath));
 
     const spawnPauseElem = document.getElementById("spawnPause") as HTMLImageElement;
     spawnPauseElem?.addEventListener("mousedown", () => {
