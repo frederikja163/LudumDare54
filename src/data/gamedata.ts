@@ -33,11 +33,11 @@ export class GameData {
 
     public readonly queensTotal = value(1);
     public readonly farmersTotal = value(2);
-    public readonly workersTotal = value(4);
+    public readonly workersTotal = value(25);
     // public readonly soldiersTotal = value(1);
 
     public readonly queensActive = this.queensTotal;
-    public readonly workersActive = equation([this.totalTiles, this.queensTotal], n => (n[0] - 30 * n[1]));
+    public readonly workersActive = equation([this.totalTiles, this.queensTotal], n => (Math.round(n[0] / 3) - 0 * n[1]));
     // public readonly soldiersActive = value(0);
 
     public readonly queensIdle = equation([this.queensTotal, this.queensActive], n => n[0] - n[1]);
@@ -46,7 +46,7 @@ export class GameData {
 
     // Farmers cant have more than 1 consumption atm as this would create a circular dependency. Luckily we planned for a consumption of 1.
     public readonly foodConsumption = sum([weightedSum([this.queensActive, this.farmersTotal, this.workersActive, /*this.soldiersActive,*/ this.queensIdle, this.workersIdle, /*this.soldiersIdle*/],
-        [10, 1, 3, /*2,*/ 1, 1, /*1*/]), value(-6)]);
+        [10, 1, 3, /*2,*/ 1, 1, /*1*/]), value(-53)]); //-6
     public readonly farmersActive = equation([this.farmerProduction, this.farmersTotal, this.farmProduction, this.farmTiles, this.foodConsumption],
         // Min(productionBaseOnFarmers, productionBasedOnFarms)
         n => Math.min(Math.min(Math.ceil(n[4] / n[0]), n[1]), Math.ceil(n[3] * n[0] / n[2])));
@@ -63,7 +63,7 @@ export class GameData {
     public readonly antSpawnProgress = value(0);
     public readonly antCapacity = product([this.residentialTiles, value(3)]);
     // public readonly combatPower = product([this.trainingTiles, this.soldiersActive]);
-    public readonly tileCapacity = equation([this.workersTotal, this.queensTotal], n => (3 * n[0] + 30 * n[1]));
+    public readonly tileCapacity = equation([this.workersTotal, this.queensTotal], n => (3 * n[0] + 0 * n[1]));
 
     public readonly farmerSpawnRatio = value(100);
     public readonly workerSpawnRatio = value(100);
