@@ -108,9 +108,9 @@ function trySpawnAnt(game: Game, spawn: boolean): boolean{
         else if ((antType -= data.workerSpawnChance.value) < 0){
             data.workersTotal.value += 1;
         }
-        else if ((antType -= data.soldierSpawnChance.value) < 0){
-            data.soldiersTotal.value += 1;
-        }
+        // else if ((antType -= data.soldierSpawnChance.value) < 0){
+        //     data.soldiersTotal.value += 1;
+        // }
         return true;
     }
     // Notifications are sat continuosly while supposed to show. So hide them immidiatly.

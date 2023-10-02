@@ -67,10 +67,10 @@ export class GameData {
 
     public readonly farmerSpawnRatio = value(100);
     public readonly workerSpawnRatio = value(100);
-    public readonly soldierSpawnRatio = value(24);
-    public readonly totalSpawnRatio = sum([this.farmerSpawnRatio, this.workerSpawnRatio, this.soldierSpawnRatio]);
+    // public readonly soldierSpawnRatio = value(24);
+    public readonly totalSpawnRatio = sum([this.farmerSpawnRatio, this.workerSpawnRatio, /*this.soldierSpawnRatio*/]);
     public readonly farmerSpawnChance = equation([this.totalSpawnRatio, this.farmerSpawnRatio], n => n[1] / n[0]);
     public readonly workerSpawnChance = equation([this.totalSpawnRatio, this.workerSpawnRatio], n => n[1] / n[0]);
-    public readonly soldierSpawnChance = equation([this.totalSpawnRatio, this.soldierSpawnRatio], n => n[1] / n[0]);
+    // public readonly soldierSpawnChance = equation([this.totalSpawnRatio, this.soldierSpawnRatio], n => n[1] / n[0]);
 }
 
