@@ -97,7 +97,7 @@ export function mouseDragged(game: Game, event: MouseEvent) {
     const camera = game.camera;
     const cursorMode = game.cursorMode;
 
-    if (p5.mouseButton === p5.CENTER || (p5.mouseButton === p5.LEFT && cursorMode === CursorMode.Neutral)) {
+    if (p5.mouseButton === p5.CENTER || (p5.mouseButton === p5.LEFT && cursorMode === CursorMode.Neutral && !game.canvasIgnoreInput)) {
         camera.move(event.movementX, event.movementY);
     }
 }

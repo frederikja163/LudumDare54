@@ -6,10 +6,12 @@ export class BuildBtn {
     private iconPath: string;
     private activeIconPath: string;
     private _active: boolean = false;
+    private changeActiveAction?: (active: boolean) => void;
 
-    constructor(name: string, clickAction: (active: boolean) => boolean, button: Button) {
+    constructor(name: string, clickAction: (active: boolean) => boolean, button: Button, changeActiveAction?: (active: boolean) => void) {
         this.iconPath = button.iconPath;
         this.activeIconPath = button.activePath == undefined ? button.iconPath : button.activePath;
+        this.changeActiveAction = changeActiveAction;
 
         this._buttonElem = document.createElement("button");
         this._buttonElem.addEventListener("mousedown", () => { this.active = clickAction(this.active) });
@@ -35,6 +37,10 @@ export class BuildBtn {
         else {
             this._active = false;
             this.iconElem.src = this.iconPath;
+        }
+
+        if (this.changeActiveAction != undefined) {
+            this.changeActiveAction(this._active);
         }
     }
 

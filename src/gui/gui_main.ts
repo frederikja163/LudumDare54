@@ -1,6 +1,7 @@
 import { ResourceDisplay } from "./resource_display";
 import { BuildBtn } from "./build_btn";
 import { CursorMode, Game } from "../data/game";
+import { Slider } from "./slider";
 import { value } from "../data/dynamic_equations";
 
 export function initGui(game: Game) {
@@ -8,7 +9,7 @@ export function initGui(game: Game) {
     const data = game.gameData;
     const gui = game.gui;
 
-    const barElems = document.querySelectorAll(".bar");
+    const barElems = document.querySelectorAll(".gui");
     barElems.forEach(e => {
         const elem = e as HTMLElement;
         elem.addEventListener("mousedown", () => { game.canvasIgnoreInput = true });
@@ -28,9 +29,28 @@ export function initGui(game: Game) {
     gui.addBuildBtn(new BuildBtn("residential chamber", getSwapCursorModeFunction(game, CursorMode.Residential), assetList.buildBtn.residential));
     gui.addBuildBtn(new BuildBtn("farm chamber", getSwapCursorModeFunction(game, CursorMode.Farm), assetList.buildBtn.farming));
     gui.addBuildBtn(new BuildBtn("training chamber", getSwapCursorModeFunction(game, CursorMode.Training), assetList.buildBtn.training));
+    gui.addBuildBtn(new BuildBtn("ant spawn", toggleAntSpawnMenu(game), assetList.buildBtn.queen, updateAntSpawnMenuBtn));
+
+    gui.spawnMenuAddSlider(new Slider("Farmer ants", assetList.resource.farmerPath));
+    gui.spawnMenuAddSlider(new Slider("Worker ants", assetList.resource.workerPath));
+    gui.spawnMenuAddSlider(new Slider("Soldier ants", assetList.resource.soldierPath));
+
+    const spawnPauseElem = document.getElementById("spawnPause") as HTMLImageElement;
+    spawnPauseElem?.addEventListener("mousedown", () => {
+        if (spawnPauseElem.alt.includes("Pause")) {
+            spawnPauseElem.src = assetList.spawnMenu.playIconPath;
+            spawnPauseElem.alt = "Play ant production";
+            spawnPauseElem.title = "Play ant production";
+        }
+        else {
+            spawnPauseElem.src = assetList.spawnMenu.pauseIconPath;
+            spawnPauseElem.alt = "Pause ant production";
+            spawnPauseElem.title = "Pause ant production";
+        }
+    });
 }
 
-function getSwapCursorModeFunction(game: Game, cursorModeThis: CursorMode) {
+function getSwapCursorModeFunction(game: Game, cursorModeThis: CursorMode): (active: boolean) => boolean {
     return (active) => {
         if (game.cursorMode == cursorModeThis && active) {
             game.cursorMode = CursorMode.Neutral;
@@ -42,4 +62,34 @@ function getSwapCursorModeFunction(game: Game, cursorModeThis: CursorMode) {
             return true;
         }
     };
+}
+
+function toggleAntSpawnMenu(game: Game): (active: boolean) => boolean {
+    return (active) => {
+        const antSpawnElem = document.getElementById("spawnMenu");
+
+        game.cursorMode = CursorMode.Neutral;
+        game.gui.neutralizeBuildBtns();
+
+        if (active && antSpawnElem != null) {
+            antSpawnElem.style.display = "none";
+            return false;
+        }
+        else if (antSpawnElem != null) {
+            antSpawnElem.style.display = "flex";
+            return true;
+        }
+        return false;
+    };
+}
+
+function updateAntSpawnMenuBtn(active: boolean) {
+    const antSpawnElem = document.getElementById("spawnMenu");
+
+    if (active && antSpawnElem != null) {
+        antSpawnElem.style.display = "flex";
+    }
+    else if (antSpawnElem != null) {
+        antSpawnElem.style.display = "none";
+    }
 }
