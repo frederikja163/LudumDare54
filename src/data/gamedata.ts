@@ -45,8 +45,8 @@ export class GameData {
     // public readonly soldiersIdle = equation([this.soldiersTotal, this.soldiersActive], n => n[0] - n[1]);;
 
     // Farmers cant have more than 1 consumption atm as this would create a circular dependency. Luckily we planned for a consumption of 1.
-    public readonly foodConsumption = weightedSum([this.queensActive, this.farmersTotal, this.workersActive, /*this.soldiersActive,*/ this.queensIdle, this.workersIdle, /*this.soldiersIdle*/],
-        [10, 1, 3, /*2,*/ 1, 1, /*1*/]);
+    public readonly foodConsumption = sum([weightedSum([this.queensActive, this.farmersTotal, this.workersActive, /*this.soldiersActive,*/ this.queensIdle, this.workersIdle, /*this.soldiersIdle*/],
+        [10, 1, 3, /*2,*/ 1, 1, /*1*/]), value(-6)]);
     public readonly farmersActive = equation([this.farmerProduction, this.farmersTotal, this.farmProduction, this.farmTiles, this.foodConsumption],
         // Min(productionBaseOnFarmers, productionBasedOnFarms)
         n => Math.min(Math.min(Math.ceil(n[4] / n[0]), n[1]), Math.ceil(n[3] * n[0] / n[2])));
