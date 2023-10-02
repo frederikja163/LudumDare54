@@ -88,6 +88,12 @@ export function draw(game: Game) {
                 break;
         }
         antHill.countTiles();
+        if (data.queenTiles.value === 0){
+            console.log("Couldn't remove tile, it would kill your queen.");
+            antHill.setTile(tileX, tileY, 0);
+            antHill.getChamber(tileX, tileY)!.chamberType = ChamberType.Queen;
+            antHill.countTiles();
+        }
     }
 
     antHill.draw();
