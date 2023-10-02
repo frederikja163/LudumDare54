@@ -64,4 +64,12 @@ export class Game {
         this._gameData = new GameData();
         this._cursorMode = CursorMode.Neutral;
     }
+
+    public camZoom(factor: number) {
+        if (factor > 1) {
+            this._camera.zoom(factor);
+        } else if (factor < 1 && this._camera.zoomAmount > 100) {
+            this._camera.zoom(factor);
+        }
+    }
 }
