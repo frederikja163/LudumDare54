@@ -1,10 +1,17 @@
 import { EquationEventType } from "./data/dynamic_equations";
 import { Game } from "./data/game";
 import { TutorialStep } from "./data/gamedata";
+import { Notification } from "./gui/notification";
 
 export function initGameplay(game: Game){
+    startTutorial(game);
+    startAntSpawning(game);
+}
+
+function startTutorial(game: Game){
     const data = game.gameData;
-    const notification = game.notifications;
+    const noti = game.notifications;
+    let previousNotification: Notification | undefined;
     data.tutorialStep.addEventListener(EquationEventType.ValueChange, () => {
         const step = data.tutorialStep.value;
 
@@ -12,24 +19,33 @@ export function initGameplay(game: Game){
             case TutorialStep.WelcomeMessage:
                 break;
             case TutorialStep.ExcavateTunnel:
-                notification.excavateTunnel.show(-1);
+                swapNotification(noti.excavateTunnel);
                 break;
             case TutorialStep.CreateChamber:
-                notification.excavateTunnel.hide();
-                notification.createChamber.show(-1);
+                swapNotification(noti.createChamber);
                 break;
             case TutorialStep.MarkAsResidential:
+                swapNotification(noti.markAsResidential);
                 break;
             case TutorialStep.ExcavateAnotherChamber:
+                swapNotification(noti.excavateAnotherChamber);
                 break;
             case TutorialStep.MarkAsFarm:
+                swapNotification(noti.markAsFarm);
                 break;
             case TutorialStep.Finished:
+                previousNotification?.hide();
+                noti.finished.show();
                 break;
+        }
+
+        function swapNotification(notification: Notification){
+            previousNotification?.hide();
+            notification.show(-1);
+            previousNotification = notification;
         }
     })
 
-    startAntSpawning(game);
 }
 
 function startAntSpawning(game: Game){
