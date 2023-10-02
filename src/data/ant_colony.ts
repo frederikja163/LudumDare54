@@ -67,12 +67,12 @@ export class AntColony extends EventTarget {
         this.defaultLayout();
     }
 
-    private defaultLayout(){
+    private defaultLayout() {
         const centerX = Math.floor(this.width / 2);
         const centerY = Math.floor(this.height / 2);
-        
+
         setTimeout(() => {
-            this.carveSquare(centerX - 2, centerX + 2, centerY - 2, centerY + 2);
+            this.carveSquare(centerX - 1, centerX + 1, centerY - 1, centerY + 1);
             // this.carveSquare(centerX - 6, centerX - 5, centerY + 1, centerY + 2);
             // this.carveSquare(centerX - 5, centerX - 3, centerY, centerY);
             // this.carveSquare(centerX + 3, centerX + 4, centerY - 4, centerY - 3);
@@ -85,7 +85,7 @@ export class AntColony extends EventTarget {
             this.countTiles();
         }, 0);
     }
-    private carveSquare(minX: number, maxX: number, minY: number, maxY: number){
+    private carveSquare(minX: number, maxX: number, minY: number, maxY: number) {
         for (let y = minY; y <= maxY; y++) {
             for (let x = minX; x <= maxX; x++) {
                 this.setTile(x, y, 0);
@@ -94,7 +94,7 @@ export class AntColony extends EventTarget {
         this.game.gameData.totalTiles.value += (maxX - minX + 1) * (maxY - minY + 1);
     }
 
-    public countTiles(){
+    public countTiles() {
         const data = this.game.gameData;
         const counts = new Map<ChamberType, number>();
         counts.set(ChamberType.Unassigned, 0);
@@ -110,7 +110,7 @@ export class AntColony extends EventTarget {
             counts.set(chamber.chamberType, count + chamber.size);
         }
         counts.forEach((val, type) => {
-            switch (type){
+            switch (type) {
                 case ChamberType.Invalid:
                     break;
                 case ChamberType.Unassigned:
@@ -144,20 +144,20 @@ export class AntColony extends EventTarget {
             this.chambers.splice(index, 1);
         }
     }
-    
-    private findChamberIndex(x: number, y: number): number{
+
+    private findChamberIndex(x: number, y: number): number {
         let index = -1;
-        for (let i = this.chambers.length - 1; i >= 0; i--){
+        for (let i = this.chambers.length - 1; i >= 0; i--) {
             const chamber = this.chambers[i];
-            if (index === -1 && chamber.contains(x, y)){
+            if (index === -1 && chamber.contains(x, y)) {
                 index = i;
             }
-            else if (index != -1 && chamber.contains(x, y)){
-                if ((chamber.size > this.chambers[index].size || chamber.chamberType != ChamberType.Queen) && this.chambers[index].chamberType === ChamberType.Queen){
+            else if (index != -1 && chamber.contains(x, y)) {
+                if ((chamber.size > this.chambers[index].size || chamber.chamberType != ChamberType.Queen) && this.chambers[index].chamberType === ChamberType.Queen) {
                     this.chambers.splice(i, 1);
                     index -= 1;
                 }
-                else{
+                else {
                     this.chambers.splice(index, 1);
                     index = i;
                 }
