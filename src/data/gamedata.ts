@@ -46,5 +46,13 @@ export class GameData{
     public readonly antCapacity = product([this.residentialTiles, value(5)]);
     public readonly combatPower = product([this.trainingTiles, this.soldiersActive]);
     public readonly tileCapacity = product([value(10), sum([this.workersActive, this.workersIdle])]);
+
+    public readonly farmerSpawnRatio = value(1);
+    public readonly workerSpawnRatio = value(1);
+    public readonly soldierSpawnRatio = value(1);
+    public readonly totalSpawnRatio = sum([this.farmerSpawnRatio, this.workerSpawnRatio, this.soldierSpawnRatio]);
+    public readonly farmerSpawnChance = equation([this.totalSpawnRatio, this.farmerSpawnRatio], n => n[1] / n[0]);
+    public readonly workerSpawnChance = equation([this.totalSpawnRatio, this.workerSpawnRatio], n => n[1] / n[0]);
+    public readonly soldierSpawnChance = equation([this.totalSpawnRatio, this.soldierSpawnRatio], n => n[1] / n[0]);
 }
 
