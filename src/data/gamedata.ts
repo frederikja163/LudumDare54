@@ -1,8 +1,25 @@
 import { value, equation, sum, weightedSum, product } from "./dynamic_equations";
 
+export enum TutorialStep {
+    WelcomeMessage,
+    MoveCamera,
+    ZoomCamera,
+    ExcavateTunnel,
+    CreateChamber,
+    MarkAsResidential,
+    ExcavateAnotherChamber,
+    MarkAsFarm,
+    SpawnMenu,
+    EnableFarmers,
+    EnableWorkers,
+    ContinueGame,
+    Finished
+}
+
 export class GameData {
     public readonly time = value(0);
     public readonly pauseProduction = value(1);
+    public readonly tutorialStep = value(TutorialStep.WelcomeMessage);
 
     public readonly farmerProduction = value(15);
     public readonly farmProduction = value(5);

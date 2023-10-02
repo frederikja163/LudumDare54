@@ -190,6 +190,12 @@ body
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+#spawnPauseText{
+    margin: auto;
+    text-align: center;
+    width: 100%;
+}
+
 #spawnPause:active {
     padding: 2px;
 }
