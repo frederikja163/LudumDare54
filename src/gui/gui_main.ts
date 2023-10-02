@@ -15,6 +15,8 @@ export function initGui(game: Game) {
         elem.addEventListener("mousedown", () => { game.canvasIgnoreInput = true });
     });
 
+    gui.updateSpawnProgress(data.msPerAnt, data.antSpawnProgress);
+
     // ResourceBar
     gui.addResourceDisplay(new ResourceDisplay("food", "Food: If you don't have enough your ants will start to die. [consumption/production]", data.foodConsumption, data.foodProduction, assetList.resource.foodIconPath));
     gui.addResourceDisplay(new ResourceDisplay("tiles", "Tiles: How many tiles your workers can maintain at once. [used/available]", data.totalTiles, data.tileCapacity, assetList.resource.tileIconPath));
