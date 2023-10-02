@@ -26,6 +26,7 @@ export function draw(game: Game) {
     const camera = game.camera;
     const assetList = game.assetList;
     const cursorMode = game.cursorMode;
+    const data = game.gameData;
 
     p5.background(0, 0, 0);
     camera.apply();
@@ -47,14 +48,18 @@ export function draw(game: Game) {
         const chamber = antHill.getChamber(tileX, tileY);
         switch (cursorMode) {
             case CursorMode.Dig:
-                if (Math.abs(x % cursorRadius) > placementThreshold && Math.abs(y % cursorRadius) > placementThreshold) {
-
+                if (data.tileCapacity.value > data.totalTiles.value && Math.abs(x % cursorRadius) > placementThreshold && Math.abs(y % cursorRadius) > placementThreshold) {
+                    if (antHill.getTile(tileX, tileY) != 0){
+                        data.totalTiles.value += 1;
+                    }
                     antHill.setTile(tileX, tileY, 0);
                 }
                 break;
             case CursorMode.Fill:
                 if (Math.abs(x % cursorRadius) > placementThreshold && Math.abs(y % cursorRadius) > placementThreshold) {
-
+                    if (antHill.getTile(tileX, tileY) != 1){
+                        data.totalTiles.value -= 1;
+                    }
                     antHill.setTile(tileX, tileY, 1);
                 }
                 break;
@@ -78,8 +83,8 @@ export function draw(game: Game) {
                     chamber.chamberType = ChamberType.Training;
                 }
                 break;
-
         }
+        antHill.countTiles();
     }
 
     antHill.draw();
@@ -112,6 +117,9 @@ export function keyPressed(game: Game) {
     }
     else if (p5.keyIsDown(189) /*-*/) {
         camera.zoom(1 / 1.1);
+    }
+    else if (p5.keyIsDown(p5.ESCAPE)){
+        console.log(game.gameData);
     }
 }
 

@@ -46,11 +46,12 @@ export class AntColony extends EventTarget {
         if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
             return;
         }
+        this.tiles[y][x] = value;
+        this.updateChamber(x, y);
         this.updateChamber(x - 1, y);
         this.updateChamber(x, y - 1);
         this.updateChamber(x + 1, y);
         this.updateChamber(x, y + 1);
-        this.tiles[y][x] = value;
         this.dispatchEvent(new TileEvent(x, y));
     }
 
@@ -65,9 +66,47 @@ export class AntColony extends EventTarget {
         this.game = game;
     }
 
+    public countTiles(){
+        const data = this.game.gameData;
+        const counts = new Map<ChamberType, number>();
+        counts.set(ChamberType.Unassigned, 0);
+        counts.set(ChamberType.Invalid, 0);
+        counts.set(ChamberType.Hall, 0);
+        counts.set(ChamberType.Queen, 0);
+        counts.set(ChamberType.Residential, 0);
+        counts.set(ChamberType.Farm, 0);
+        counts.set(ChamberType.Training, 0);
+        for (let i = 0; i < this.chambers.length; i++) {
+            const chamber = this.chambers[i];
+            const count = counts.get(chamber.chamberType)!;
+            counts.set(chamber.chamberType, count + chamber.size);
+        }
+        counts.forEach((val, type) => {
+            switch (type){
+                case ChamberType.Invalid:
+                    break;
+                case ChamberType.Unassigned:
+                    data.unassignedTiles.value = val;
+                    break;
+                case ChamberType.Queen:
+                    data.queenTiles.value = val;
+                    break;
+                case ChamberType.Residential:
+                    data.residentialTiles.value = val;
+                    break;
+                case ChamberType.Farm:
+                    data.farmTiles.value = val;
+                    break;
+                case ChamberType.Training:
+                    data.trainingTiles.value = val;
+                    break;
+            }
+        });
+    }
+
     private updateChamber(x: number, y: number) {
         const index = this.findChamberIndex(x, y);
-        if (index === -1 && Chamber.calcChamberType(this, ChamberType.Unassigned, x, y) === ChamberType.Unassigned) {
+        if (index === -1 && Chamber.calcChamberType(this, ChamberType.Unassigned, x, y) != ChamberType.Invalid) {
             const chamber = new Chamber(this.game, x, y);
             if (chamber.isValidChamber()) {
                 this.chambers.push(chamber);
@@ -77,7 +116,7 @@ export class AntColony extends EventTarget {
             this.chambers.splice(index, 1);
         }
     }
-
+    
     private findChamberIndex(x: number, y: number): number{
         let index = -1;
         for (let i = this.chambers.length - 1; i >= 0; i--){
@@ -110,13 +149,13 @@ export class AntColony extends EventTarget {
             const chamber = this.chambers[i];
             switch (chamber.chamberType) {
                 case ChamberType.Invalid:
-                    p5.fill(255, 0, 0);
+                    p5.fill(255, 0, 255);
                     break;
                 case ChamberType.Hall:
-                    p5.fill(100, 100, 100);
+                    p5.fill(255, 100, 255);
                     break;
                 case ChamberType.Unassigned:
-                    p5.fill(150, 150, 150);
+                    p5.fill(100, 100, 100);
                     break;
                 case ChamberType.Queen:
                     p5.fill(255, 255, 255);

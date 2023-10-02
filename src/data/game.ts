@@ -3,6 +3,7 @@ import { AntColony } from "./ant_colony";
 import { Camera } from "./camera";
 import { AssetList } from "./asset_list";
 import { Gui } from "./gui";
+import { GameData } from "./gamedata";
 
 export enum CursorMode {
     Neutral,
@@ -20,6 +21,7 @@ export class Game {
     private readonly _antHill: AntColony;
     private readonly _camera: Camera;
     private readonly _gui: Gui;
+    private readonly _gameData: GameData;
     private _cursorMode: CursorMode;
     private _canvasIgnoreInput: boolean;
     public get p5(): P5 {
@@ -33,6 +35,9 @@ export class Game {
     }
     public get camera(): Camera {
         return this._camera;
+    }
+    public get gameData(): GameData {
+        return this._gameData;
     }
     public get gui(): Gui {
         return this._gui;
@@ -56,6 +61,7 @@ export class Game {
         this._antHill = new AntColony(this, 100, 100);
         this._camera = new Camera(p5, 100);
         this._gui = new Gui();
+        this._gameData = new GameData();
         this._cursorMode = CursorMode.Neutral;
     }
 }

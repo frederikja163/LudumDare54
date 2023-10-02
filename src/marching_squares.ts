@@ -2,7 +2,6 @@ import P5 from "p5";
 import { AntColony } from "./data/ant_colony";
 import { Game } from "./data/game";
 import { Camera } from "./data/camera";
-const DEBUG = false;
 
 type PointOffset = { xOffset: number, yOffset: number };
 const TopCenter: PointOffset = { xOffset: 0, yOffset: 0.5 };
@@ -76,15 +75,12 @@ export function drawMarchingSquares(game: Game, textures: P5.Image[] | undefined
             }
             p5.endShape();
 
-            if (DEBUG) {
+            if (p5.keyIsDown(p5.ALT)) {
                 p5.push();
-                p5.fill((predicate(x - 1, y - 1)) ? 200 : 50);
+                p5.fill(50);
                 p5.ellipse(x - 1, y - 1, .25, .25);
-                p5.fill((predicate(x, y - 1)) ? 200 : 50);
                 p5.ellipse(x, y - 1, .25, .25);
-                p5.fill((predicate(x, y)) ? 200 : 50);
                 p5.ellipse(x - 1, y, .25, .25);
-                p5.fill((predicate(x - 1, y)) ? 200 : 50);
                 p5.ellipse(x, y, .25, .25);
                 p5.pop();
             }
