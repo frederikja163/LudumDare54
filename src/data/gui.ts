@@ -2,6 +2,7 @@ import { ResourceDisplay } from "../gui/resource_display";
 import { BuildBtn } from "../gui/build_btn";
 import { Slider } from "../gui/slider";
 import { Equation, EquationEventType } from "./dynamic_equations";
+import { Notification } from "../gui/notification";
 
 export class Gui {
     private readonly _resourceDisplays: ResourceDisplay[];
@@ -32,6 +33,12 @@ export class Gui {
         spawnMenuElem?.appendChild(slider.containerElem);
     }
 
+    public slidersPlayPause(pause?: boolean) {
+        for (const slider of this._spawnSliders) {
+            slider.playPause(pause);
+        }
+    }
+
     public neutralizeBuildBtns() {
         for (const button of this._buildBtns) {
             button.active = false;
@@ -39,14 +46,25 @@ export class Gui {
     }
 
     public updateSpawnProgress(msPerAnt: Equation, antSpawnProgress: Equation) {
-        const spawnProgressElem = document.querySelector("#resourceBar>input") as HTMLInputElement;
+        const spawnProgInputElem = document.querySelector("#spawnProg>input") as HTMLInputElement;
+        const spawnProgPElem = document.querySelector("#spawnProg>p") as HTMLParagraphElement;
+
+        function updateP() {
+            spawnProgPElem.innerText = `${Math.round(antSpawnProgress.value / 1000)}/${Math.round(msPerAnt.value / 1000)} s`;
+        }
 
         msPerAnt.addEventListener(EquationEventType.ValueChange, () => {
-            spawnProgressElem.max = JSON.stringify(msPerAnt.value);
+            spawnProgInputElem.max = JSON.stringify(msPerAnt.value);
+            updateP();
         });
 
         antSpawnProgress.addEventListener(EquationEventType.ValueChange, () => {
-            spawnProgressElem.value = JSON.stringify(antSpawnProgress.value);
+            spawnProgInputElem.value = JSON.stringify(antSpawnProgress.value);
+            updateP();
         });
+    }
+
+    public notify(title: string, message: string) {
+        new Notification(title, message).show();
     }
 }

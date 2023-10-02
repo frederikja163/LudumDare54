@@ -1,8 +1,12 @@
 :root {
     --guiBg: rgba(31, 31, 31, 0.9);
     --light: #f0f0f0;
+    --gold: #8e7603;
+    --btnBg: #4f4f4f;
     --resourceBarHeight: 40px;
     --buildBtnHeight: 64px;
+    --guiBorderRadius: 4px;
+    --btnBorderRadius: 10px;
 }
 
 *
@@ -51,25 +55,94 @@ body
     color: var(--light);
 }
 
-#resourceBar>input
+#spawProg
 {
-    align-self: flex-end;
-    display: flex;
-    right: 0;
+    /* Move me sometime */
+}
+
+#spawnProg>input
+{
     height: calc(var(--resourceBarHeight) * 0.5);
     margin: calc(var(--resourceBarHeight) * 0.25);
     border-radius: calc(var(--resourceBarHeight) * 0.25);
     width: 200px;
     appearance: none;
-    background-color: #4f4f4f;
+    background-color: var(--btnBg);
     overflow: hidden;
 }
 
-#resourceBar>input::-webkit-slider-thumb {
+#spawnProg>p
+{
+    color: var(--light);
+    line-height: var(--resourceBarHeight);
+    height: var(--resourceBarHeight);
+    margin: 0;
+    transform: translateY(-100%);
+    text-align: center;
+}
+
+#spawnProg>input::-webkit-slider-thumb {
     width: 0;
     height: 0;
     appearance: none;
     box-shadow: -100px 0 0 100px #8e7603;
+}
+
+#notiCont
+{
+    width: 400px;
+    display: flex;
+    position: fixed;
+    z-index: 1;
+    top: var(--resourceBarHeight);
+    left: 50%;
+    transform: translate(-50%);
+}
+
+#notiCont>div
+{
+    background-color: var(--guiBg);
+    width: 100%;
+    margin: 4px;
+    padding: 0 10px 0 10px;
+    border-radius: var(--guiBorderRadius);
+    color: var(--light);
+    transition: opacity 0.5s linear;
+}
+
+#notiCont .title
+{
+    font-weight: bold;
+}
+
+#welcomeMsg
+{
+    background-color: var(--guiBg);
+    border-radius: var(--guiBorderRadius);
+    color: var(--light);
+    padding: 0 40px 0 40px;
+    width: 60%;
+    position: fixed;
+    z-index: 10;
+    top: calc(var(--resourceBarHeight) * 2);
+    left: 50%;
+    transform: translate(-50%);
+    display: flex;
+    flex-direction: column;
+}
+
+#welcomeMsg button
+{
+    font-size: 24px;
+    font-family: 'Pixelify Sans', Arial, Helvetica, sans-serif;
+    background-color: var(--btnBg);
+    color: var(--light);
+    border: var(--gold) solid 2px;
+    border-radius: var(--btnBorderRadius);
+    display: flex;
+    margin: auto;
+    margin-bottom: 20px;
+    padding: 10px;
 }
 
 #buildBarCont
@@ -145,6 +218,8 @@ body
 
 #spawnMenu .sliderCont input
 {
+    --sliderGold: var(--gold);
+
     transform: rotate(-90deg) translate(-50%);
     height: var(--width);
     border-radius: calc(var(--width) * 0.5);
@@ -159,7 +234,7 @@ body
     height: 0;
     appearance: none;
     cursor: n-resize;
-    box-shadow: calc(var(--height) * -0.5) 0 0 calc(var(--height) * 0.5) #8e7603;
+    box-shadow: calc(var(--height) * -0.5) 0 0 calc(var(--height) * 0.5) var(--sliderGold);
 }
 
 #buildBar
