@@ -68,7 +68,7 @@ export class Game {
     public camZoom(factor: number) {
         if (factor > 1) {
             this._camera.zoom(factor);
-        } else if (factor < 1 && this._camera.zoomAmount > 100) {
+        } else if (factor < 1 && this._camera.zoomAmount > 100) { // Ignore red line, it works
             this._camera.zoom(factor);
         }
     }
