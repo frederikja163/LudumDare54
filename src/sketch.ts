@@ -127,9 +127,6 @@ export function keyPressed(game: Game) {
     else if (p5.keyIsDown(189) /*-*/) {
         game.camZoom(1 / 1.1);
     }
-    else if (p5.keyIsDown(87)) /*w*/ {
-        console.log("www");
-    }
     else if (p5.keyIsDown(p5.ESCAPE)) {
         console.log(game.gameData);
     }
