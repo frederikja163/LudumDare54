@@ -13,7 +13,7 @@ export class GameData{
     public readonly trainingTiles = value(0);
 
     public readonly queensTotal = value(1);
-    public readonly farmersTotal = value(1);
+    public readonly farmersTotal = value(2);
     public readonly workersTotal = value(4);
     public readonly soldiersTotal = value(1);
 
@@ -47,9 +47,9 @@ export class GameData{
     public readonly combatPower = product([this.trainingTiles, this.soldiersActive]);
     public readonly tileCapacity = product([value(10), sum([this.workersActive, this.workersIdle])]);
 
-    public readonly farmerSpawnRatio = value(1);
-    public readonly workerSpawnRatio = value(1);
-    public readonly soldierSpawnRatio = value(0.24);
+    public readonly farmerSpawnRatio = value(100);
+    public readonly workerSpawnRatio = value(100);
+    public readonly soldierSpawnRatio = value(24);
     public readonly totalSpawnRatio = sum([this.farmerSpawnRatio, this.workerSpawnRatio, this.soldierSpawnRatio]);
     public readonly farmerSpawnChance = equation([this.totalSpawnRatio, this.farmerSpawnRatio], n => n[1] / n[0]);
     public readonly workerSpawnChance = equation([this.totalSpawnRatio, this.workerSpawnRatio], n => n[1] / n[0]);
