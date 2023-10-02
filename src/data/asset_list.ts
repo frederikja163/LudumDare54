@@ -48,6 +48,10 @@ export class BuildBtn {
         iconPath: getPath("gui/build_buttons/queen_icon.png"),
         activePath: getPath("gui/build_buttons/queen_icon_active.png"),
     }
+    public readonly spawn: Button = {
+        iconPath: getPath("gui/build_buttons/spawn_icon.png"),
+        activePath: getPath("gui/build_buttons/spawn_icon_active.png"),
+    }
 }
 
 export type Tile = {
