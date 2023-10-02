@@ -3,6 +3,7 @@ import { BuildBtn } from "./build_btn";
 import { CursorMode, Game } from "../data/game";
 import { Slider } from "./slider";
 import { value } from "../data/dynamic_equations";
+import { TutorialStep } from "../data/gamedata";
 
 export function initGui(game: Game) {
     const assetList = game.assetList;
@@ -40,9 +41,10 @@ export function initGui(game: Game) {
     gui.addBuildBtn(new BuildBtn("training chamber", "Mark chambers as training chambers.", getSwapCursorModeFunction(game, CursorMode.Training), assetList.buildBtn.training));
     gui.addBuildBtn(new BuildBtn("ant spawn", "Control ant spawning.", toggleAntSpawnMenu(game), assetList.buildBtn.spawn, updateAntSpawnMenuBtn));
 
-    gui.spawnMenuAddSlider(new Slider("Farmer ants", assetList.spawnMenu.farmerPath, assetList.spawnMenu.farmerDisabledPath, data.farmerSpawnRatio, data.farmerSpawnChance));
-    gui.spawnMenuAddSlider(new Slider("Worker ants", assetList.spawnMenu.workerPath, assetList.spawnMenu.workerDisabledPath, data.workerSpawnRatio, data.workerSpawnChance));
-    gui.spawnMenuAddSlider(new Slider("Soldier ants", assetList.spawnMenu.soldierPath, assetList.spawnMenu.soldierDisabledPath, data.soldierSpawnRatio, data.soldierSpawnChance));
+    gui.spawnMenuAddSlider(new Slider(game, TutorialStep.EnableFarmers, "Farmer ants", assetList.spawnMenu.farmerPath, assetList.spawnMenu.farmerDisabledPath, data.farmerSpawnRatio, data.farmerSpawnChance));
+    gui.spawnMenuAddSlider(new Slider(game, TutorialStep.EnableWorkers, "Worker ants", assetList.spawnMenu.workerPath, assetList.spawnMenu.workerDisabledPath, data.workerSpawnRatio, data.workerSpawnChance));
+    gui.spawnMenuAddSlider(new Slider(game, TutorialStep.Finished, "Soldier ants", assetList.spawnMenu.soldierPath, assetList.spawnMenu.soldierDisabledPath, data.soldierSpawnRatio, data.soldierSpawnChance));
+    gui.slidersPlayPause(true);
 
     const spawnPauseElem = document.getElementById("spawnPause") as HTMLImageElement;
     const spawnPauseTextElem = document.getElementById("spawnPauseText") as HTMLElement;
@@ -62,10 +64,14 @@ export function initGui(game: Game) {
             spawnPauseElem.src = assetList.spawnMenu.playIconPath;
             spawnPauseElem.alt = "Play ant production";
             spawnPauseElem.title = "Click to pause ant production";
-
+            
             spawnPauseTextElem.textContent = "Running";
             
             data.pauseProduction.value = 0;
+
+            if (game.gameData.tutorialStep.value === TutorialStep.ContinueGame){
+                game.gameData.tutorialStep.value += 1;
+            }
         }
     });
 }
@@ -96,6 +102,10 @@ function toggleAntSpawnMenu(game: Game): (active: boolean) => boolean {
             return false;
         }
         else if (antSpawnElem != null) {
+            if (game.gameData.tutorialStep.value === TutorialStep.SpawnMenu){
+                game.gameData.tutorialStep.value += 1;
+            }
+            
             antSpawnElem.style.display = "flex";
             return true;
         }

@@ -39,6 +39,18 @@ function startTutorial(game: Game){
             case TutorialStep.MarkAsFarm:
                 swapNotification(noti.markAsFarm);
                 break;
+            case TutorialStep.SpawnMenu:
+                swapNotification(noti.spawnMenu);
+                break;
+            case TutorialStep.EnableFarmers:
+                swapNotification(noti.enableFarmers);
+                break;
+            case TutorialStep.EnableWorkers:
+                swapNotification(noti.enableWorkers);
+                break;
+            case TutorialStep.ContinueGame:
+                swapNotification(noti.continueGame);
+                break;
             case TutorialStep.Finished:
                 previousNotification?.hide();
                 noti.finished.show();

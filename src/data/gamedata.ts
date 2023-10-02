@@ -9,6 +9,10 @@ export enum TutorialStep {
     MarkAsResidential,
     ExcavateAnotherChamber,
     MarkAsFarm,
+    SpawnMenu,
+    EnableFarmers,
+    EnableWorkers,
+    ContinueGame,
     Finished
 }
 
