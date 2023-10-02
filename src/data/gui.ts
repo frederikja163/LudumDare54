@@ -39,14 +39,21 @@ export class Gui {
     }
 
     public updateSpawnProgress(msPerAnt: Equation, antSpawnProgress: Equation) {
-        const spawnProgressElem = document.querySelector("#resourceBar>input") as HTMLInputElement;
+        const spawnProgInputElem = document.querySelector("#spawnProg>input") as HTMLInputElement;
+        const spawnProgPElem = document.querySelector("#spawnProg>p") as HTMLParagraphElement;
+
+        function updateP() {
+            spawnProgPElem.innerText = `${Math.round(antSpawnProgress.value / 1000)}/${Math.round(msPerAnt.value / 1000)} s`;
+        }
 
         msPerAnt.addEventListener(EquationEventType.ValueChange, () => {
-            spawnProgressElem.max = JSON.stringify(msPerAnt.value);
+            spawnProgInputElem.max = JSON.stringify(msPerAnt.value);
+            updateP();
         });
 
         antSpawnProgress.addEventListener(EquationEventType.ValueChange, () => {
-            spawnProgressElem.value = JSON.stringify(antSpawnProgress.value);
+            spawnProgInputElem.value = JSON.stringify(antSpawnProgress.value);
+            updateP();
         });
     }
 }

@@ -51,11 +51,13 @@ body
     color: var(--light);
 }
 
-#resourceBar>input
+#spawProg
 {
-    align-self: flex-end;
-    display: flex;
-    right: 0;
+    /* Move me sometime */
+}
+
+#spawnProg>input
+{
     height: calc(var(--resourceBarHeight) * 0.5);
     margin: calc(var(--resourceBarHeight) * 0.25);
     border-radius: calc(var(--resourceBarHeight) * 0.25);
@@ -65,7 +67,17 @@ body
     overflow: hidden;
 }
 
-#resourceBar>input::-webkit-slider-thumb {
+#spawnProg>p
+{
+    color: var(--light);
+    line-height: var(--resourceBarHeight);
+    height: var(--resourceBarHeight);
+    margin: 0;
+    transform: translateY(-100%);
+    text-align: center;
+}
+
+#spawnProg>input::-webkit-slider-thumb {
     width: 0;
     height: 0;
     appearance: none;
