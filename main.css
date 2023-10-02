@@ -1,6 +1,7 @@
 :root {
     --guiBg: rgba(31, 31, 31, 0.9);
     --light: #f0f0f0;
+    --gold: #8e7603;
     --btnBg: #4f4f4f;
     --resourceBarHeight: 40px;
     --buildBtnHeight: 64px;
@@ -54,11 +55,13 @@ body
     color: var(--light);
 }
 
-#resourceBar>input
+#spawProg
 {
-    align-self: flex-end;
-    display: flex;
-    right: 0;
+    /* Move me sometime */
+}
+
+#spawnProg>input
+{
     height: calc(var(--resourceBarHeight) * 0.5);
     margin: calc(var(--resourceBarHeight) * 0.25);
     border-radius: calc(var(--resourceBarHeight) * 0.25);
@@ -68,7 +71,17 @@ body
     overflow: hidden;
 }
 
-#resourceBar>input::-webkit-slider-thumb {
+#spawnProg>p
+{
+    color: var(--light);
+    line-height: var(--resourceBarHeight);
+    height: var(--resourceBarHeight);
+    margin: 0;
+    transform: translateY(-100%);
+    text-align: center;
+}
+
+#spawnProg>input::-webkit-slider-thumb {
     width: 0;
     height: 0;
     appearance: none;
@@ -198,6 +211,8 @@ body
 
 #spawnMenu .sliderCont input
 {
+    --sliderGold: var(--gold);
+
     transform: rotate(-90deg) translate(-50%);
     height: var(--width);
     border-radius: calc(var(--width) * 0.5);
@@ -212,7 +227,7 @@ body
     height: 0;
     appearance: none;
     cursor: n-resize;
-    box-shadow: calc(var(--height) * -0.5) 0 0 calc(var(--height) * 0.5) #8e7603;
+    box-shadow: calc(var(--height) * -0.5) 0 0 calc(var(--height) * 0.5) var(--sliderGold);
 }
 
 #buildBar
