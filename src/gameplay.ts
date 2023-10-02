@@ -11,15 +11,18 @@ function startAntSpawning(game: Game){
     requestAnimationFrame(updateAntSpawning);
     function updateAntSpawning(time){
         const deltaTime = time - lastTime;
-        data.antSpawnProgress.value += deltaTime;
 
-        if (!trySpawnAnt(game, false)){
-            data.antSpawnProgress.value = 0;
-        }
-
-        while (data.antSpawnProgress.value > data.msPerAnt.value){   
-            trySpawnAnt(game, true);
-            data.antSpawnProgress.value -= data.msPerAnt.value;
+        if (!data.pauseProduction.value){
+            data.antSpawnProgress.value += deltaTime;
+            
+            if (!trySpawnAnt(game, false)){
+                data.antSpawnProgress.value = 0;
+            }
+            
+            while (data.antSpawnProgress.value > data.msPerAnt.value){   
+                trySpawnAnt(game, true);
+                data.antSpawnProgress.value -= data.msPerAnt.value;
+            }
         }
         lastTime = time;
         requestAnimationFrame(updateAntSpawning);
@@ -28,6 +31,7 @@ function startAntSpawning(game: Game){
 
 function trySpawnAnt(game: Game, spawn: boolean): boolean{
     const data = game.gameData;
+    const notification = game.notifications;
 
     if (data.antsTotal.value < data.antCapacity.value && data.foodConsumption.value < data.foodProduction.value){
         if (!spawn)
@@ -47,14 +51,15 @@ function trySpawnAnt(game: Game, spawn: boolean): boolean{
         }
         return true;
     }
-    else if (spawn && data.antsTotal.value >= data.antCapacity.value) {
-        console.log("Ant production failed: not enough chambers to produce ant.");
+    // Notifications are sat continuosly while supposed to show. So hide them immidiatly.
+    else if (data.antsTotal.value >= data.antCapacity.value) {
+        notification.missingResidential.show(.5);
     }
-    else if (spawn && data.foodConsumption.value >= data.foodProduction.value) {
-        console.log("Ant production failed: not enough food to produce ant.")
+    else if (data.foodConsumption.value >= data.foodProduction.value) {
+        notification.missingFood.show(.5);
     }
-    else if (spawn) {
-        console.log("Ant production failed: unknown reason");
+    else {
+        notification.antProductionFailed.show(.5);
     }
     return false;
 }

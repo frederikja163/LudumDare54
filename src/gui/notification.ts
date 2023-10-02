@@ -1,6 +1,7 @@
 export class Notification {
     private title: string;
     private message: string;
+    private timeoutId: number | undefined;
     private readonly notiElem: HTMLDivElement;
     private readonly titleElem: HTMLParagraphElement;
     private readonly messageElem: HTMLParagraphElement;
@@ -27,15 +28,16 @@ export class Notification {
     private hide() {
         this.notiElem.style.opacity = "0";
 
-        setTimeout(() => { this.notiElem.style.display = "none" }, 500);
+        this.timeoutId = setTimeout(() => { this.notiElem.style.display = "none"; this.timeoutId = undefined; }, 500);
     }
 
-    public show(duration: number = 10) {
+    public show(duration: number = 5) {
         const notiContElem = document.getElementById("notiCont");
         notiContElem?.appendChild(this.notiElem);
 
-        setTimeout(() => { this.notiElem.style.opacity = "1" }, 1);
+        clearTimeout(this.timeoutId);
+        setTimeout(() => { this.notiElem.style.opacity = "1"; this.notiElem.style.display = "block" }, 1);
 
-        setTimeout(() => { this.hide() }, duration * 1000);
+        this.timeoutId = setTimeout(() => { this.hide() }, duration * 1000);
     }
 }
