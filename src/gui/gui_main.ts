@@ -31,9 +31,9 @@ export function initGui(game: Game) {
     gui.addBuildBtn(new BuildBtn("training chamber", getSwapCursorModeFunction(game, CursorMode.Training), assetList.buildBtn.training));
     gui.addBuildBtn(new BuildBtn("ant spawn", toggleAntSpawnMenu(game), assetList.buildBtn.queen, updateAntSpawnMenuBtn));
 
-    gui.spawnMenuAddSlider(new Slider("Farmer ants", assetList.resource.farmerPath));
-    gui.spawnMenuAddSlider(new Slider("Worker ants", assetList.resource.workerPath));
-    gui.spawnMenuAddSlider(new Slider("Soldier ants", assetList.resource.soldierPath));
+    gui.spawnMenuAddSlider(new Slider("Farmer ants", assetList.resource.farmerPath, data.farmerSpawnRatio, data.farmerSpawnChance));
+    gui.spawnMenuAddSlider(new Slider("Worker ants", assetList.resource.workerPath, data.workerSpawnRatio, data.workerSpawnChance));
+    gui.spawnMenuAddSlider(new Slider("Soldier ants", assetList.resource.soldierPath, data.soldierSpawnRatio, data.soldierSpawnChance));
 
     const spawnPauseElem = document.getElementById("spawnPause") as HTMLImageElement;
     spawnPauseElem?.addEventListener("mousedown", () => {

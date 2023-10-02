@@ -1,16 +1,16 @@
+import { Equation, EquationEventType, Value } from "../data/dynamic_equations";
+
 export class Slider {
     private _name: string;
-    private _value: number;
     private _max: number;
     private readonly _containerElem: HTMLDivElement;
     private readonly iconElem: HTMLImageElement;
     private readonly infoElem: HTMLDivElement;
     private readonly inputElem: HTMLInputElement;
 
-    constructor(name: string, iconPath: string, max: number = 1, startValue: number = 0) {
+    constructor(name: string, iconPath: string, value: Value, percentageValue: Equation, max: number = 1) {
         this._name = name;
         this._max = max;
-        this._value = startValue;
 
         this._containerElem = document.createElement("div");
         this._containerElem.className += "sliderCont";
@@ -22,25 +22,23 @@ export class Slider {
         this.iconElem.draggable = false;
 
         this.infoElem = document.createElement("p");
-        this.infoElem.textContent = JSON.stringify(this._value);
+        percentageValue.addEventListener(EquationEventType.ValueChange, () => {
+            const text = (percentageValue.value * 100).toString().split('.');
+            this.infoElem.textContent = `${text[0]}%`;
+        });
 
         this.inputElem = document.createElement("input");
         this.inputElem.type = "range";
+        this.inputElem.addEventListener("change", () => {
+            value.value = parseFloat(this.inputElem.value);
+        });
         this.inputElem.max = JSON.stringify(this._max);
         this.inputElem.step = "0.001";
+        this.inputElem.min = "0.001";
 
         this._containerElem.appendChild(this.iconElem);
         this._containerElem.appendChild(this.infoElem);
         this._containerElem.appendChild(this.inputElem);
-    }
-
-    public get value(): number {
-        return this._value;
-    }
-
-    public set value(value: number) {
-        this._value = value;
-        this.inputElem.value = JSON.stringify(this._value);
     }
 
     public get containerElem(): HTMLElement {
