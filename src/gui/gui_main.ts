@@ -53,14 +53,14 @@ export function initGui(game: Game) {
             spawnPauseElem.title = "Click to resume ant production";
 
             data.pauseProduction.value = 1;
-            
+
         }
         // Pause
         else {
             spawnPauseElem.src = assetList.spawnMenu.playIconPath;
             spawnPauseElem.alt = "Play ant production";
             spawnPauseElem.title = "Click to pause ant production";
-            
+
             data.pauseProduction.value = 0;
         }
     });
