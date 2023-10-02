@@ -83,9 +83,6 @@ export class AntColony extends EventTarget {
         }
         counts.forEach((val, type) => {
             switch (type){
-                case ChamberType.Hall:
-                    data.hallTiles.value = val;
-                    break;
                 case ChamberType.Invalid:
                     break;
                 case ChamberType.Unassigned:

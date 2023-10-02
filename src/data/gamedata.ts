@@ -6,7 +6,6 @@ export class GameData{
     public readonly farmerProduction = value(30);
     public readonly farmProduction = value(45);
     
-    public readonly hallTiles = value(0);
     public readonly unassignedTiles = value(0);
     public readonly queenTiles = value(0);
     public readonly residentialTiles = value(0);
@@ -38,7 +37,7 @@ export class GameData{
     public readonly antsIdle = sum([this.queensIdle, this.farmersIdle, this.workersIdle, this.soldiersIdle]);
     public readonly antsActive = sum([this.queensActive, this.farmersActive, this.workersActive, this.soldiersActive]);
     public readonly antsTotal = sum([this.antsIdle, this.antsActive]);
-    public readonly totalTiles = sum([this.hallTiles, this.unassignedTiles, this.queenTiles,this.farmTiles,this.residentialTiles,this.trainingTiles]);
+    public readonly totalTiles = value(0);
     
     // ants/min
     public readonly antProduction = equation([this.queenTiles], n => Math.log(n[0] + 1)/Math.log(8));

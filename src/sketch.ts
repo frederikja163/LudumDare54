@@ -49,13 +49,17 @@ export function draw(game: Game) {
         switch (cursorMode) {
             case CursorMode.Dig:
                 if (data.tileCapacity.value > data.totalTiles.value && Math.abs(x % cursorRadius) > placementThreshold && Math.abs(y % cursorRadius) > placementThreshold) {
-
+                    if (antHill.getTile(tileX, tileY) != 0){
+                        data.totalTiles.value += 1;
+                    }
                     antHill.setTile(tileX, tileY, 0);
                 }
                 break;
             case CursorMode.Fill:
                 if (Math.abs(x % cursorRadius) > placementThreshold && Math.abs(y % cursorRadius) > placementThreshold) {
-
+                    if (antHill.getTile(tileX, tileY) != 1){
+                        data.totalTiles.value -= 1;
+                    }
                     antHill.setTile(tileX, tileY, 1);
                 }
                 break;
