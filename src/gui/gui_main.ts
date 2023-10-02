@@ -9,6 +9,11 @@ export function initGui(game: Game) {
     const data = game.gameData;
     const gui = game.gui;
 
+    const welcomeMsgElem = document.getElementById("welcomeMsg");
+    welcomeMsgElem?.querySelector("button")?.addEventListener("mouseup", () => {
+        welcomeMsgElem.style.display = "none";
+    });
+
     const barElems = document.querySelectorAll(".gui");
     barElems.forEach(e => {
         const elem = e as HTMLElement;
@@ -56,6 +61,8 @@ export function initGui(game: Game) {
             gui.slidersPlayPause(false);
         }
     });
+
+    gui.notify("Antlantis", "I'm a notification, and i wanna be free");
 }
 
 function getSwapCursorModeFunction(game: Game, cursorModeThis: CursorMode): (active: boolean) => boolean {

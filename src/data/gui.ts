@@ -2,6 +2,7 @@ import { ResourceDisplay } from "../gui/resource_display";
 import { BuildBtn } from "../gui/build_btn";
 import { Slider } from "../gui/slider";
 import { Equation, EquationEventType } from "./dynamic_equations";
+import { Notification } from "../gui/notification";
 
 export class Gui {
     private readonly _resourceDisplays: ResourceDisplay[];
@@ -61,5 +62,9 @@ export class Gui {
             spawnProgInputElem.value = JSON.stringify(antSpawnProgress.value);
             updateP();
         });
+    }
+
+    public notify(title: string, message: string) {
+        new Notification(title, message).show();
     }
 }
