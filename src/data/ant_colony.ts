@@ -171,30 +171,33 @@ export class AntColony extends EventTarget {
     }
 
     public draw() {
-        const p5 = this.game.p5;        
+        const p5 = this.game.p5;
+        const alpha = 100;
+
         for (let i = 0; i < this.chambers.length; i++) {
             const chamber = this.chambers[i];
             switch (chamber.chamberType) {
                 case ChamberType.Invalid:
-                    p5.fill(255, 0, 255);
+                    p5.fill(255, 0, 255, alpha);
                     break;
                 case ChamberType.Hall:
-                    p5.fill(255, 100, 255);
+                    p5.fill(255, 100, 255, alpha);
                     break;
                 case ChamberType.Unassigned:
-                    p5.fill(100, 100, 100);
+                    p5.fill(71, 71, 71, alpha);
+                    // p5.fill(177, 61, 163, alpha); // Larvae chamber
                     break;
                 case ChamberType.Queen:
-                    p5.fill(255, 255, 255);
+                    p5.fill(177, 155, 61, alpha);
                     break;
                 case ChamberType.Residential:
-                    p5.fill(0, 0, 255);
+                    p5.fill(61, 126, 177, alpha);
                     break;
                 case ChamberType.Farm:
-                    p5.fill(0, 255, 0);
+                    p5.fill(75, 177, 61, alpha);
                     break;
                 case ChamberType.Training:
-                    p5.fill(255, 0, 0);
+                    p5.fill(177, 62, 61, alpha);
                     break;
             }
 

@@ -66,6 +66,10 @@ export class Tiles {
         getPath("tiles/dirt3.png"),
         getPath("tiles/dirt4.png"),]
     };
+    public readonly colony: Tile = {
+        image: [],
+        paths: [getPath("tiles/colony.png")]
+    };
 }
 
 export class AssetList {
