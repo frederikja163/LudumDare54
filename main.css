@@ -134,7 +134,7 @@ body
 }
 
 #welcomeMsg img {
-    width: 30em;
+    width: 40vh;
     height: 50%;
     margin: auto;
     image-rendering: pixelated;
