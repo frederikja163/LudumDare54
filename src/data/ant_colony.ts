@@ -91,6 +91,7 @@ export class AntColony extends EventTarget {
                 this.setTile(x, y, 0);
             }
         }
+        this.game.gameData.totalTiles.value += (maxX - minX + 1) * (maxY - minY + 1);
     }
 
     public countTiles(){

@@ -3,8 +3,8 @@ import { value, equation, sum, weightedSum, product } from "./dynamic_equations"
 export class GameData{
     public readonly time = value(0);
 
-    public readonly farmerProduction = value(30);
-    public readonly farmProduction = value(45);
+    public readonly farmerProduction = value(15);
+    public readonly farmProduction = value(20);
     
     public readonly unassignedTiles = value(0);
     public readonly queenTiles = value(0);
@@ -49,7 +49,7 @@ export class GameData{
 
     public readonly farmerSpawnRatio = value(1);
     public readonly workerSpawnRatio = value(1);
-    public readonly soldierSpawnRatio = value(1);
+    public readonly soldierSpawnRatio = value(0.24);
     public readonly totalSpawnRatio = sum([this.farmerSpawnRatio, this.workerSpawnRatio, this.soldierSpawnRatio]);
     public readonly farmerSpawnChance = equation([this.totalSpawnRatio, this.farmerSpawnRatio], n => n[1] / n[0]);
     public readonly workerSpawnChance = equation([this.totalSpawnRatio, this.workerSpawnRatio], n => n[1] / n[0]);

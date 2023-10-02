@@ -8,14 +8,14 @@ export class BuildBtn {
     private _active: boolean = false;
     private changeActiveAction?: (active: boolean) => void;
 
-    constructor(name: string, clickAction: (active: boolean) => boolean, button: Button, changeActiveAction?: (active: boolean) => void) {
+    constructor(name: string, tooltip: string, clickAction: (active: boolean) => boolean, button: Button, changeActiveAction?: (active: boolean) => void) {
         this.iconPath = button.iconPath;
         this.activeIconPath = button.activePath == undefined ? button.iconPath : button.activePath;
         this.changeActiveAction = changeActiveAction;
 
         this._buttonElem = document.createElement("button");
         this._buttonElem.addEventListener("mousedown", () => { this.active = clickAction(this.active) });
-        this._buttonElem.title = name;
+        this._buttonElem.title = tooltip;
 
         this.iconElem = document.createElement("img");
         this.iconElem.src = button.iconPath;
