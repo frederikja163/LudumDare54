@@ -29,6 +29,7 @@ body
 
 .resourceDisplay
 {
+    font-size: calc(var(--resourceBarHeight) * 0.5);
     width: 200px;
     display: grid;
     grid-template-rows: var(--resourceBarHeight);

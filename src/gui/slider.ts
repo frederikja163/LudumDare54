@@ -8,7 +8,7 @@ export class Slider {
     private readonly infoElem: HTMLDivElement;
     private readonly inputElem: HTMLInputElement;
 
-    constructor(name: string, iconPath: string, value: Value, percentageValue: Equation, max: number = 1) {
+    constructor(name: string, iconPath: string, value: Value, percentageValue: Equation, max: number = 100) {
         this._name = name;
         this._max = max;
 
@@ -29,12 +29,13 @@ export class Slider {
 
         this.inputElem = document.createElement("input");
         this.inputElem.type = "range";
+        this.inputElem.value = JSON.stringify(value.value);
         this.inputElem.addEventListener("change", () => {
             value.value = parseFloat(this.inputElem.value);
         });
         this.inputElem.max = JSON.stringify(this._max);
-        this.inputElem.step = "0.001";
-        this.inputElem.min = "0.001";
+        this.inputElem.step = "1";
+        this.inputElem.min = "1";
 
         this._containerElem.appendChild(this.iconElem);
         this._containerElem.appendChild(this.infoElem);

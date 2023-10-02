@@ -12,6 +12,9 @@ export function preload(game: Game): void {
     for (const path of assetList.tiles.dirt.paths) {
         assetList.tiles.dirt.image.push(p5.loadImage(path))
     }
+    for (const path of assetList.tiles.colony.paths) {
+        assetList.tiles.colony.image.push(p5.loadImage(path))
+    }
 }
 
 export function setup(game: Game) {
@@ -39,9 +42,9 @@ export function draw(game: Game) {
     p5.translate(-antHill.width / 2, -antHill.height / 2);
     p5.noStroke();
 
-    p5.fill(255, 255, 255);
     p5.textureMode(p5.NORMAL);
-    drawMarchingSquares(game, assetList.tiles.dirt.image, 1, antHill.width, 1, antHill.height, (x, y) => antHill.getTile(x, y) > 0);
+    drawMarchingSquares(game, assetList.tiles.colony.image, -Infinity, Infinity, -Infinity, Infinity, () => true);
+    drawMarchingSquares(game, assetList.tiles.dirt.image, -Infinity, Infinity, -Infinity, Infinity, (x, y) => antHill.getTile(x, y) != 0);
 
     if (p5.mouseIsPressed && p5.mouseButton === p5.LEFT && cursorMode != CursorMode.Neutral && !game.canvasIgnoreInput) {
         const cursorRadius = 0.9;
@@ -85,6 +88,12 @@ export function draw(game: Game) {
                 break;
         }
         antHill.countTiles();
+        if (data.queenTiles.value === 0){
+            console.log("Couldn't remove tile, it would kill your queen.");
+            antHill.setTile(tileX, tileY, 0);
+            antHill.getChamber(tileX, tileY)!.chamberType = ChamberType.Queen;
+            antHill.countTiles();
+        }
     }
 
     antHill.draw();

@@ -2,6 +2,7 @@ import P5 from "p5";
 
 export class Resource {
     public readonly foodIconPath: string = getPath("gui/resources/food_icon.png");
+    public readonly tileIconPath: string = getPath("gui/resources/tile_icon.png");
     public readonly queenPath: string = getPath("gui/resources/queen_icon.png");
     public readonly farmerPath: string = getPath("gui/resources/farmer_icon.png");
     public readonly workerPath: string = getPath("gui/resources/worker_icon.png");
@@ -65,6 +66,10 @@ export class Tiles {
         getPath("tiles/dirt2.png"),
         getPath("tiles/dirt3.png"),
         getPath("tiles/dirt4.png"),]
+    };
+    public readonly colony: Tile = {
+        image: [],
+        paths: [getPath("tiles/colony.png")]
     };
 }
 

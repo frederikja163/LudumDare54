@@ -3,8 +3,8 @@ import { value, equation, sum, weightedSum, product } from "./dynamic_equations"
 export class GameData{
     public readonly time = value(0);
 
-    public readonly farmerProduction = value(30);
-    public readonly farmProduction = value(45);
+    public readonly farmerProduction = value(15);
+    public readonly farmProduction = value(20);
     
     public readonly unassignedTiles = value(0);
     public readonly queenTiles = value(0);
@@ -13,8 +13,8 @@ export class GameData{
     public readonly trainingTiles = value(0);
 
     public readonly queensTotal = value(1);
-    public readonly farmersTotal = value(1);
-    public readonly workersTotal = value(1);
+    public readonly farmersTotal = value(2);
+    public readonly workersTotal = value(4);
     public readonly soldiersTotal = value(1);
 
     public readonly queensActive = this.queensTotal;
@@ -40,16 +40,16 @@ export class GameData{
     public readonly totalTiles = value(0);
     
     // ants/min
-    public readonly antProduction = equation([this.queenTiles], n => Math.log(n[0] + 1)/Math.log(8));
+    public readonly antProduction = equation([this.queenTiles], n => n[0] < 21 ? 1 : Math.log(n[0] - 20)/Math.log(2));
     public readonly msPerAnt = equation([this.antProduction], n => (1000 * 60) / (n[0] + 1));
     public readonly antSpawnProgress = value(0);
     public readonly antCapacity = product([this.residentialTiles, value(5)]);
     public readonly combatPower = product([this.trainingTiles, this.soldiersActive]);
     public readonly tileCapacity = product([value(10), sum([this.workersActive, this.workersIdle])]);
 
-    public readonly farmerSpawnRatio = value(1);
-    public readonly workerSpawnRatio = value(1);
-    public readonly soldierSpawnRatio = value(1);
+    public readonly farmerSpawnRatio = value(100);
+    public readonly workerSpawnRatio = value(100);
+    public readonly soldierSpawnRatio = value(24);
     public readonly totalSpawnRatio = sum([this.farmerSpawnRatio, this.workerSpawnRatio, this.soldierSpawnRatio]);
     public readonly farmerSpawnChance = equation([this.totalSpawnRatio, this.farmerSpawnRatio], n => n[1] / n[0]);
     public readonly workerSpawnChance = equation([this.totalSpawnRatio, this.workerSpawnRatio], n => n[1] / n[0]);
