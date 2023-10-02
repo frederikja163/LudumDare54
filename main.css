@@ -3,6 +3,8 @@
     --light: #f0f0f0;
     --resourceBarHeight: 40px;
     --buildBtnHeight: 64px;
+    --guiBorderRadius: 4px;
+    --btnBorderRadius: 10px;
 }
 
 *
@@ -70,6 +72,38 @@ body
     height: 0;
     appearance: none;
     box-shadow: -100px 0 0 100px #8e7603;
+}
+
+#notiCont
+{
+    width: 400px;
+    display: flex;
+    position: fixed;
+    z-index: 1;
+    top: var(--resourceBarHeight);
+    left: 50%;
+    transform: translate(-50%);
+}
+
+#notiCont>div
+{
+    background-color: var(--guiBg);
+    width: 100%;
+    margin: 4px;
+    padding: 0 10px 0 10px;
+    border-radius: var(--guiBorderRadius);
+    color: var(--light);
+    transition: opacity 0.5s linear;
+}
+
+#notiCont .title
+{
+    font-weight: bold;
+}
+
+#notiCont .message
+{
+
 }
 
 #buildBarCont

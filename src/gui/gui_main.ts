@@ -51,6 +51,8 @@ export function initGui(game: Game) {
             spawnPauseElem.title = "Pause ant production";
         }
     });
+
+    gui.notify("Antlantis", "I'm a notification, and i wanna be free");
 }
 
 function getSwapCursorModeFunction(game: Game, cursorModeThis: CursorMode): (active: boolean) => boolean {
