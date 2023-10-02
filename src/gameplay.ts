@@ -53,7 +53,9 @@ function startTutorial(game: Game){
                 break;
             case TutorialStep.Finished:
                 previousNotification?.hide();
-                noti.finished.show();
+                if (previousNotification){
+                    noti.finished.show();
+                }
                 break;
         }
 

@@ -11,9 +11,19 @@ export function initGui(game: Game) {
     const gui = game.gui;
 
     const welcomeMsgElem = document.getElementById("welcomeMsg");
-    welcomeMsgElem?.querySelector("button")?.addEventListener("mouseup", () => {
+    if (!welcomeMsgElem){
+        throw console.error("Couldn't find welcome message for some reason?!");
+    }
+    document.getElementById("startTutorial")?.addEventListener("mouseup", () => {
         welcomeMsgElem.style.display = "none";
         data.tutorialStep.value += 1;
+    });
+    document.getElementById("skipTutorial")?.addEventListener("mouseup", () => {
+        welcomeMsgElem.style.display = "none";
+        game.gui.slidersPlayPause(false);
+        togglePauseTime(game);
+        
+        data.tutorialStep.value = TutorialStep.Finished;
     });
 
     const barElems = document.querySelectorAll(".gui");
@@ -49,32 +59,40 @@ export function initGui(game: Game) {
 
     const spawnPauseElem = document.getElementById("spawnPause") as HTMLImageElement;
     const spawnPauseTextElem = document.getElementById("spawnPauseText") as HTMLElement;
-    spawnPauseElem?.addEventListener("mousedown", () => {
-        // Pause
-        if (spawnPauseElem.alt.includes("Play")) {
-            spawnPauseElem.src = assetList.spawnMenu.pauseIconPath;
-            spawnPauseElem.alt = "Pause ant production";
-            spawnPauseElem.title = "Click to resume ant production";
+    spawnPauseElem?.addEventListener("mousedown", () => togglePauseTime(game));
+}
 
-            spawnPauseTextElem.textContent = "Paused";
-            
-            data.pauseProduction.value = 1;
-        }
-        // Play
-        else {
-            spawnPauseElem.src = assetList.spawnMenu.playIconPath;
-            spawnPauseElem.alt = "Play ant production";
-            spawnPauseElem.title = "Click to pause ant production";
-            
-            spawnPauseTextElem.textContent = "Running";
-            
-            data.pauseProduction.value = 0;
+function togglePauseTime(game: Game){
+    const assetList = game.assetList;
+    const data = game.gameData;
+    const gui = game.gui;
 
-            if (game.gameData.tutorialStep.value === TutorialStep.ContinueGame){
-                game.gameData.tutorialStep.value += 1;
-            }
+    const spawnPauseElem = document.getElementById("spawnPause") as HTMLImageElement;
+    const spawnPauseTextElem = document.getElementById("spawnPauseText") as HTMLElement;
+    // Pause
+    if (spawnPauseElem.alt.includes("Play")) {
+        spawnPauseElem.src = assetList.spawnMenu.pauseIconPath;
+        spawnPauseElem.alt = "Pause ant production";
+        spawnPauseElem.title = "Click to resume ant production";
+
+        spawnPauseTextElem.textContent = "Paused";
+        
+        data.pauseProduction.value = 1;
+    }
+    // Play
+    else {
+        spawnPauseElem.src = assetList.spawnMenu.playIconPath;
+        spawnPauseElem.alt = "Play ant production";
+        spawnPauseElem.title = "Click to pause ant production";
+        
+        spawnPauseTextElem.textContent = "Running";
+        
+        data.pauseProduction.value = 0;
+
+        if (game.gameData.tutorialStep.value === TutorialStep.ContinueGame){
+            game.gameData.tutorialStep.value += 1;
         }
-    });
+    }
 }
 
 function getSwapCursorModeFunction(game: Game, cursorModeThis: CursorMode): (active: boolean) => boolean {
