@@ -1,6 +1,7 @@
 :root {
     --guiBg: rgba(31, 31, 31, 0.9);
     --light: #f0f0f0;
+    --btnBg: #4f4f4f;
     --resourceBarHeight: 40px;
     --buildBtnHeight: 64px;
     --guiBorderRadius: 4px;
@@ -63,7 +64,7 @@ body
     border-radius: calc(var(--resourceBarHeight) * 0.25);
     width: 200px;
     appearance: none;
-    background-color: #4f4f4f;
+    background-color: var(--btnBg);
     overflow: hidden;
 }
 
@@ -101,9 +102,27 @@ body
     font-weight: bold;
 }
 
-#notiCont .message
+#welcomeMsg
 {
+    background-color: var(--guiBg);
+    border-radius: var(--guiBorderRadius);
+    color: var(--light);
+    padding: 0 10px 0 10px;
+    width: 60%;
+    position: fixed;
+    z-index: 10;
+    top: calc(var(--resourceBarHeight) * 2);
+    left: 50%;
+    transform: translate(-50%);
+}
 
+#welcomeMsg button
+{
+    margin: auto;
+    font-size: 24px;
+    font-family: 'Pixelify Sans', Arial, Helvetica, sans-serif;
+    background-color: var(--btnBg);
+    color: var(--light);
 }
 
 #buildBarCont
