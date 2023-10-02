@@ -25,7 +25,7 @@ export enum AntHillEvent {
     TilesChanged = "TilesChanged",
 }
 
-export class AntHill extends EventTarget {
+export class AntColony extends EventTarget {
     private readonly tiles: number[][] = [];
     private readonly chambers: Chamber[] = [];
     private readonly game: Game;
