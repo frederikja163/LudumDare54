@@ -15,17 +15,17 @@ export class Notification {
 
         this.titleElem = document.createElement("p");
         this.titleElem.className += "title";
-        this.titleElem.textContent = this.title;
+        this.titleElem.innerHTML = this.title;
 
         this.messageElem = document.createElement("p");
         this.messageElem.className += "message";
-        this.messageElem.textContent = this.message;
+        this.messageElem.innerHTML = this.message.replace("\n", "<br>");
 
         this.notiElem.appendChild(this.titleElem);
         this.notiElem.appendChild(this.messageElem);
     }
 
-    private hide() {
+    public hide() {
         this.notiElem.style.opacity = "0";
 
         this.timeoutId = setTimeout(() => { this.notiElem.style.display = "none"; this.timeoutId = undefined; }, 500);
@@ -38,6 +38,8 @@ export class Notification {
         clearTimeout(this.timeoutId);
         setTimeout(() => { this.notiElem.style.opacity = "1"; this.notiElem.style.display = "block" }, 1);
 
-        this.timeoutId = setTimeout(() => { this.hide() }, duration * 1000);
+        if (duration != -1){
+            this.timeoutId = setTimeout(() => { this.hide() }, duration * 1000);
+        }
     }
 }

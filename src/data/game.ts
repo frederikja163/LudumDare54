@@ -64,10 +64,10 @@ export class Game {
         this._p5 = p5;
         this._assetList = new AssetList();
         this._antHill = new AntColony(this, 100, 100);
-        this._camera = new Camera(p5, 100);
         this._gui = new Gui();
         this._notifications = new NotificationList();
         this._gameData = new GameData();
+        this._camera = new Camera(p5, this._gameData, 100);
         this._cursorMode = CursorMode.Neutral;
     }
 

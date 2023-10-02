@@ -1,5 +1,7 @@
 import { AssetList } from "../data/asset_list";
 import { Equation, EquationEventType, Value, value } from "../data/dynamic_equations";
+import { Game } from "../data/game";
+import { TutorialStep } from "../data/gamedata";
 
 export class Slider {
     private _name: string;
@@ -14,8 +16,12 @@ export class Slider {
     private readonly iconElem: HTMLImageElement;
     private readonly infoElem: HTMLDivElement;
     private readonly inputElem: HTMLInputElement;
+    private readonly game: Game;
+    private readonly tutorialStep: TutorialStep;
 
-    constructor(name: string, iconPath: string, iconPausedPath: string, value: Value, percentageValue: Equation, max: number = 100) {
+    constructor(game: Game, tutorialStep: TutorialStep, name: string, iconPath: string, iconPausedPath: string, value: Value, percentageValue: Equation, max: number = 100) {
+        this.game = game;
+        this.tutorialStep = tutorialStep;
         this._name = name;
         this._max = max;
         this.paused = false;
@@ -67,6 +73,9 @@ export class Slider {
         }
 
         if (this.paused) {
+            if (this.game.gameData.tutorialStep.value === this.tutorialStep){
+                this.game.gameData.tutorialStep.value += 1;
+            }
             this.paused = false;
 
             this.iconElem.src = this.iconPath;
