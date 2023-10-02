@@ -9,6 +9,12 @@ export function initGui(game: Game) {
     const data = game.gameData;
     const gui = game.gui;
 
+    const welcomeMsgElem = document.getElementById("welcomeMsg");
+    welcomeMsgElem?.querySelector("button")?.addEventListener("mouseup", () => {
+        welcomeMsgElem.style.display = "none";
+        data.pauseProduction.value = 0;
+    });
+
     const barElems = document.querySelectorAll(".gui");
     barElems.forEach(e => {
         const elem = e as HTMLElement;
@@ -34,21 +40,28 @@ export function initGui(game: Game) {
     gui.addBuildBtn(new BuildBtn("training chamber", "Mark chambers as training chambers.", getSwapCursorModeFunction(game, CursorMode.Training), assetList.buildBtn.training));
     gui.addBuildBtn(new BuildBtn("ant spawn", "Control ant spawning.", toggleAntSpawnMenu(game), assetList.buildBtn.spawn, updateAntSpawnMenuBtn));
 
-    gui.spawnMenuAddSlider(new Slider("Farmer ants", assetList.spawnMenu.farmerPath, data.farmerSpawnRatio, data.farmerSpawnChance));
-    gui.spawnMenuAddSlider(new Slider("Worker ants", assetList.spawnMenu.workerPath, data.workerSpawnRatio, data.workerSpawnChance));
-    gui.spawnMenuAddSlider(new Slider("Soldier ants", assetList.spawnMenu.soldierPath, data.soldierSpawnRatio, data.soldierSpawnChance));
+    gui.spawnMenuAddSlider(new Slider("Farmer ants", assetList.spawnMenu.farmerPath, assetList.spawnMenu.farmerDisabledPath, data.farmerSpawnRatio, data.farmerSpawnChance));
+    gui.spawnMenuAddSlider(new Slider("Worker ants", assetList.spawnMenu.workerPath, assetList.spawnMenu.workerDisabledPath, data.workerSpawnRatio, data.workerSpawnChance));
+    gui.spawnMenuAddSlider(new Slider("Soldier ants", assetList.spawnMenu.soldierPath, assetList.spawnMenu.soldierDisabledPath, data.soldierSpawnRatio, data.soldierSpawnChance));
 
     const spawnPauseElem = document.getElementById("spawnPause") as HTMLImageElement;
     spawnPauseElem?.addEventListener("mousedown", () => {
-        if (spawnPauseElem.alt.includes("Pause")) {
+        // Pause
+        if (spawnPauseElem.alt.includes("Play")) {
             spawnPauseElem.src = assetList.spawnMenu.pauseIconPath;
-            spawnPauseElem.alt = "Play ant production";
-            spawnPauseElem.title = "Play ant production";
+            spawnPauseElem.alt = "Pause ant production";
+            spawnPauseElem.title = "Click to resume ant production";
+
+            data.pauseProduction.value = 1;
+            
         }
+        // Pause
         else {
             spawnPauseElem.src = assetList.spawnMenu.playIconPath;
-            spawnPauseElem.alt = "Pause ant production";
-            spawnPauseElem.title = "Pause ant production";
+            spawnPauseElem.alt = "Play ant production";
+            spawnPauseElem.title = "Click to pause ant production";
+            
+            data.pauseProduction.value = 0;
         }
     });
 }

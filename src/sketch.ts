@@ -30,6 +30,7 @@ export function draw(game: Game) {
     const assetList = game.assetList;
     const cursorMode = game.cursorMode;
     const data = game.gameData;
+    const notifications = game.notifications;
 
     p5.background(0, 0, 0);
     camera.apply();
@@ -51,11 +52,16 @@ export function draw(game: Game) {
         const chamber = antHill.getChamber(tileX, tileY);
         switch (cursorMode) {
             case CursorMode.Dig:
-                if (data.tileCapacity.value > data.totalTiles.value && Math.abs(x % cursorRadius) > placementThreshold && Math.abs(y % cursorRadius) > placementThreshold) {
-                    if (antHill.getTile(tileX, tileY) != 0) {
-                        data.totalTiles.value += 1;
+                if (data.tileCapacity.value > data.totalTiles.value){
+                    if (Math.abs(x % cursorRadius) > placementThreshold && Math.abs(y % cursorRadius) > placementThreshold) {
+                        if (antHill.getTile(tileX, tileY) != 0){
+                            data.totalTiles.value += 1;
+                        }
+                        antHill.setTile(tileX, tileY, 0);
                     }
-                    antHill.setTile(tileX, tileY, 0);
+                }
+                else{
+                    notifications.noTilesLeft.show();
                 }
                 break;
             case CursorMode.Fill:
@@ -88,9 +94,10 @@ export function draw(game: Game) {
                 break;
         }
         antHill.countTiles();
-        if (data.queenTiles.value === 0) {
-            console.log("Couldn't remove tile, it would kill your queen.");
+        if (data.queenTiles.value === 0){
+            notifications.cannotRemoveQueen.show();
             antHill.setTile(tileX, tileY, 0);
+            data.totalTiles.value += 1;
             antHill.getChamber(tileX, tileY)!.chamberType = ChamberType.Queen;
             antHill.countTiles();
         }

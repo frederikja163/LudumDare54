@@ -2,6 +2,7 @@ import { value, equation, sum, weightedSum, product } from "./dynamic_equations"
 
 export class GameData{
     public readonly time = value(0);
+    public readonly pauseProduction = value(1);
 
     public readonly farmerProduction = value(15);
     public readonly farmProduction = value(20);
