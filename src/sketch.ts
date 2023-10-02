@@ -3,6 +3,7 @@ import { AntColony } from "./data/ant_colony";
 import { drawMarchingSquares } from "./marching_squares";
 import { CursorMode, Game } from "./data/game";
 import { Chamber, ChamberType } from "./data/chamber";
+import { TutorialStep } from "./data/gamedata";
 const placementThreshold = 0.2;
 
 export function preload(game: Game): void {
@@ -58,6 +59,9 @@ export function draw(game: Game) {
                             data.totalTiles.value += 1;
                         }
                         antHill.setTile(tileX, tileY, 0);
+                        if (data.tutorialStep.value === TutorialStep.ExcavateTunnel){
+                            data.tutorialStep.value += 1;
+                        }
                     }
                 }
                 else{

@@ -73,15 +73,15 @@ export class AntColony extends EventTarget {
         
         setTimeout(() => {
             this.carveSquare(centerX - 2, centerX + 2, centerY - 2, centerY + 2);
-            this.carveSquare(centerX - 6, centerX - 5, centerY + 1, centerY + 2);
-            this.carveSquare(centerX - 5, centerX - 3, centerY, centerY);
-            this.carveSquare(centerX + 3, centerX + 4, centerY - 4, centerY - 3);
-            this.setTile(centerX +  3, centerY - 2, 0);
-            this.setTile(centerX, centerY, 1);
+            // this.carveSquare(centerX - 6, centerX - 5, centerY + 1, centerY + 2);
+            // this.carveSquare(centerX - 5, centerX - 3, centerY, centerY);
+            // this.carveSquare(centerX + 3, centerX + 4, centerY - 4, centerY - 3);
+            // this.setTile(centerX +  3, centerY - 2, 0);
+            // this.setTile(centerX, centerY, 1);
 
             this.getChamber(centerX + 1, centerY + 1)!.chamberType = ChamberType.Queen;
-            this.getChamber(centerX - 5, centerY + 1)!.chamberType = ChamberType.Residential;
-            this.getChamber(centerX + 3, centerY - 4)!.chamberType = ChamberType.Farm;
+            // this.getChamber(centerX - 5, centerY + 1)!.chamberType = ChamberType.Residential;
+            // this.getChamber(centerX + 3, centerY - 4)!.chamberType = ChamberType.Farm;
             this.countTiles();
         }, 0);
     }

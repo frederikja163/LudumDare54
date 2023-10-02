@@ -1,6 +1,34 @@
+import { EquationEventType } from "./data/dynamic_equations";
 import { Game } from "./data/game";
+import { TutorialStep } from "./data/gamedata";
 
 export function initGameplay(game: Game){
+    const data = game.gameData;
+    const notification = game.notifications;
+    data.tutorialStep.addEventListener(EquationEventType.ValueChange, () => {
+        const step = data.tutorialStep.value;
+
+        switch (step){
+            case TutorialStep.WelcomeMessage:
+                break;
+            case TutorialStep.ExcavateTunnel:
+                notification.excavateTunnel.show(-1);
+                break;
+            case TutorialStep.CreateChamber:
+                notification.excavateTunnel.hide();
+                notification.createChamber.show(-1);
+                break;
+            case TutorialStep.MarkAsResidential:
+                break;
+            case TutorialStep.ExcavateAnotherChamber:
+                break;
+            case TutorialStep.MarkAsFarm:
+                break;
+            case TutorialStep.Finished:
+                break;
+        }
+    })
+
     startAntSpawning(game);
 }
 

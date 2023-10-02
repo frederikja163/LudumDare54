@@ -12,7 +12,7 @@ export function initGui(game: Game) {
     const welcomeMsgElem = document.getElementById("welcomeMsg");
     welcomeMsgElem?.querySelector("button")?.addEventListener("mouseup", () => {
         welcomeMsgElem.style.display = "none";
-        data.pauseProduction.value = 0;
+        data.tutorialStep.value += 1;
     });
 
     const barElems = document.querySelectorAll(".gui");
