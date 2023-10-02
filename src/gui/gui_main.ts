@@ -12,7 +12,7 @@ export function initGui(game: Game) {
     const welcomeMsgElem = document.getElementById("welcomeMsg");
     welcomeMsgElem?.querySelector("button")?.addEventListener("mouseup", () => {
         welcomeMsgElem.style.display = "none";
-        gui.notify("Antlantis", "I'm a notification, and I wanna be free");
+        data.pauseProduction.value = 0;
     });
 
     const barElems = document.querySelectorAll(".gui");
@@ -46,20 +46,22 @@ export function initGui(game: Game) {
 
     const spawnPauseElem = document.getElementById("spawnPause") as HTMLImageElement;
     spawnPauseElem?.addEventListener("mousedown", () => {
+        // Pause
         if (spawnPauseElem.alt.includes("Play")) {
             spawnPauseElem.src = assetList.spawnMenu.pauseIconPath;
             spawnPauseElem.alt = "Pause ant production";
             spawnPauseElem.title = "Click to resume ant production";
 
-            gui.slidersPlayPause(true);
-
+            data.pauseProduction.value = 1;
+            
         }
+        // Pause
         else {
             spawnPauseElem.src = assetList.spawnMenu.playIconPath;
             spawnPauseElem.alt = "Play ant production";
             spawnPauseElem.title = "Click to pause ant production";
-
-            gui.slidersPlayPause(false);
+            
+            data.pauseProduction.value = 0;
         }
     });
 }

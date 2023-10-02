@@ -131,6 +131,13 @@ body
     flex-direction: column;
 }
 
+#welcomeMsg img {
+    width: 30em;
+    height: 50%;
+    margin: auto;
+    image-rendering: pixelated;
+}
+
 #welcomeMsg button
 {
     font-size: 24px;

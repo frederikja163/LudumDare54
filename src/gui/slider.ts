@@ -87,7 +87,7 @@ export class Slider {
             this.prePauseVal = this.value.value;
             this.value.value = 0.00001;
 
-            this.infoElem.textContent = "Paused";
+            this.infoElem.textContent = "Disabled";
         }
     }
 }
