@@ -1,9 +1,13 @@
 import { value, equation, sum, weightedSum, product } from "./dynamic_equations";
 
 export class GameData{
+    public readonly time = value(0);
+
     public readonly farmerProduction = value(30);
     public readonly farmProduction = value(45);
     
+    public readonly hallTiles = value(0);
+    public readonly unassignedTiles = value(0);
     public readonly queenTiles = value(0);
     public readonly residentialTiles = value(0);
     public readonly farmTiles = value(0);
@@ -34,11 +38,12 @@ export class GameData{
     public readonly antsIdle = sum([this.queensIdle, this.farmersIdle, this.workersIdle, this.soldiersIdle]);
     public readonly antsActive = sum([this.queensActive, this.farmersActive, this.workersActive, this.soldiersActive]);
     public readonly antsTotal = sum([this.antsIdle, this.antsActive]);
-    public readonly totalTiles = sum([this.queenTiles,this.farmTiles,this.residentialTiles,this.trainingTiles]);
+    public readonly totalTiles = sum([this.hallTiles, this.unassignedTiles, this.queenTiles,this.farmTiles,this.residentialTiles,this.trainingTiles]);
     
     // ants/min
-    public readonly antProduction = equation([this.queenTiles], n => Math.log(n[0])/Math.log(8));
-    public readonly msPerAnt = equation([this.antProduction], n => (1000 * 60) / n[0]);
+    public readonly antProduction = equation([this.queenTiles], n => Math.log(n[0] + 1)/Math.log(8));
+    public readonly msPerAnt = equation([this.antProduction], n => (1000 * 60) / (n[0] + 1));
+    public readonly antSpawnProgress = value(0);
     public readonly antCapacity = product([this.residentialTiles, value(5)]);
     public readonly combatPower = product([this.trainingTiles, this.soldiersActive]);
     public readonly tileCapacity = product([value(10), sum([this.workersActive, this.workersIdle])]);

@@ -101,7 +101,8 @@ export class Chamber {
             return;
         }
 
-        if (Chamber.calcChamberType(antHill, this._chamberType, x, y) != this._chamberType) {
+        const type = Chamber.calcChamberType(antHill, this._chamberType, x, y);
+        if (type != this._chamberType) {
             return;
         }
         this.minX = Math.min(x, this.minX);
