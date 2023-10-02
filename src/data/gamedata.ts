@@ -2,6 +2,8 @@ import { value, equation, sum, weightedSum, product } from "./dynamic_equations"
 
 export enum TutorialStep {
     WelcomeMessage,
+    MoveCamera,
+    ZoomCamera,
     ExcavateTunnel,
     CreateChamber,
     MarkAsResidential,

@@ -15,11 +15,11 @@ export class Notification {
 
         this.titleElem = document.createElement("p");
         this.titleElem.className += "title";
-        this.titleElem.textContent = this.title;
+        this.titleElem.innerHTML = this.title;
 
         this.messageElem = document.createElement("p");
         this.messageElem.className += "message";
-        this.messageElem.textContent = this.message;
+        this.messageElem.innerHTML = this.message.replace("\n", "<br>");
 
         this.notiElem.appendChild(this.titleElem);
         this.notiElem.appendChild(this.messageElem);

@@ -18,6 +18,12 @@ function startTutorial(game: Game){
         switch (step){
             case TutorialStep.WelcomeMessage:
                 break;
+            case TutorialStep.MoveCamera:
+                swapNotification(noti.moveCamera);
+                break;
+            case TutorialStep.ZoomCamera:
+                swapNotification(noti.zoomCamera);
+                break;
             case TutorialStep.ExcavateTunnel:
                 swapNotification(noti.excavateTunnel);
                 break;

@@ -45,6 +45,7 @@ export function initGui(game: Game) {
     gui.spawnMenuAddSlider(new Slider("Soldier ants", assetList.spawnMenu.soldierPath, assetList.spawnMenu.soldierDisabledPath, data.soldierSpawnRatio, data.soldierSpawnChance));
 
     const spawnPauseElem = document.getElementById("spawnPause") as HTMLImageElement;
+    const spawnPauseTextElem = document.getElementById("spawnPauseText") as HTMLElement;
     spawnPauseElem?.addEventListener("mousedown", () => {
         // Pause
         if (spawnPauseElem.alt.includes("Play")) {
@@ -52,15 +53,18 @@ export function initGui(game: Game) {
             spawnPauseElem.alt = "Pause ant production";
             spawnPauseElem.title = "Click to resume ant production";
 
+            spawnPauseTextElem.textContent = "Paused";
+            
             data.pauseProduction.value = 1;
-
         }
-        // Pause
+        // Play
         else {
             spawnPauseElem.src = assetList.spawnMenu.playIconPath;
             spawnPauseElem.alt = "Play ant production";
             spawnPauseElem.title = "Click to pause ant production";
 
+            spawnPauseTextElem.textContent = "Running";
+            
             data.pauseProduction.value = 0;
         }
     });
