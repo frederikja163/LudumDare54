@@ -14,7 +14,7 @@ export class GameData{
 
     public readonly queensTotal = value(1);
     public readonly farmersTotal = value(1);
-    public readonly workersTotal = value(1);
+    public readonly workersTotal = value(4);
     public readonly soldiersTotal = value(1);
 
     public readonly queensActive = this.queensTotal;
@@ -40,7 +40,7 @@ export class GameData{
     public readonly totalTiles = value(0);
     
     // ants/min
-    public readonly antProduction = equation([this.queenTiles], n => Math.log(n[0] + 1)/Math.log(8));
+    public readonly antProduction = equation([this.queenTiles], n => n[0] < 21 ? 1 : Math.log(n[0] - 20)/Math.log(2));
     public readonly msPerAnt = equation([this.antProduction], n => (1000 * 60) / (n[0] + 1));
     public readonly antSpawnProgress = value(0);
     public readonly antCapacity = product([this.residentialTiles, value(5)]);
