@@ -103,6 +103,22 @@ export function draw(game: Game) {
         }
     }
 
+
+    if (p5.keyIsPressed) {
+        if (p5.keyIsDown(87) || p5.keyIsDown(38)){
+            camera.move(0, p5.deltaTime * 2);
+        }
+        if (p5.keyIsDown(83) || p5.keyIsDown(40)){
+            camera.move(0, -p5.deltaTime * 2);
+        }
+        if (p5.keyIsDown(68) || p5.keyIsDown(39)){
+            camera.move(-p5.deltaTime * 2, 0);
+        }
+        if (p5.keyIsDown(65) || p5.keyIsDown(37)){
+            camera.move(p5.deltaTime * 2, 0);
+        }
+    }
+
     antHill.draw();
 
     p5.pop();
