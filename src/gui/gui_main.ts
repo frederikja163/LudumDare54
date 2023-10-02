@@ -30,7 +30,7 @@ export function initGui(game: Game) {
     gui.addResourceDisplay(new ResourceDisplay("queen", "Queen: You can only have one", data.queensActive, value(-1), assetList.resource.queenPath));
     gui.addResourceDisplay(new ResourceDisplay("farmer", "Farmers: Produce food when there is enough farm tiles. [Active/Total]", data.farmersActive, data.farmersTotal, assetList.resource.farmerPath));
     gui.addResourceDisplay(new ResourceDisplay("worker", "Workers: Maintains the tiles of your colony. [Active/Total]", data.workersActive, data.workersTotal, assetList.resource.workerPath));
-    gui.addResourceDisplay(new ResourceDisplay("soldier", "Soldiers: Contains the threat level to the colony. [Active/Total]", data.soldiersActive, data.soldiersTotal, assetList.resource.soldierPath));
+    // gui.addResourceDisplay(new ResourceDisplay("soldier", "Soldiers: Contains the threat level to the colony. [Active/Total]", data.soldiersActive, data.soldiersTotal, assetList.resource.soldierPath));
 
     // BuildBar
     gui.addBuildBtn(new BuildBtn("dig", "Excavate ant colony.", getSwapCursorModeFunction(game, CursorMode.Dig), assetList.buildBtn.dig));
@@ -38,12 +38,12 @@ export function initGui(game: Game) {
     // gui.addBuildBtn(new BuildBtn("queens lair", "Marks chambers as queens lair.", getSwapCursorModeFunction(game, CursorMode.Queen), assetList.buildBtn.queen));
     gui.addBuildBtn(new BuildBtn("residential chamber", "Marks chambers as residential chambers.", getSwapCursorModeFunction(game, CursorMode.Residential), assetList.buildBtn.residential));
     gui.addBuildBtn(new BuildBtn("farm chamber", "Mark chambers as farm chambers.", getSwapCursorModeFunction(game, CursorMode.Farm), assetList.buildBtn.farming));
-    gui.addBuildBtn(new BuildBtn("training chamber", "Mark chambers as training chambers.", getSwapCursorModeFunction(game, CursorMode.Training), assetList.buildBtn.training));
+    // gui.addBuildBtn(new BuildBtn("training chamber", "Mark chambers as training chambers.", getSwapCursorModeFunction(game, CursorMode.Training), assetList.buildBtn.training));
     gui.addBuildBtn(new BuildBtn("ant spawn", "Control ant spawning.", toggleAntSpawnMenu(game), assetList.buildBtn.spawn, updateAntSpawnMenuBtn));
 
     gui.spawnMenuAddSlider(new Slider(game, TutorialStep.EnableFarmers, "Farmer ants", assetList.spawnMenu.farmerPath, assetList.spawnMenu.farmerDisabledPath, data.farmerSpawnRatio, data.farmerSpawnChance));
     gui.spawnMenuAddSlider(new Slider(game, TutorialStep.EnableWorkers, "Worker ants", assetList.spawnMenu.workerPath, assetList.spawnMenu.workerDisabledPath, data.workerSpawnRatio, data.workerSpawnChance));
-    gui.spawnMenuAddSlider(new Slider(game, TutorialStep.Finished, "Soldier ants", assetList.spawnMenu.soldierPath, assetList.spawnMenu.soldierDisabledPath, data.soldierSpawnRatio, data.soldierSpawnChance));
+    // gui.spawnMenuAddSlider(new Slider(game, TutorialStep.Finished, "Soldier ants", assetList.spawnMenu.soldierPath, assetList.spawnMenu.soldierDisabledPath, data.soldierSpawnRatio, data.soldierSpawnChance));
     gui.slidersPlayPause(true);
 
     const spawnPauseElem = document.getElementById("spawnPause") as HTMLImageElement;
