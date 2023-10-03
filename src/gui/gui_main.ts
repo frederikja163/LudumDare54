@@ -39,8 +39,8 @@ export function initGui(game: Game) {
     gui.addResourceDisplay(new ResourceDisplay("tiles", "Tiles: How many tiles your workers can maintain at once. [Used/Available]", data.totalTiles, data.tileCapacity, assetList.resource.tileIconPath));
     gui.addResourceDisplay(new ResourceDisplay("ants", "Ants: How many ants you can have in total [Current/Total]", data.antsTotal, data.antCapacity, assetList.resource.antPath));
     gui.addResourceDisplay(new ResourceDisplay("queen", "Queen: You can only have one", data.queensActive, value(-1), assetList.resource.queenPath));
-    gui.addResourceDisplay(new ResourceDisplay("farmer", "Farmers: Produce food when there is enough farm tiles. [Active/Total]", data.farmersActive, data.farmersTotal, assetList.resource.farmerPath));
-    gui.addResourceDisplay(new ResourceDisplay("worker", "Workers: Maintains the tiles of your colony. [Active/Total]", data.workersActive, data.workersTotal, assetList.resource.workerPath));
+    gui.addResourceDisplay(new ResourceDisplay("farmer", "Farmers: Produce food when there is enough farm tiles.", data.farmersTotal, value(-1), assetList.resource.farmerPath));
+    gui.addResourceDisplay(new ResourceDisplay("worker", "Workers: Maintains the tiles of your colony.", data.workersTotal, value(-1), assetList.resource.workerPath));
     // gui.addResourceDisplay(new ResourceDisplay("soldier", "Soldiers: Contains the threat level to the colony. [Active/Total]", data.soldiersActive, data.soldiersTotal, assetList.resource.soldierPath));
 
     // BuildBar
